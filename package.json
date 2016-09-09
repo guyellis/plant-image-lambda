@@ -1,0 +1,28 @@
+{
+  "name": "plant-image-lambda",
+  "version": "0.0.1",
+  "description": "Image Lambda for Plant Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guyellis/plant-image-lambda.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/guyellis/plant-image-lambda/issues"
+  },
+  "homepage": "https://github.com/guyellis/plant-image-lambda#readme",
+  "dependencies": {
+    "async": "2.0.1",
+    "aws-sdk": "2.6.0",
+    "gm": "1.23.0"
+  },
+  "devDependencies": {
+    "eslint": "3.5.0",
+    "mocha": "3.0.2"
+  }
+}
