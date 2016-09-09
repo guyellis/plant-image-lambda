@@ -1,0 +1,14 @@
+{
+  "ecmaFeatures": {
+    "modules": true
+  },
+  "env": {
+    "mocha": true,
+    "node": true
+  },
+  "extends": [
+    "guyellis"
+  ],
+  "rules": {
+  }
+}
