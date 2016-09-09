@@ -4,7 +4,10 @@
   "description": "Image Lambda for Plant Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "make lambda",
+    "clean": "make clean",
+    "test": "mocha",
+    "upload": "make uploadlambda"
   },
   "repository": {
     "type": "git",
