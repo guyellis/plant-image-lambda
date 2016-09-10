@@ -9,7 +9,7 @@ var gm = {
   density: function() { return gm; }
 };
 
-var index = proxyquire('../src', {
+var index = proxyquire('../src/outer', {
   'aws-sdk': {
 
   },
