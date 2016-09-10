@@ -20,34 +20,44 @@ var sizes = [
 ];
 var bucket = 'i.plaaant.com';
 
-function extractFromEvent(event) {
+// #1
+function extractFromEvent(event, cb) {
   // Object key may have spaces or unicode non-ASCII characters.
   var key = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
   // Infer the image type.
   var typeMatch = key.match(/\.([^.]*)$/);
   if (!typeMatch) {
-    console.error('unable to infer image type for key ' + key);
-    return false;
+    var err = 'unable to infer image type for key ' + key;
+    console.error(err);
+    return cb(err);
   }
+
   var imageType = typeMatch[1].toLowerCase();
 
   if (['jpg', 'gif', 'png', 'eps'].indexOf(imageType) === -1) {
-    console.log('skipping non-image ' + key);
-    return false;
+    var err2 = 'skipping non-image ' + key;
+    console.log(err2);
+    return cb(err2);
   }
 
-  return {
+  if(key.indexOf('/orig/') === -1) {
+    var err3 = 'Not processing ' + key + ' because it is not an original image.';
+    console.log(err3);
+    return cb(err3);
+  }
+
+  return cb(null, {
     bucketName: event.Records[0].s3.bucket.name,
     key: key,
     fileName: path.basename(key),
     imageType: imageType
-  };
+  });
 }
 
-// #1
+// #2
 // data has: bucketName, key, fileName, imageType
 function getImageFromS3(data, cb) {
-  console.time('downloadImage');
+  console.time('getImageFromS3');
   console.log('getImageFromS3');
   // Download the image from S3 into a buffer.
   // sadly it downloads the image several times, but we couldn't place it outside
@@ -57,29 +67,24 @@ function getImageFromS3(data, cb) {
     Key: data.key
   }, function(err, s3Object) {
     data.s3Object = s3Object;
-    Object.freeze(data);
-    console.timeEnd('downloadImage');
+    console.timeEnd('getImageFromS3');
     return cb(err, data);
   });
 }
 
+
+
 // #2
-// data has:
-//   input: (frozen)
-//     bucketName
-//     key
-//     fileName
-//     imageType
-//     s3Object
-//   item:
-//     size:
-//       width
-//       name
-//     index
+// data:
+//   bucketName
+//   key
+//   fileName
+//   imageType
+//   s3Object
 function convertToJpg(data, next) {
   // convert eps images to png
   console.time('convertToJpg');
-  var response = data.input.s3Object;
+  var response = data.s3Object;
   console.log('Reponse content type: ' + response.ContentType);
   console.log('Conversion');
   gm(response.Body)
@@ -90,6 +95,24 @@ function convertToJpg(data, next) {
       console.timeEnd('convertToJpg');
       next(err, data);
     });
+}
+
+/**
+ * outerPipeline does image pre-processing before we start resizing etc.
+ * The output is a buffer/object/something that can then be sized etc. by
+ * each of the different output sizes.
+ * @param {object} event - event that call the lambda function
+ * @param {function} cb - callback to call once done
+ * @returns {undefined}
+ */
+function outerPipeline(event, cb) {
+
+  async.waterfall([
+    extractFromEvent.bind(null, event),
+    getImageFromS3,
+    convertToJpg
+  ], cb);
+
 }
 
 // #3
@@ -169,50 +192,51 @@ function uploadImage(data, next) {
   console.timeEnd('uploadImage');
 }
 
+function innerPipeline(data, cb) {
+  async.forEachOf(sizes, function(size, index, callback) {
+    var data2 = {
+      item: {
+        size: size,
+        index: index
+      },
+      input: data
+    };
+
+    async.waterfall([
+      processImage.bind(null, data2), // #3
+      uploadImage, // #4
+    ], function(err2) {
+      if (err2) {
+        console.error('Waterfall error on step ' + index, err2);
+      } else {
+        console.log('End of step ' + index);
+      }
+      return callback(err2);
+    });
+  }, function(err3) {
+    var logData = util.inspect(data);
+    if (err3) {
+      console.error('----> Unable to resize due to an error', logData, err3);
+    } else {
+      console.log('----> Successfully resized ', logData);
+    }
+    return cb(err3);
+  });
+}
 
 function handler(event, ctx) {
-  // Read options from the event.
   console.log('Reading options from event:\n', util.inspect(event, {
     depth: 5
   }));
 
-  var parsedEvent = extractFromEvent(event);
-
-  getImageFromS3(parsedEvent, function(err, data) { // #1
-    if(data.key.indexOf('/orig/') === -1) {
-      console.log('Not processing ' + data.key + ' because it is not an original image.');
+  outerPipeline(event, function(err, data) {
+    if(err) {
       return ctx.done();
-    }
-    async.forEachOf(sizes, function(size, index, callback) {
-      var data2 = {
-        item: {
-          size: size,
-          index: index
-        },
-        input: data
-      };
-
-      async.waterfall([
-        convertToJpg.bind(null, data2), // #2
-        processImage, // #3
-        uploadImage, // #4
-      ], function(err2) {
-        if (err2) {
-          console.error('Waterfall error on step ' + index, err2);
-        } else {
-          console.log('End of step ' + index);
-        }
-        return callback(err2);
+    } else {
+      innerPipeline(data, function() {
+        ctx.done();
       });
-    }, function(err3) {
-      var logData = util.inspect(data);
-      if (err3) {
-        console.error('----> Unable to resize due to an error', logData, err3);
-      } else {
-        console.log('----> Successfully resized ', logData);
-      }
-      ctx.done();
-    });
+    }
   });
 }
 
