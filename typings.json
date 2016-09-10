@@ -1,0 +1,9 @@
+{
+  "name": "Plant Image Lambda",
+  "globalDependencies": {
+    "async": "registry:dt/async#2.0.1+20160804113311",
+    "aws-sdk": "registry:dt/aws-sdk#0.0.0+20160811005841",
+    "mocha": "registry:dt/mocha#2.2.5+20160720003353",
+    "node": "registry:dt/node#6.0.0+20160807145350"
+  }
+}
