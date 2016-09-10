@@ -1,9 +1,9 @@
 .PHONY: clean
 
-lambda:
+lambda: test
 	@echo "Installing node modules (production)..."
 	@rm -rf node_modules/
-	npm i --production
+	npm i --production --depth 0
 	@echo "Copying files to build..."
 	@rm -rf build/
 	@mkdir build
@@ -12,6 +12,8 @@ lambda:
 	@echo "Create package archive..."
 	@cd build && zip -rq lambda-image.zip .
 	@mv build/lambda-image.zip ./
+	@echo "Installing node modules (all)..."
+	npm i --depth 0
 
 uploadlambda: lambda
 	@if [ -z "${LAMBDA_FUNCTION_NAME}" ]; then (echo "Please export LAMBDA_FUNCTION_NAME" && exit 1); fi

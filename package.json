@@ -6,9 +6,9 @@
   "scripts": {
     "build": "make lambda",
     "clean": "make clean",
-    "lint": "eslint --ext .js --ext .jsx . --max-warnings 0",
+    "lint": "eslint --ext .js . --max-warnings 0",
     "test": "mocha",
-    "upload": "make uploadlambda"
+    "upload": "LAMBDA_FUNCTION_NAME=iPlant make uploadlambda"
   },
   "repository": {
     "type": "git",
