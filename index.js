@@ -91,6 +91,9 @@ function convertToJpg(data, next) {
     .antialias(true)
     .density(300)
     .toBuffer('JPG', function(err, buffer) {
+      if(err) {
+        console.error('convertToJpg error in toBuffer:', err);
+      }
       data.buffer = buffer;
       console.timeEnd('convertToJpg');
       next(err, data);
@@ -231,10 +234,10 @@ function handler(event, ctx) {
 
   outerPipeline(event, function(err, data) {
     if(err) {
-      return ctx.done();
+      return ctx.done(err);
     } else {
-      innerPipeline(data, function() {
-        ctx.done();
+      innerPipeline(data, function(err2) {
+        ctx.done(err2);
       });
     }
   });
