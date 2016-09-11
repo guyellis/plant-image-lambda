@@ -4,8 +4,8 @@ var async = require('async');
 
 var convertToJpg = require('./outer-3-convert-to-jpg').convertToJpg;
 var getImageFromS3 = require('./outer-2-get-image-from-s3').getImageFromS3;
+var getImageSize = require('./outer-5-image-size').getImageSize;
 var extractFromEvent = require('./outer-1-extract-from-event').extractFromEvent;
-
 
 /**
  * pipeline does image pre-processing before we start resizing etc.
@@ -20,7 +20,8 @@ function pipeline(event, cb) {
   async.waterfall([
     extractFromEvent.bind(null, event),
     getImageFromS3,
-    convertToJpg
+    convertToJpg,
+    getImageSize
   ], cb);
 
 }

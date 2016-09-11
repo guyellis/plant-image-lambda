@@ -27,12 +27,12 @@ var bucket = 'i.plaaant.com';
 //     fileName
 //     imageType
 //     s3Object
+//     buffer
 //   item:
 //     size:
 //       width
 //       name
 //     index
-//   buffer
 function processImage(data, next) {
   var response = data.input.buffer;
   var item = data.item;
@@ -85,7 +85,7 @@ function uploadImage(data, next) {
   var index = data.item.index;
   console.log('upload: ' + index);
   // TODO: Fix below
-  var outKey = '/test/' + data.item.size.name + '/' + data.input.fileName;
+  var outKey = 'test/' + data.item.size.name + '/' + data.input.fileName;
   console.log('upload to path: ' + outKey);
   s3.putObject({
     Bucket: bucket,
