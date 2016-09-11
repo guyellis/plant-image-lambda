@@ -3,6 +3,7 @@
 var async = require('async');
 
 var convertToJpg = require('./outer-3-convert-to-jpg').convertToJpg;
+var fixExif = require('./outer-4-fix-exif').fixExif;
 var getImageFromS3 = require('./outer-2-get-image-from-s3').getImageFromS3;
 var getImageSize = require('./outer-5-image-size').getImageSize;
 var extractFromEvent = require('./outer-1-extract-from-event').extractFromEvent;
@@ -21,6 +22,7 @@ function pipeline(event, cb) {
     extractFromEvent.bind(null, event),
     getImageFromS3,
     convertToJpg,
+    fixExif,
     getImageSize
   ], cb);
 
