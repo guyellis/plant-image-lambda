@@ -11,10 +11,10 @@ var outer = require('./outer');
 
 var sizes = [
   {width: 2000, name: 'xl'},
-  {width: 1500, name: 'lg'},
-  {width: 1000, name: 'md'},
-  {width: 500, name: 'sm'},
-  {width: 100, name: 'thumb'}
+  // {width: 1500, name: 'lg'},
+  // {width: 1000, name: 'md'},
+  // {width: 500, name: 'sm'},
+  // {width: 100, name: 'thumb'}
 ];
 var bucket = 'i.plaaant.com';
 
@@ -34,12 +34,12 @@ var bucket = 'i.plaaant.com';
 //     index
 //   buffer
 function processImage(data, next) {
-  var response = data.buffer;
+  var response = data.input.buffer;
   var item = data.item;
   var targetSize = item.size;
   var index = item.index;
   console.time('processImage');
-  console.log('processImage');
+  console.log('processImage', util.inspect(data));
   console.log('run ' + item.index + ' size: ' + targetSize.width + ' name: ' + targetSize.name);
   // Transform the image buffer in memory.
   gm(response).size(function(err, size) {

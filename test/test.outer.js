@@ -24,7 +24,7 @@ var index = proxyquire('../src/outer', {
 
 describe('buildFromEvent', function() {
 
-  it.skip('should run end-to-end', function(end) {
+  it.skip('should run outer end-to-end', function(end) {
     var ctx = {
       done: function(err) {
         assert(!err);

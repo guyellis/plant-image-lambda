@@ -9,6 +9,7 @@ lambda: test
 	@mkdir build
 	@cp index.js build/index.js
 	@cp -R node_modules build/node_modules
+	@cp -R src build/src
 	@echo "Create package archive..."
 	@cd build && zip -rq lambda-image.zip .
 	@mv build/lambda-image.zip ./
