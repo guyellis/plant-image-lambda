@@ -11,10 +11,10 @@ var outer = require('./outer');
 
 var sizes = [
   {width: 2000, name: 'xl'},
-  // {width: 1500, name: 'lg'},
-  // {width: 1000, name: 'md'},
-  // {width: 500, name: 'sm'},
-  // {width: 100, name: 'thumb'}
+  {width: 1500, name: 'lg'},
+  {width: 1000, name: 'md'},
+  {width: 500, name: 'sm'},
+  {width: 100, name: 'thumb'}
 ];
 var bucket = 'i.plaaant.com';
 
@@ -98,7 +98,7 @@ function uploadImage(data, next) {
 }
 
 function innerPipeline(data, cb) {
-  async.forEachOf(sizes, function(size, index, callback) {
+  async.eachOfSeries(sizes, function(size, index, callback) {
     var data2 = {
       item: {
         size: size,
@@ -148,4 +148,3 @@ function handler(event, ctx) {
 module.exports = {
   handler: handler
 };
-
