@@ -3,7 +3,8 @@
 var path = require('path');
 
 // #1
-function extractFromEvent(event, cb) {
+function extractFromEvent(req, cb) {
+  var event = req.event;
   // Object key may have spaces or unicode non-ASCII characters.
   var key = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
   // Infer the image type.
@@ -43,13 +44,15 @@ function extractFromEvent(event, cb) {
   }
   outKeyRoot += '/';
 
-  return cb(null, {
+  req.data = {
     bucketName: event.Records[0].s3.bucket.name,
     key: key,
     fileName: path.basename(key),
     imageType: imageType,
     outKeyRoot: outKeyRoot
-  });
+  };
+
+  return cb(null, req);
 }
 
 module.exports = {

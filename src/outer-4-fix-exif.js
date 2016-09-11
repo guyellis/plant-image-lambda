@@ -12,9 +12,9 @@
 //   imageType
 //   s3Object
 //   buffer
-function fixExif(data, next) {
+function fixExif(req, next) {
   console.log('o4 fixExif');
-  next(null, data);
+  next(null, req);
 }
 
 module.exports = {

@@ -2,7 +2,7 @@
 
 var assert = require('assert');
 // var helper = require('./helper');
-var proxyquire = require('proxyquire');
+var imageFromS3 = require('../src/outer-2-get-image-from-s3');
 
 var gm = {
   antialias: function() { return gm; },
@@ -13,19 +13,17 @@ var fakeBucket = 'Fake Bucket';
 var fakeKey = 'Fake Key';
 var fakeS3Object = 'Fake S3 Object';
 
-var imageFromS3 = proxyquire('../src/outer-2-get-image-from-s3', {
-  'aws-sdk': {
-    S3: function() {
-      return {
-        getObject: function(obj, cb) {
-          assert.equal(fakeBucket, obj.Bucket);
-          assert.equal(fakeKey, obj.Key);
-          cb(null, fakeS3Object);
-        }
-      };
+var req = {
+  deps: {
+    s3: {
+      getObject: function(obj, cb) {
+        assert.equal(fakeBucket, obj.Bucket);
+        assert.equal(fakeKey, obj.Key);
+        cb(null, fakeS3Object);
+      }
     }
   }
-});
+};
 
 describe('getImageFromS3', function() {
   it('should get a fake image', function(done) {
@@ -34,13 +32,13 @@ describe('getImageFromS3', function() {
       key: fakeKey,
       s3Object: fakeS3Object
     };
-
-    imageFromS3.getImageFromS3({
+    req.data = {
       bucketName: fakeBucket,
       key: fakeKey
-    }, function(err, actual){
+    };
+    imageFromS3.getImageFromS3(req, function(err, actual){
       assert(!err);
-      assert.deepEqual(actual, expected);
+      assert.deepEqual(actual.data, expected);
       done();
     });
   });

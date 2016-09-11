@@ -6,17 +6,18 @@ var extractFromEvent = require('../src/outer-1-extract-from-event').extractFromE
 
 describe('extractFromEvent', function() {
   it('should build an object', function(done) {
-    var event = helper.fakeEvent;
+    var req = {event: helper.fakeEvent};
     var expected = {
       bucketName: 'example.com',
       fileName: '2016-08-27 10.20.04.jpg',
       imageType: 'jpg',
-      key: 'test/orig/2016-08-27 10.20.04.jpg'
+      key: 'test/orig/2016-08-27 10.20.04.jpg',
+      outKeyRoot: 'test/'
     };
 
-    extractFromEvent(event, function(err, actual){
+    extractFromEvent(req, function(err, actual){
       assert(!err);
-      assert.deepEqual(actual, expected);
+      assert.deepEqual(actual.data, expected);
       done();
     });
   });

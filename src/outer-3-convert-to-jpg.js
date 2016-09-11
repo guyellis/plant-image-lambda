@@ -1,9 +1,5 @@
 'use strict';
 
-var gm = require('gm').subClass({
-  imageMagick: true
-});
-
 // #3
 // data:
 //   bucketName
@@ -11,9 +7,11 @@ var gm = require('gm').subClass({
 //   fileName
 //   imageType
 //   s3Object
-function convertToJpg(data, next) {
+function convertToJpg(req, next) {
   // convert eps images to png
   console.time('convertToJpg');
+  var data = req.data;
+  var gm = req.deps.gm;
   var response = data.s3Object;
   console.log('Reponse content type: ' + response.ContentType);
   console.log('Conversion');
@@ -26,7 +24,7 @@ function convertToJpg(data, next) {
       }
       data.buffer = buffer;
       console.timeEnd('convertToJpg');
-      next(err, data);
+      next(err, req);
     });
 }
 

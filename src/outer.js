@@ -12,14 +12,14 @@ var extractFromEvent = require('./outer-1-extract-from-event').extractFromEvent;
  * pipeline does image pre-processing before we start resizing etc.
  * The output is a buffer/object/something that can then be sized etc. by
  * each of the different output sizes.
- * @param {object} event - event that call the lambda function
+ * @param {object} req - request object with event and deps
  * @param {function} cb - callback to call once done
  * @returns {undefined}
  */
-function pipeline(event, cb) {
+function pipeline(req, cb) {
 
   async.waterfall([
-    extractFromEvent.bind(null, event),
+    extractFromEvent.bind(null, req),
     getImageFromS3,
     convertToJpg,
     fixExif,

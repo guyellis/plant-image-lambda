@@ -1,11 +1,10 @@
 'use strict';
 
-var AWS = require('aws-sdk');
-var s3 = new AWS.S3();
-
 // #2
 // data has: bucketName, key, fileName, imageType
-function getImageFromS3(data, cb) {
+function getImageFromS3(req, cb) {
+  var data = req.data;
+  var s3 = req.deps.s3;
   console.time('getImageFromS3');
   console.log('getImageFromS3');
   // Download the image from S3 into a buffer.
@@ -17,7 +16,7 @@ function getImageFromS3(data, cb) {
   }, function(err, s3Object) {
     data.s3Object = s3Object;
     console.timeEnd('getImageFromS3');
-    return cb(err, data);
+    return cb(err, req);
   });
 }
 

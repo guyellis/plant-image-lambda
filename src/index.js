@@ -4,22 +4,42 @@ var util = require('util');
 var outer = require('./outer');
 var inner = require('./inner');
 
-function handler(event, ctx) {
-  console.log('Reading options from event:\n', util.inspect(event, {
+function handlerDeps(deps, event, ctx) {
+  console.log('Reading options from event:', util.inspect(event, {
     depth: 5
   }));
 
-  outer.pipeline(event, function(err, data) {
+  if(!deps) {
+    var AWS = require('aws-sdk');
+    var s3 = new AWS.S3();
+    var gm = require('gm').subClass({
+      imageMagick: true
+    });
+    deps = {s3: s3, gm: gm};
+  }
+
+  var req = {
+    event: event,
+    deps: deps
+  };
+
+  outer.pipeline(req, function(err) {
     if(err) {
       return ctx.done(err);
     } else {
-      inner.pipeline(Object.freeze(data), function(err2) {
+      Object.freeze(req.data);
+      inner.pipeline(req, function(err2) {
         ctx.done(err2);
       });
     }
   });
 }
 
+function handler(event, ctx) {
+  handlerDeps(null, event, ctx);
+}
+
 module.exports = {
-  handler: handler
+  handler: handler,
+  handlerDeps: handlerDeps
 };

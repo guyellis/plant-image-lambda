@@ -1,12 +1,7 @@
 'use strict';
 
 var async = require('async');
-var AWS = require('aws-sdk');
-var gm = require('gm').subClass({
-  imageMagick: true
-});
 var util = require('util');
-var s3 = new AWS.S3();
 
 var sizes = [
   {width: 2000, name: 'xl'},
@@ -32,13 +27,14 @@ var bucket = 'i.plaaant.com';
 //       width
 //       name
 //     index
-function processImage(data, next) {
-  var response = data.input.buffer;
-  var item = data.item;
+function processImage(req, next) {
+  var gm = req.deps.gm;
+  var response = req.input.buffer;
+  var item = req.item;
   var targetSize = item.size;
   var index = item.index;
   console.time('processImage');
-  console.log('processImage', util.inspect(data));
+  console.log('processImage', util.inspect(req.input.data));
   console.log('run ' + item.index + ' size: ' + targetSize.width + ' name: ' + targetSize.name);
   // Transform the image buffer in memory.
   gm(response).size(function(err, size) {
@@ -58,9 +54,9 @@ function processImage(data, next) {
     this.resize(width, height)
       .toBuffer('JPG', function(err2, buffer) {
         console.timeEnd('processImage');
-        data.buffer = buffer;
+        req.buffer = buffer;
         console.timeEnd('processImage');
-        next(err2, data);
+        next(err2, req);
       });
   });
 }
@@ -80,34 +76,35 @@ function processImage(data, next) {
 //       name
 //     index
 //   buffer
-function uploadImage(data, next) {
+function uploadImage(req, next) {
   console.time('uploadImage');
-  var index = data.item.index;
+  var s3 = req.deps.s3;
+  var index = req.item.index;
   console.log('upload: ' + index);
-  // TODO: Fix below
-  var outKey = data.input.outKeyRoot + data.item.size.name + '/' + data.input.fileName;
+  var outKey = req.input.outKeyRoot + req.item.size.name + '/' + req.input.fileName;
   console.log('upload to path: ' + outKey);
   s3.putObject({
     Bucket: bucket,
     Key: outKey,
-    Body: data.buffer,
+    Body: req.buffer,
     ContentType: 'JPG'
   }, next);
   console.timeEnd('uploadImage');
 }
 
-function pipeline(data, cb) {
+function pipeline(req, cb) {
   async.eachOfSeries(sizes, function(size, index, callback) {
-    var data2 = {
+    var newReq = {
       item: {
         size: size,
         index: index
       },
-      input: data
+      input: req.data,
+      deps: req.deps
     };
 
     async.waterfall([
-      processImage.bind(null, data2), // #3
+      processImage.bind(null, newReq), // #3
       uploadImage, // #4
     ], function(err2) {
       if (err2) {
@@ -118,7 +115,7 @@ function pipeline(data, cb) {
       return callback(err2);
     });
   }, function(err3) {
-    var logData = util.inspect(data);
+    var logData = util.inspect(req.data);
     if (err3) {
       console.error('----> Unable to resize due to an error', logData, err3);
     } else {

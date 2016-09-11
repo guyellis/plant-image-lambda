@@ -5,9 +5,12 @@
       "name": "Mocha",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/node_modules/.bin/mocha",
+      "program": "${workspaceRoot}/node_modules/.bin/_mocha",
       "stopOnEntry": false,
-      "args": [],
+      "args": [
+        "./test/**/*.js",
+        "--recursive"
+      ],
       "cwd": "${workspaceRoot}",
       "preLaunchTask": null,
       "runtimeExecutable": null,

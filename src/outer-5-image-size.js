@@ -1,8 +1,5 @@
 'use strict';
 
-var gm = require('gm').subClass({
-  imageMagick: true
-});
 
 // #5
 // data:
@@ -12,13 +9,15 @@ var gm = require('gm').subClass({
 //   imageType
 //   s3Object
 //   buffer
-function getImageSize(data, next) {
+function getImageSize(req, next) {
+  var gm = req.deps.gm;
+  var data = req.data;
   console.log('o5 getImageSize');
   gm(data.buffer).size(function(err, size) {
     console.log('o5 got size:', size);
     data.imageSize = size;
     console.log('o5 size done');
-    next(err, data);
+    next(err, req);
   });
 }
 
