@@ -18,21 +18,37 @@ function extractFromEvent(event, cb) {
 
   if (['jpg', 'gif', 'png', 'eps'].indexOf(imageType) === -1) {
     var err2 = 'skipping non-image ' + key;
-    console.log(err2);
+    console.error(err2);
     return cb(err2);
   }
 
   if(key.indexOf('/orig/') === -1) {
+    // This should not happen because the filter on S3 has been setup to be:
+    // test/orig/ for test and
+    // up/orig/ for prod
     var err3 = 'Not processing ' + key + ' because it is not an original image.';
-    console.log(err3);
+    console.error(err3);
     return cb(err3);
   }
+
+  // Compute root of key for output
+  // The key either starts with one of:
+  // test/orig/
+  // up/orig/
+  var outKeyRoot = key.split('/')[0];
+  if(['test', 'up'].indexOf(outKeyRoot) === -1) {
+    var err4 = 'key does not start with a recognized folder:' + key;
+    console.error(err4);
+    return cb(err4);
+  }
+  outKeyRoot += '/';
 
   return cb(null, {
     bucketName: event.Records[0].s3.bucket.name,
     key: key,
     fileName: path.basename(key),
-    imageType: imageType
+    imageType: imageType,
+    outKeyRoot: outKeyRoot
   });
 }
 

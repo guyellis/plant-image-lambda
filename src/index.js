@@ -71,6 +71,7 @@ function processImage(data, next) {
 //   input: (frozen)
 //     bucketName
 //     key
+//     outKeyRoot
 //     fileName
 //     imageType
 //     s3Object
@@ -85,7 +86,7 @@ function uploadImage(data, next) {
   var index = data.item.index;
   console.log('upload: ' + index);
   // TODO: Fix below
-  var outKey = 'test/' + data.item.size.name + '/' + data.input.fileName;
+  var outKey = data.input.outKeyRoot + data.item.size.name + '/' + data.input.fileName;
   console.log('upload to path: ' + outKey);
   s3.putObject({
     Bucket: bucket,
