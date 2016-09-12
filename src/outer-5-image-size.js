@@ -18,7 +18,7 @@ function getImageSize(req, next) {
     console.log('o5 got size:', size);
     data.imageSize = size;
     data.sizes = imageSizes.calcSizes(size.width);
-    console.log('o5 size done');
+    console.log('o5 size done:', data.sizes);
     next(err, req);
   });
 }

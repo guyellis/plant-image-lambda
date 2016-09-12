@@ -13,8 +13,15 @@
 //   s3Object
 //   buffer
 function fixExif(req, next) {
+  var gm = req.deps.gm;
+  var data = req.data;
   console.log('o4 fixExif');
-  next(null, req);
+  gm(data.buffer)
+    .autoOrient()
+    .toBuffer('JPG', function(toBufferError, buffer){
+      data.buffer = buffer;
+      next(toBufferError, req);
+    });
 }
 
 module.exports = {
