@@ -25,30 +25,26 @@ function processImage(req, next) {
   var response = req.input.buffer;
   var item = req.item;
   var targetSize = item.size;
-  var index = item.index;
   console.time('processImage');
   // Transform the image buffer in memory.
-  gm(response).size(function(err, size) {
-    // Infer the scaling factor to avoid stretching the image unnaturally.
-    if(err) {
-      console.log('Error in gm(response):', err);
-      console.timeEnd('processImage');
-      return next(err);
-    }
+  var size = req.input.imageSize;
 
-    var scalingFactor = Math.min(targetSize.width / size.width, targetSize.width / size.height);
-    console.log('run ' + index + ' scalingFactor : ' + scalingFactor);
-    var width = scalingFactor * size.width;
-    var height = scalingFactor * size.height;
-    console.log('run ' + index + ' width : ' + width);
-    console.log('run ' + index + ' height : ' + height);
-    this.resize(width, height)
-      .toBuffer('JPG', function(err2, buffer) {
-        req.buffer = buffer;
-        console.timeEnd('processImage');
-        next(err2, req);
-      });
-  });
+  if(size.width === targetSize.width) {
+    req.buffer = response;
+    console.timeEnd('processImage');
+    return next(null, req);
+  }
+
+  var scalingFactor = Math.min(targetSize.width / size.width, targetSize.width / size.height);
+  console.log('scalingFactor:', scalingFactor);
+  var width = scalingFactor * size.width;
+  var height = scalingFactor * size.height;
+  gm(response).resize(width, height)
+    .toBuffer('JPG', function(err2, buffer) {
+      req.buffer = buffer;
+      console.timeEnd('processImage');
+      next(err2, req);
+    });
 }
 
 // #4
