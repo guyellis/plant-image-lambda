@@ -1,5 +1,6 @@
 'use strict';
 
+var imageSizes = require('./image-sizes');
 
 // #5
 // data:
@@ -16,6 +17,7 @@ function getImageSize(req, next) {
   gm(data.buffer).size(function(err, size) {
     console.log('o5 got size:', size);
     data.imageSize = size;
+    data.sizes = imageSizes.calcSizes(size.width);
     console.log('o5 size done');
     next(err, req);
   });

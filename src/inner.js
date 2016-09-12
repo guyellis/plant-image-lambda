@@ -3,15 +3,7 @@
 var async = require('async');
 var util = require('util');
 
-var sizes = [
-  {width: 2000, name: 'xl'},
-  {width: 1500, name: 'lg'},
-  {width: 1000, name: 'md'},
-  {width: 500, name: 'sm'},
-  {width: 100, name: 'thumb'}
-];
 var bucket = 'i.plaaant.com';
-
 
 // #4
 // data has:
@@ -28,14 +20,13 @@ var bucket = 'i.plaaant.com';
 //       name
 //     index
 function processImage(req, next) {
+  console.log('i-' + ++req.step + ' processImage:', req);
   var gm = req.deps.gm;
   var response = req.input.buffer;
   var item = req.item;
   var targetSize = item.size;
   var index = item.index;
   console.time('processImage');
-  console.log('processImage', util.inspect(req.input.data));
-  console.log('run ' + item.index + ' size: ' + targetSize.width + ' name: ' + targetSize.name);
   // Transform the image buffer in memory.
   gm(response).size(function(err, size) {
     // Infer the scaling factor to avoid stretching the image unnaturally.
@@ -53,7 +44,6 @@ function processImage(req, next) {
     console.log('run ' + index + ' height : ' + height);
     this.resize(width, height)
       .toBuffer('JPG', function(err2, buffer) {
-        console.timeEnd('processImage');
         req.buffer = buffer;
         console.timeEnd('processImage');
         next(err2, req);
@@ -77,10 +67,9 @@ function processImage(req, next) {
 //     index
 //   buffer
 function uploadImage(req, next) {
+  console.log('i-' + ++req.step + ' uploadImage:', req);
   console.time('uploadImage');
   var s3 = req.deps.s3;
-  var index = req.item.index;
-  console.log('upload: ' + index);
   var outKey = req.input.outKeyRoot + req.item.size.name + '/' + req.input.fileName;
   console.log('upload to path: ' + outKey);
   s3.putObject({
@@ -88,11 +77,14 @@ function uploadImage(req, next) {
     Key: outKey,
     Body: req.buffer,
     ContentType: 'JPG'
-  }, next);
-  console.timeEnd('uploadImage');
+  }, function(err, result) {
+    console.timeEnd('uploadImage');
+    next(err, result);
+  });
 }
 
 function pipeline(req, cb) {
+  var sizes = req.data.sizes;
   async.eachOfSeries(sizes, function(size, index, callback) {
     var newReq = {
       item: {
@@ -100,7 +92,8 @@ function pipeline(req, cb) {
         index: index
       },
       input: req.data,
-      deps: req.deps
+      deps: req.deps,
+      step: 0
     };
 
     async.waterfall([
