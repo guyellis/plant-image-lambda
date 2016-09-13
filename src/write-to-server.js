@@ -22,11 +22,13 @@ function httpPost(req, cb) {
     }
   };
 
+  console.log('About to PUT to server...');
   var request = https.request(options, function() {});
   request.write(postData);
   request.end();
+  console.log('Completed PUT to server...');
 
-  cb();
+  cb(null, req);
 }
 
 module.exports = {
