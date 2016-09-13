@@ -23,9 +23,16 @@ function httpPost(req, cb) {
   };
 
   console.log('About to PUT to server...');
-  var request = https.request(options, function() {});
+  var request = https.request(options, function(res) {
+    console.log('response from https.request:', res);
+  });
   request.write(postData);
   request.end();
+
+  req.on('error', function(e) {
+    console.error('Error in https.request:', e);
+  });
+
   console.log('Completed PUT to server...');
 
   cb(null, req);
