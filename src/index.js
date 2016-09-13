@@ -3,6 +3,7 @@
 var util = require('util');
 var outer = require('./outer');
 var inner = require('./inner');
+var httpPost = require('./write-to-server').httpPost;
 
 function handlerDeps(deps, event, ctx) {
   console.log('Reading options from event:', util.inspect(event, {
@@ -29,7 +30,13 @@ function handlerDeps(deps, event, ctx) {
     } else {
       Object.freeze(req.data);
       inner.pipeline(req, function(innerPipelineError) {
-        ctx.done(innerPipelineError);
+        if(innerPipelineError) {
+          ctx.done(innerPipelineError);
+        } else {
+          httpPost(req, function(postError) {
+            ctx.done(postError);
+          });
+        }
       });
     }
   });
