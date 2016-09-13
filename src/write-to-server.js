@@ -29,7 +29,7 @@ function httpPost(req, cb) {
   request.write(postData);
   request.end();
 
-  req.on('error', function(e) {
+  request.on('error', function(e) {
     console.error('Error in https.request:', e);
   });
 
