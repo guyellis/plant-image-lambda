@@ -24,3 +24,17 @@ function getImageFromS3(req, cb) {
 module.exports = {
   getImageFromS3: getImageFromS3,
 };
+
+/*
+The s3Object returned by s3.getObject will look something like this:
+
+{ AcceptRanges: 'bytes',
+  LastModified: 'Tue, 06 Sep 2016 22:45:04 GMT',
+  ContentLength: '2718943',
+  ETag: '"244c6ae2eeaf49e7f84070864aa3fa26"',
+  ContentType: 'image/jpeg',
+  Metadata:
+   { userid: 'xxxxxxxxxxxxxxxxx',
+     originalname: 'zzzzzzzzzzzzzz.jpg' },
+  Body: <Buffer
+*/

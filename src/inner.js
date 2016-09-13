@@ -80,6 +80,7 @@ function uploadImage(req, next) {
 }
 
 function pipeline(req, cb) {
+  Object.freeze(req.data);
   var sizes = req.data.sizes;
   async.eachOfSeries(sizes, function(size, index, callback) {
     var newReq = {
