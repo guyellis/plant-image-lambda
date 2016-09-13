@@ -85,6 +85,20 @@ var fakeEvent = {
   }]
 };
 
+var fakeS3Object = {
+  AcceptRanges: 'bytes',
+  LastModified: 'Tue, 06 Sep 2016 22:45:04 GMT',
+  ContentLength: '2718943',
+  ETag: '"244c6ae2eeaf49e7f84070864aa3fa26"',
+  ContentType: 'image/jpeg',
+  Metadata: {
+    userid: '12345',
+    originalname: '987.jpg'
+  },
+  Body: '<Buffer>'
+};
+
 module.exports = {
-  fakeEvent: fakeEvent
+  fakeEvent: fakeEvent,
+  fakeS3Object: fakeS3Object
 };

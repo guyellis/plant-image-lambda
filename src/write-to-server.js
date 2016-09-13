@@ -7,15 +7,19 @@ function httpPost(req, cb) {
   console.log('env:', env);
 
   var postData = JSON.stringify({
-    metadata: req.input.data.s3Object.Metadata,
-    imageSizes: req.imageSizes
+    metadata: req.data.s3Object.Metadata,
+    sizes: req.data.sizes
   });
 
   var options = {
     hostname: 'plaaant.com',
     port: 443,
     path: '/api/image-complete?token=' + env.PLANT_IMAGE_COMPLETE,
-    method: 'PUT'
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(postData)
+    }
   };
 
   var request = https.request(options, function() {});

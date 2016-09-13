@@ -4,7 +4,6 @@ var assert = require('assert');
 var helper = require('./helper');
 var index = require('../src');
 
-
 function GM() {
   var _this = this;
   return function() {
@@ -38,16 +37,29 @@ GM.prototype.size = function(cb) {
 
 var gm = new GM();
 
-var deps = {
-  s3: {
-    getObject: function(obj, cb) {
-      cb(null, 'fake s3Object');
-    },
-    putObject: function(obj, cb) {
-      cb();
-    }
+var s3 = {
+  getObject: function(obj, cb) {
+    cb(null, helper.fakeS3Object);
   },
-  gm: gm
+  putObject: function(obj, cb) {
+    cb();
+  }
+};
+
+var https = {
+  request: function(options, cb) {
+    cb();
+    return {
+      write: function() {},
+      end: function() {}
+    };
+  }
+};
+
+var deps = {
+  s3: s3,
+  gm: gm,
+  https: https
 };
 
 describe('buildFromEvent', function() {

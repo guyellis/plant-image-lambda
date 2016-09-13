@@ -2,8 +2,6 @@
 
 var util = require('util');
 var outer = require('./outer');
-var inner = require('./inner');
-var httpPost = require('./write-to-server').httpPost;
 
 function handlerDeps(deps, event, ctx) {
   console.log('Reading options from event:', util.inspect(event, {
@@ -16,7 +14,8 @@ function handlerDeps(deps, event, ctx) {
     var gm = require('gm').subClass({
       imageMagick: true
     });
-    deps = {s3: s3, gm: gm};
+    var https = require('https');
+    deps = {s3: s3, gm: gm, https: https};
   }
 
   var req = {
@@ -24,21 +23,8 @@ function handlerDeps(deps, event, ctx) {
     deps: deps
   };
 
-  outer.pipeline(req, function(err) {
-    if(err) {
-      return ctx.done(err);
-    } else {
-      Object.freeze(req.data);
-      inner.pipeline(req, function(innerPipelineError) {
-        if(innerPipelineError) {
-          ctx.done(innerPipelineError);
-        } else {
-          httpPost(req, function(postError) {
-            ctx.done(postError);
-          });
-        }
-      });
-    }
+  outer.pipeline(req, function(pipelineError) {
+    ctx.done(pipelineError);
   });
 }
 

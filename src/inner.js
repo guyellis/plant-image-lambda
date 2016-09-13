@@ -83,7 +83,7 @@ function pipeline(req, cb) {
   Object.freeze(req.data);
   var sizes = req.data.sizes;
   async.eachOfSeries(sizes, function(size, index, callback) {
-    var newReq = {
+    var innerReq = {
       item: {
         size: size,
         index: index
@@ -94,7 +94,7 @@ function pipeline(req, cb) {
     };
 
     async.waterfall([
-      processImage.bind(null, newReq), // #3
+      processImage.bind(null, innerReq), // #3
       uploadImage, // #4
     ], function(err2) {
       if (err2) {
@@ -111,7 +111,7 @@ function pipeline(req, cb) {
     } else {
       console.log('----> Successfully resized ', logData);
     }
-    return cb(eachOfSeriesError);
+    return cb(eachOfSeriesError, req);
   });
 }
 
