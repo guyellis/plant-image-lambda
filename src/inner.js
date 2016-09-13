@@ -103,14 +103,14 @@ function pipeline(req, cb) {
       }
       return callback(err2);
     });
-  }, function(err3) {
+  }, function(eachOfSeriesError) {
     var logData = util.inspect(req.data);
-    if (err3) {
-      console.error('----> Unable to resize due to an error', logData, err3);
+    if (eachOfSeriesError) {
+      console.error('----> Unable to resize due to an error', logData, eachOfSeriesError);
     } else {
       console.log('----> Successfully resized ', logData);
     }
-    return cb(err3);
+    return cb(eachOfSeriesError);
   });
 }
 

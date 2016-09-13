@@ -16,6 +16,10 @@ GM.prototype.antialias = function() {
   return this;
 };
 
+GM.prototype.autoOrient = function() {
+  return this;
+};
+
 GM.prototype.density = function() {
   return this;
 };

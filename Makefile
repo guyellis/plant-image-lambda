@@ -1,6 +1,7 @@
 .PHONY: clean
 
-lambda: test
+lambda:
+	@if [ -z "${PLANT_IMAGE_COMPLETE}" ]; then (echo "Please export PLANT_IMAGE_COMPLETE" && exit 1); fi
 	@echo "Installing node modules (production)..."
 	@rm -rf node_modules/
 	npm i --production --depth 0
@@ -10,6 +11,7 @@ lambda: test
 	@cp index.js build/index.js
 	@cp -R node_modules build/node_modules
 	@cp -R src build/src
+	sh devops/setenv.sh
 	@echo "Create package archive..."
 	@cd build && zip -rq lambda-image.zip .
 	@mv build/lambda-image.zip ./

@@ -28,8 +28,8 @@ function handlerDeps(deps, event, ctx) {
       return ctx.done(err);
     } else {
       Object.freeze(req.data);
-      inner.pipeline(req, function(err2) {
-        ctx.done(err2);
+      inner.pipeline(req, function(innerPipelineError) {
+        ctx.done(innerPipelineError);
       });
     }
   });
