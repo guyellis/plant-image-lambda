@@ -6,10 +6,12 @@ function httpPost(req, cb) {
   var https = req.deps.https;
   console.log('env:', env);
 
-  var postData = JSON.stringify({
+  var putData = JSON.stringify({
     metadata: req.data.s3Object.Metadata,
     sizes: req.data.sizes
   });
+
+  console.log('PUT data:', putData);
 
   var options = {
     hostname: 'plaaant.com',
@@ -18,15 +20,16 @@ function httpPost(req, cb) {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      'Content-Length': Buffer.byteLength(postData)
+      'Content-Length': Buffer.byteLength(putData)
     }
   };
 
   console.log('About to PUT to server...');
   var request = https.request(options, function(res) {
     console.log('response from https.request:', res);
+    cb(null, req);
   });
-  request.write(postData);
+  request.write(putData);
   request.end();
 
   request.on('error', function(e) {
@@ -34,8 +37,6 @@ function httpPost(req, cb) {
   });
 
   console.log('Completed PUT to server...');
-
-  cb(null, req);
 }
 
 module.exports = {
