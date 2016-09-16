@@ -26,7 +26,6 @@ function processImage(req, next) {
   var item = req.item;
   var targetSize = item.size;
   console.time('processImage');
-  // Transform the image buffer in memory.
   var size = req.input.imageSize;
 
   if(size.width === targetSize.width) {
@@ -35,11 +34,10 @@ function processImage(req, next) {
     return next(null, req);
   }
 
-  var scalingFactor = Math.min(targetSize.width / size.width, targetSize.width / size.height);
+  var scalingFactor = targetSize.width / size.width;
   console.log('scalingFactor:', scalingFactor);
-  var width = scalingFactor * size.width;
   var height = scalingFactor * size.height;
-  gm(response).resize(width, height)
+  gm(response).resize(targetSize.width, height)
     .toBuffer('JPG', function(err2, buffer) {
       req.buffer = buffer;
       console.timeEnd('processImage');

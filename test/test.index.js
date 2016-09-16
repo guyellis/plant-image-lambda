@@ -50,8 +50,9 @@ var https = {
   request: function(options, cb) {
     cb();
     return {
-      write: function() {},
-      end: function() {}
+      end: function() {},
+      on: function() {},
+      write: function() {}
     };
   }
 };
