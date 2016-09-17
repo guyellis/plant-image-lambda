@@ -2,6 +2,8 @@
 
 lambda:
 	@if [ -z "${PLANT_IMAGE_COMPLETE}" ]; then (echo "Please export PLANT_IMAGE_COMPLETE" && exit 1); fi
+	@if [ -z "${PLANT_IMAGE_HOST}" ]; then (echo "Please export PLANT_IMAGE_HOST" && exit 1); fi
+	@if [ -z "${PLANT_IMAGE_PORT}" ]; then (echo "Please export PLANT_IMAGE_PORT" && exit 1); fi
 	@echo "Installing node modules (production)..."
 	@rm -rf node_modules/
 	npm i --production --depth 0

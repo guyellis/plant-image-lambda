@@ -60,7 +60,8 @@ var https = {
 var deps = {
   s3: s3,
   gm: gm,
-  https: https
+  https: https,
+  http: https
 };
 
 describe('buildFromEvent', function() {

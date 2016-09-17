@@ -15,7 +15,8 @@ function handlerDeps(deps, event, ctx) {
       imageMagick: true
     });
     var https = require('https');
-    deps = {s3: s3, gm: gm, https: https};
+    var http = require('http');
+    deps = {s3: s3, gm: gm, https: https, http: http};
   }
 
   var req = {

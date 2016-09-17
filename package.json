@@ -8,8 +8,8 @@
     "clean": "make clean",
     "lint": "eslint --ext .js . --max-warnings 0",
     "test": "mocha",
-    "upprod": "LAMBDA_FUNCTION_NAME=iPlant make uploadlambda",
-    "uptest": "LAMBDA_FUNCTION_NAME=iPlantTest make uploadlambda"
+    "upprod": "LAMBDA_FUNCTION_NAME=iPlant PLANT_IMAGE_HOST=$PLANT_IMAGE_HOST_PROD PLANT_IMAGE_PORT=$PLANT_IMAGE_PORT_PROD make uploadlambda",
+    "uptest": "LAMBDA_FUNCTION_NAME=iPlantTest PLANT_IMAGE_HOST=$PLANT_IMAGE_HOST_TEST PLANT_IMAGE_PORT=$PLANT_IMAGE_PORT_TEST make uploadlambda"
   },
   "repository": {
     "type": "git",
