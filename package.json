@@ -29,6 +29,6 @@
   "devDependencies": {
     "eslint": "3.19.0",
     "eslint-config-guyellis": "0.0.6",
-    "mocha": "3.3.0"
+    "mocha": "3.4.1"
   }
 }
