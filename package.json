@@ -1,8 +1,27 @@
 {
-  "name": "plant-image-lambda",
-  "version": "0.0.1",
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/guyellis/plant-image-lambda/issues"
+  },
+  "dependencies": {
+    "async": "2.4.0",
+    "aws-sdk": "2.54.0",
+    "gm": "1.23.0"
+  },
   "description": "Image Lambda for Plant Project",
+  "devDependencies": {
+    "eslint": "3.19.0",
+    "eslint-config-guyellis": "0.0.6",
+    "mocha": "3.4.1"
+  },
+  "homepage": "https://github.com/guyellis/plant-image-lambda#readme",
+  "license": "MIT",
   "main": "index.js",
+  "name": "plant-image-lambda",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guyellis/plant-image-lambda.git"
+  },
   "scripts": {
     "build": "make lambda",
     "clean": "make clean",
@@ -11,24 +30,5 @@
     "upprod": "LAMBDA_FUNCTION_NAME=iPlant PLANT_IMAGE_HOST=$PLANT_IMAGE_HOST_PROD PLANT_IMAGE_PORT=$PLANT_IMAGE_PORT_PROD make uploadlambda",
     "uptest": "LAMBDA_FUNCTION_NAME=iPlantTest PLANT_IMAGE_HOST=$PLANT_IMAGE_HOST_TEST PLANT_IMAGE_PORT=$PLANT_IMAGE_PORT_TEST make uploadlambda"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/guyellis/plant-image-lambda.git"
-  },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/guyellis/plant-image-lambda/issues"
-  },
-  "homepage": "https://github.com/guyellis/plant-image-lambda#readme",
-  "dependencies": {
-    "async": "2.4.0",
-    "aws-sdk": "2.54.0",
-    "gm": "1.23.0"
-  },
-  "devDependencies": {
-    "eslint": "3.19.0",
-    "eslint-config-guyellis": "0.0.6",
-    "mocha": "3.4.1"
-  }
+  "version": "0.0.1"
 }
