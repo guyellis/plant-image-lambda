@@ -23,7 +23,7 @@
   "homepage": "https://github.com/guyellis/plant-image-lambda#readme",
   "dependencies": {
     "async": "2.4.0",
-    "aws-sdk": "2.48.0",
+    "aws-sdk": "2.54.0",
     "gm": "1.23.0"
   },
   "devDependencies": {
