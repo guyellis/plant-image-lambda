@@ -9,9 +9,9 @@ Here is a summary of the data-flow that takes place.
   - An entry is written to the Plaaant database.
   - The image is written to a bucket on Amazon S3
 - The writing of the image to the S3 bucket triggers a call to the `plant-image-lambda` function - [S3 Bucket Trigger](#s3-bucket-trigger)
-- The `plant-image-lambda` function pulls the image and produces up to 5 smaller images from it and writes them to buckets on S3.
-- The `plant-image-lambda` function calls the Plaaant server with details of the new images.
-- The Plaaant server updates the database with the new images available.
+- The `plant-image-lambda` function pulls the image and produces up to 5 smaller images from it and writes them to buckets on S3 - [Image Processing](#image-processing)
+- The `plant-image-lambda` function calls the Plaaant server with details of the new images - [Update Server](#update-server)
+- The Plaaant server updates the database with the new images available - [Server Images Update](#server-images-update)
 
 ## Browser Image Upload
 
@@ -42,4 +42,36 @@ In Amazon's S3 console you will need to setup a trigger for files created in a b
 - **Send to**: This is a dropdown of Amazon services that are able to receive S3 Events.
 - **Lambda**: The name of the Lambda function that should be called with this event. A dropdown of Lambda functions that I've added to my AWS Account.
 
+## Image Processing
 
+The image processing is done by the Lambda Function, this repository.
+
+The [waterfall events in the outer.js](https://github.com/guyellis/plant-image-lambda/blob/8f64b2b14dbe03f72e3fd16f8063af4de575b8e9/src/outer.js#L24-L30) file step through each part of the process:
+
+- extractFromEvent
+  - Gets the data from the infrastructure that spins up the Lambda Function.
+- getImageFromS3
+  - Download the image from S3 into a buffer
+- convertToJpg
+  - If the image is not a jpeg then convert it to a jpeg.
+- fixExif
+  - If the image has been rotated by another editor this will fix the metadata associated with that rotation.
+- getImageSize
+  - Calculates the size of the image
+- innerPipeline
+  - For each target width that's been calculated we:
+  - Create an image with that width and then
+  - upload that image to a bucket on S3
+
+## Update Server
+
+This is the last step in the Lambda function after the images have been written to S3.
+
+- httpPost
+  - Do a PUT to the Plaaant server with the sizes of the images that have been created and saved.
+
+## Server Images Update
+
+As its final step the Lambda function does a PUT to [`api/image-complete`](https://github.com/guyellis/plant/blob/5c404354cc38feb57deb2f21efc54ff5d2ec71df/lib/routes/api-note.js#L253) with details of the images updated.
+
+This simply updates the database with the images and their sizes available for a given note.
