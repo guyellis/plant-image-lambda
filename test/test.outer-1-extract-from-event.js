@@ -1,6 +1,5 @@
 
 
-const assert = require('assert');
 const helper = require('./helper');
 const { extractFromEvent } = require('../src/outer-1-extract-from-event');
 
@@ -16,8 +15,8 @@ describe('extractFromEvent', () => {
     };
 
     extractFromEvent(req, (err, actual) => {
-      assert(!err);
-      assert.deepEqual(actual.data, expected);
+      expect(err).toBeFalsy();
+      expect(actual.data).toEqual(expected);
       done();
     });
   });

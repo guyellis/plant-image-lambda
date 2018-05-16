@@ -1,7 +1,4 @@
 
-
-const assert = require('assert');
-// var helper = require('./helper');
 const imageFromS3 = require('../src/outer-2-get-image-from-s3');
 
 const gm = {
@@ -17,8 +14,8 @@ const req = {
   deps: {
     s3: {
       getObject(obj, cb) {
-        assert.equal(fakeBucket, obj.Bucket);
-        assert.equal(fakeKey, obj.Key);
+        expect(fakeBucket).toBe(obj.Bucket);
+        expect(fakeKey).toBe(obj.Key);
         cb(null, fakeS3Object);
       },
     },
@@ -37,8 +34,8 @@ describe('getImageFromS3', () => {
       key: fakeKey,
     };
     imageFromS3.getImageFromS3(req, (err, actual) => {
-      assert(!err);
-      assert.deepEqual(actual.data, expected);
+      expect(err).toBeFalsy();
+      expect(actual.data).toEqual(expected);
       done();
     });
   });

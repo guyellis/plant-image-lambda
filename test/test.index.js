@@ -1,6 +1,3 @@
-
-
-const assert = require('assert');
 const helper = require('./helper');
 const index = require('../src');
 
@@ -56,7 +53,7 @@ describe('buildFromEvent', () => {
   test('should run end-to-end', (end) => {
     const ctx = {
       done(err) {
-        assert(!err);
+        expect(err).toBeFalsy();
         end();
       },
     };

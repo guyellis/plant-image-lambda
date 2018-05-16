@@ -33,10 +33,11 @@
   "scripts": {
     "build": "make lambda",
     "clean": "make clean",
+    "coverage": "jest --coverage",
     "lint": "eslint --ext .js . --max-warnings 0",
-    "test": "mocha",
+    "test": "jest",
     "upprod": "LAMBDA_FUNCTION_NAME=iPlant PLANT_IMAGE_HOST=$PLANT_IMAGE_HOST_PROD PLANT_IMAGE_PORT=$PLANT_IMAGE_PORT_PROD make uploadlambda",
     "uptest": "LAMBDA_FUNCTION_NAME=iPlantTest PLANT_IMAGE_HOST=$PLANT_IMAGE_HOST_TEST PLANT_IMAGE_PORT=$PLANT_IMAGE_PORT_TEST make uploadlambda"
   },
-  "version": "1.0.0"
+  "version": "2.0.0"
 }
