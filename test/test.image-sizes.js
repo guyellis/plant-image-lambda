@@ -12,7 +12,7 @@ function getExpected(sizes) {
 }
 
 describe('image', () => {
-  it('should calculdate the cut image sizes', () => {
+  test('should calculate the cut image sizes', () => {
     let actual = image.calcSizes(300);
     let expected = getExpected([100, 300]);
     assert.deepEqual(actual, expected);

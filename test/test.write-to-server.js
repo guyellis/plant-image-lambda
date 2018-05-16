@@ -4,7 +4,7 @@
 // var image = require('../src/image-sizes');
 
 describe('write-to-server', () => {
-  it('should POST to the server', () => {
+  test('should POST to the server', () => {
 
   });
 });

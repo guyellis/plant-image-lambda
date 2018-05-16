@@ -26,7 +26,7 @@ const req = {
 };
 
 describe('getImageFromS3', () => {
-  it('should get a fake image', (done) => {
+  test('should get a fake image', (done) => {
     const expected = {
       bucketName: fakeBucket,
       key: fakeKey,

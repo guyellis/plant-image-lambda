@@ -4,28 +4,26 @@ const assert = require('assert');
 const helper = require('./helper');
 const index = require('../src');
 
-function GM() {
-  const _this = this;
-  return () => _this;
+class GM {
+  antialias() { return this; }
+
+  autoOrient() { return this; }
+
+  density() { return this; }
+
+  resize() { return this; }
+
+  // eslint-disable-next-line class-methods-use-this
+  toBuffer(type, cb) {
+    cb(null, 'Fake Buffer');
+  }
+
+  size(cb) {
+    cb.call(this, null, { width: 3000, height: 2000 });
+  }
 }
 
-GM.prototype.antialias = () => this;
-
-GM.prototype.autoOrient = () => this;
-
-GM.prototype.density = () => this;
-
-GM.prototype.resize = () => this;
-
-GM.prototype.toBuffer = (type, cb) => {
-  cb(null, 'Fake Buffer');
-};
-
-GM.prototype.size = (cb) => {
-  cb.call(this, null, { width: 3000, height: 2000 });
-};
-
-const gm = new GM();
+const gm = () => new GM();
 
 const s3 = {
   getObject(obj, cb) {
@@ -55,7 +53,7 @@ const deps = {
 };
 
 describe('buildFromEvent', () => {
-  it('should run end-to-end', (end) => {
+  test('should run end-to-end', (end) => {
     const ctx = {
       done(err) {
         assert(!err);

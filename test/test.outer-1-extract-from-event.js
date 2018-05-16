@@ -5,7 +5,7 @@ const helper = require('./helper');
 const { extractFromEvent } = require('../src/outer-1-extract-from-event');
 
 describe('extractFromEvent', () => {
-  it('should build an object', (done) => {
+  test('should build an object', (done) => {
     const req = { event: helper.fakeEvent };
     const expected = {
       bucketName: 'example.com',
