@@ -4,8 +4,8 @@
 // #2
 // data has: bucketName, key, fileName, imageType
 function getImageFromS3(req, cb) {
-  const data = req.data;
-  const s3 = req.deps.s3;
+  const { data } = req;
+  const { s3 } = req.deps;
   console.time('getImageFromS3');
   console.log('getImageFromS3');
   // Download the image from S3 into a buffer.

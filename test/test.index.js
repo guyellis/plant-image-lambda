@@ -9,27 +9,19 @@ function GM() {
   return () => _this;
 }
 
-GM.prototype.antialias = () => {
-  return this;
-};
+GM.prototype.antialias = () => this;
 
-GM.prototype.autoOrient = () => {
-  return this;
-};
+GM.prototype.autoOrient = () => this;
 
-GM.prototype.density = () => {
-  return this;
-};
+GM.prototype.density = () => this;
 
-GM.prototype.resize = () => {
-  return this;
-};
+GM.prototype.resize = () => this;
 
-GM.prototype.toBuffer = function (type, cb) {
+GM.prototype.toBuffer = (type, cb) => {
   cb(null, 'Fake Buffer');
 };
 
-GM.prototype.size = function (cb) {
+GM.prototype.size = (cb) => {
   cb.call(this, null, { width: 3000, height: 2000 });
 };
 

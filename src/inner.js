@@ -20,10 +20,11 @@ const bucket = 'i.plaaant.com';
 //       name
 //     index
 function processImage(req, next) {
+  // eslint-disable-next-line no-plusplus
   console.log(`i-${++req.step} processImage:`, req);
-  const gm = req.deps.gm;
+  const { gm } = req.deps;
   const response = req.input.buffer;
-  const item = req.item;
+  const { item } = req;
   const targetSize = item.size;
   console.time('processImage');
   const size = req.input.imageSize;
@@ -37,7 +38,7 @@ function processImage(req, next) {
   const scalingFactor = targetSize.width / size.width;
   console.log('scalingFactor:', scalingFactor);
   const height = scalingFactor * size.height;
-  gm(response).resize(targetSize.width, height)
+  return gm(response).resize(targetSize.width, height)
     .toBuffer('JPG', (err2, buffer) => {
       req.buffer = buffer;
       console.timeEnd('processImage');
@@ -61,9 +62,10 @@ function processImage(req, next) {
 //     index
 //   buffer
 function uploadImage(req, next) {
+  // eslint-disable-next-line no-plusplus
   console.log(`i-${++req.step} uploadImage:`, req);
   console.time('uploadImage');
-  const s3 = req.deps.s3;
+  const { s3 } = req.deps;
   const outKey = `${req.input.outKeyRoot + req.item.size.name}/${req.input.fileName}`;
   console.log(`upload to path: ${outKey}`);
   s3.putObject({
@@ -79,7 +81,7 @@ function uploadImage(req, next) {
 
 function pipeline(req, cb) {
   Object.freeze(req.data);
-  const sizes = req.data.sizes;
+  const { sizes } = req.data;
   async.eachOfSeries(sizes, (size, index, callback) => {
     const innerReq = {
       item: {

@@ -9,6 +9,7 @@ function handlerDeps(deps, event, ctx) {
   }));
 
   if (!deps) {
+    /* eslint-disable global-require */
     const AWS = require('aws-sdk');
     const s3 = new AWS.S3();
     const gm = require('gm').subClass({
@@ -16,6 +17,8 @@ function handlerDeps(deps, event, ctx) {
     });
     const https = require('https');
     const http = require('http');
+    /* eslint-enable global-require */
+    // eslint-disable-next-line no-param-reassign
     deps = {
       s3, gm, https, http,
     };

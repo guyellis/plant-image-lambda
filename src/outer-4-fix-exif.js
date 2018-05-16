@@ -13,8 +13,8 @@
 //   s3Object
 //   buffer
 function fixExif(req, next) {
-  const gm = req.deps.gm;
-  const data = req.data;
+  const { gm } = req.deps;
+  const { data } = req;
   console.log('o4 fixExif');
   gm(data.buffer)
     .autoOrient()

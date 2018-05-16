@@ -4,7 +4,7 @@ const path = require('path');
 
 // #1
 function extractFromEvent(req, cb) {
-  const event = req.event;
+  const { event } = req;
   // Object key may have spaces or unicode non-ASCII characters.
   const key = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
   // Infer the image type.

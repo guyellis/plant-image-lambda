@@ -9,8 +9,8 @@
 function convertToJpg(req, next) {
   // convert eps images to png
   console.time('convertToJpg');
-  const data = req.data;
-  const gm = req.deps.gm;
+  const { data } = req;
+  const { gm } = req.deps;
   const response = data.s3Object;
   console.log(`Reponse content type: ${response.ContentType}`);
   console.log('Conversion');

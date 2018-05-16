@@ -10,8 +10,8 @@ const imageSizes = require('./image-sizes');
 //   s3Object
 //   buffer
 function getImageSize(req, next) {
-  const gm = req.deps.gm;
-  const data = req.data;
+  const { gm } = req.deps;
+  const { data } = req;
   console.log('o5 getImageSize');
   gm(data.buffer).size((err, size) => {
     console.log('o5 got size:', size);

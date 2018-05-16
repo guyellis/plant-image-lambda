@@ -9,7 +9,7 @@
          "eventVersion":"2.0",
          "eventSource":"aws:s3",
          "awsRegion":"us-east-1",
-         "eventTime":The time, in ISO-8601 format, for example, 1970-01-01T00:00:00.000Z, 
+         "eventTime":The time, in ISO-8601 format, for example, 1970-01-01T00:00:00.000Z,
                      when S3 finished processing the request,
          "eventName":"event-type",
          "userIdentity":{
