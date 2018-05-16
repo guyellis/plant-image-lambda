@@ -17,6 +17,7 @@ module.exports = {
     "jest/no-identical-title": [2],
     "jest/prefer-to-have-length": [2],
     "jest/valid-expect": [2],
+    "no-console": [0], // TODO: Replace console.log with logging module
     "no-underscore-dangle": 0,
     "security/detect-object-injection": [0]
   }

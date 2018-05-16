@@ -1,4 +1,3 @@
-'use strict';
 
 const env = require('./env.json');
 
@@ -45,3 +44,4 @@ function httpPost(req, cb) {
 module.exports = {
   httpPost,
 };
+

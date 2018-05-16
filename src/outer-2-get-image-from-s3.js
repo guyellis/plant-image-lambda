@@ -1,4 +1,5 @@
-'use strict';
+// TODO: Replace console with logging
+/* eslint-disable no-console */
 
 // #2
 // data has: bucketName, key, fileName, imageType
@@ -38,3 +39,5 @@ The s3Object returned by s3.getObject will look something like this:
      originalname: 'zzzzzzzzzzzzzz.jpg' },
   Body: <Buffer
 */
+
+/* eslint-enable no-console */

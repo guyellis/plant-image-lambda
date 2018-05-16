@@ -1,4 +1,4 @@
-'use strict';
+
 
 /**
  * Calculate the sizes to be used for resizing the image based on the current size

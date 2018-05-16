@@ -1,4 +1,3 @@
-'use strict';
 
 const imageSizes = require('./image-sizes');
 

@@ -1,4 +1,4 @@
-'use strict';
+
 
 const path = require('path');
 
@@ -58,3 +58,4 @@ function extractFromEvent(req, cb) {
 module.exports = {
   extractFromEvent,
 };
+

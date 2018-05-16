@@ -1,4 +1,3 @@
-'use strict';
 
 // #3
 // data:
@@ -32,3 +31,4 @@ function convertToJpg(req, next) {
 module.exports = {
   convertToJpg,
 };
+

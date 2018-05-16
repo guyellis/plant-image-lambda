@@ -1,10 +1,10 @@
-'use strict';
+
 
 const assert = require('assert');
 // var helper = require('./helper');
 const imageFromS3 = require('../src/outer-2-get-image-from-s3');
 
-var gm = {
+const gm = {
   antialias() { return gm; },
   density() { return gm; },
 };

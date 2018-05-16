@@ -1,4 +1,4 @@
-'use strict';
+
 
 // var assert = require('assert');
 // var image = require('../src/image-sizes');

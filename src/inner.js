@@ -1,4 +1,4 @@
-'use strict';
+
 
 const async = require('async');
 const util = require('util');

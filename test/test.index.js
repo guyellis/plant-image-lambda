@@ -1,4 +1,4 @@
-'use strict';
+
 
 const assert = require('assert');
 const helper = require('./helper');
@@ -6,24 +6,22 @@ const index = require('../src');
 
 function GM() {
   const _this = this;
-  return function () {
-    return _this;
-  };
+  return () => _this;
 }
 
-GM.prototype.antialias = function () {
+GM.prototype.antialias = () => {
   return this;
 };
 
-GM.prototype.autoOrient = function () {
+GM.prototype.autoOrient = () => {
   return this;
 };
 
-GM.prototype.density = function () {
+GM.prototype.density = () => {
   return this;
 };
 
-GM.prototype.resize = function () {
+GM.prototype.resize = () => {
   return this;
 };
 
