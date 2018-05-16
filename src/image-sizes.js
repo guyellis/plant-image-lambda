@@ -6,24 +6,24 @@
  * @return {array} - an array of 4 elements representing the size in each group
  */
 function calcSizes(width) {
-  if(width < 1) {
+  if (width < 1) {
     throw new Error('Unexpected width less than 1:', width);
   }
 
-  var names = ['thumb', 'sm', 'md', 'lg', 'xl'];
-  var brackets = [100, 500, 1000, 1500, 2000];
+  const names = ['thumb', 'sm', 'md', 'lg', 'xl'];
+  const brackets = [100, 500, 1000, 1500, 2000];
 
-  return brackets.reduce(function(acc, bracket, index) {
-    var w;
-    if(width > bracket) {
+  return brackets.reduce((acc, bracket, index) => {
+    let w;
+    if (width > bracket) {
       w = bracket;
-    } else if(index > 0 && width > brackets[index - 1] && width <= bracket) {
+    } else if (index > 0 && width > brackets[index - 1] && width <= bracket) {
       w = width;
-    } else if(index === 0 && width <= bracket) {
+    } else if (index === 0 && width <= bracket) {
       w = width;
     }
-    if(w) {
-      acc.push({width: w, name: names[index]});
+    if (w) {
+      acc.push({ width: w, name: names[index] });
     }
     return acc;
   }, []);
@@ -38,5 +38,5 @@ function calcSizes(width) {
 }
 
 module.exports = {
-  calcSizes: calcSizes
+  calcSizes,
 };

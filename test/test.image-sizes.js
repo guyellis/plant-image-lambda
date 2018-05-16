@@ -1,23 +1,20 @@
 'use strict';
 
-var assert = require('assert');
-var image = require('../src/image-sizes');
+const assert = require('assert');
+const image = require('../src/image-sizes');
 
 function getExpected(sizes) {
-  var names = ['thumb', 'sm', 'md', 'lg', 'xl'];
-  return sizes.map(function(size, index) {
-    return {
-      width: size,
-      name: names[index]
-    };
-  });
+  const names = ['thumb', 'sm', 'md', 'lg', 'xl'];
+  return sizes.map((size, index) => ({
+    width: size,
+    name: names[index],
+  }));
 }
 
-describe('image', function() {
-
-  it('should calculdate the cut image sizes', function() {
-    var actual = image.calcSizes(300);
-    var expected = getExpected([100, 300]);
+describe('image', () => {
+  it('should calculdate the cut image sizes', () => {
+    let actual = image.calcSizes(300);
+    let expected = getExpected([100, 300]);
     assert.deepEqual(actual, expected);
 
     actual = image.calcSizes(50);
@@ -80,5 +77,4 @@ describe('image', function() {
     expected = getExpected([100, 500, 1000, 1500, 2000]);
     assert.deepEqual(actual, expected);
   });
-
 });

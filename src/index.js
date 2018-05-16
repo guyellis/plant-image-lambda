@@ -1,30 +1,32 @@
 'use strict';
 
-var util = require('util');
-var outer = require('./outer');
+const util = require('util');
+const outer = require('./outer');
 
 function handlerDeps(deps, event, ctx) {
   console.log('Reading options from event:', util.inspect(event, {
-    depth: 5
+    depth: 5,
   }));
 
-  if(!deps) {
-    var AWS = require('aws-sdk');
-    var s3 = new AWS.S3();
-    var gm = require('gm').subClass({
-      imageMagick: true
+  if (!deps) {
+    const AWS = require('aws-sdk');
+    const s3 = new AWS.S3();
+    const gm = require('gm').subClass({
+      imageMagick: true,
     });
-    var https = require('https');
-    var http = require('http');
-    deps = {s3: s3, gm: gm, https: https, http: http};
+    const https = require('https');
+    const http = require('http');
+    deps = {
+      s3, gm, https, http,
+    };
   }
 
-  var req = {
-    event: event,
-    deps: deps
+  const req = {
+    event,
+    deps,
   };
 
-  outer.pipeline(req, function(pipelineError) {
+  outer.pipeline(req, (pipelineError) => {
     ctx.done(pipelineError);
   });
 }
@@ -34,6 +36,6 @@ function handler(event, ctx) {
 }
 
 module.exports = {
-  handler: handler,
-  handlerDeps: handlerDeps
+  handler,
+  handlerDeps,
 };

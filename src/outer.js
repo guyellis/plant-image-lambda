@@ -1,14 +1,14 @@
 'use strict';
 
-var async = require('async');
+const async = require('async');
 
-var convertToJpg = require('./outer-3-convert-to-jpg').convertToJpg;
-var fixExif = require('./outer-4-fix-exif').fixExif;
-var getImageFromS3 = require('./outer-2-get-image-from-s3').getImageFromS3;
-var getImageSize = require('./outer-5-image-size').getImageSize;
-var extractFromEvent = require('./outer-1-extract-from-event').extractFromEvent;
-var innerPipeline = require('./inner').pipeline;
-var httpPost = require('./write-to-server').httpPost;
+const convertToJpg = require('./outer-3-convert-to-jpg').convertToJpg;
+const fixExif = require('./outer-4-fix-exif').fixExif;
+const getImageFromS3 = require('./outer-2-get-image-from-s3').getImageFromS3;
+const getImageSize = require('./outer-5-image-size').getImageSize;
+const extractFromEvent = require('./outer-1-extract-from-event').extractFromEvent;
+const innerPipeline = require('./inner').pipeline;
+const httpPost = require('./write-to-server').httpPost;
 
 /**
  * pipeline does image pre-processing before we start resizing etc.
@@ -19,7 +19,6 @@ var httpPost = require('./write-to-server').httpPost;
  * @returns {undefined}
  */
 function pipeline(req, cb) {
-
   async.waterfall([
     extractFromEvent.bind(null, req),
     getImageFromS3,
@@ -27,11 +26,10 @@ function pipeline(req, cb) {
     fixExif,
     getImageSize,
     innerPipeline,
-    httpPost
+    httpPost,
   ], cb);
-
 }
 
 module.exports = {
-  pipeline: pipeline
+  pipeline,
 };

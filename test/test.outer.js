@@ -1,17 +1,16 @@
 'use strict';
 
-var assert = require('assert');
-var helper = require('./helper');
-var index = require('../src/outer');
+const assert = require('assert');
+const helper = require('./helper');
+const index = require('../src/outer');
 
-describe('buildFromEvent', function() {
-
-  it.skip('should run outer end-to-end', function(end) {
-    var ctx = {
-      done: function(err) {
+describe('buildFromEvent', () => {
+  it.skip('should run outer end-to-end', (end) => {
+    const ctx = {
+      done(err) {
         assert(!err);
         end();
-      }
+      },
     };
 
     index.handler(helper.fakeEvent, ctx);

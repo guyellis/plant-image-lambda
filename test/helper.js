@@ -48,7 +48,7 @@
 }
 */
 
-var fakeEvent = {
+const fakeEvent = {
   Records: [{
     eventVersion: '2.0',
     eventSource: 'aws:s3',
@@ -56,14 +56,14 @@ var fakeEvent = {
     eventTime: '2016-09-10T00:28:36.547Z',
     eventName: 'ObjectCreated:Put',
     userIdentity: {
-      principalId: 'AAAAAAAAAAAAA'
+      principalId: 'AAAAAAAAAAAAA',
     },
     requestParameters: {
-      sourceIPAddress: '1.2.3.4'
+      sourceIPAddress: '1.2.3.4',
     },
     responseElements: {
       'x-amz-request-id': 'AAAAAAAAAAAAAAAA',
-      'x-amz-id-2': 'oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo'
+      'x-amz-id-2': 'oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo',
     },
     s3: {
       s3SchemaVersion: '1.0',
@@ -71,21 +71,21 @@ var fakeEvent = {
       bucket: {
         name: 'example.com',
         ownerIdentity: {
-          principalId: 'AAAAAAAAAAAAA'
+          principalId: 'AAAAAAAAAAAAA',
         },
-        arn: 'arn:aws:s3:::example.com'
+        arn: 'arn:aws:s3:::example.com',
       },
       object: {
         key: 'test/orig/2016-08-27+10.20.04.jpg',
         size: 4777321,
         eTag: '11111111111111111111111111111111',
-        sequencer: 'AAAAAAAAAAAAAAAAAA'
-      }
-    }
-  }]
+        sequencer: 'AAAAAAAAAAAAAAAAAA',
+      },
+    },
+  }],
 };
 
-var fakeS3Object = {
+const fakeS3Object = {
   AcceptRanges: 'bytes',
   LastModified: 'Tue, 06 Sep 2016 22:45:04 GMT',
   ContentLength: '2718943',
@@ -93,12 +93,12 @@ var fakeS3Object = {
   ContentType: 'image/jpeg',
   Metadata: {
     userid: '12345',
-    originalname: '987.jpg'
+    originalname: '987.jpg',
   },
-  Body: '<Buffer>'
+  Body: '<Buffer>',
 };
 
 module.exports = {
-  fakeEvent: fakeEvent,
-  fakeS3Object: fakeS3Object
+  fakeEvent,
+  fakeS3Object,
 };

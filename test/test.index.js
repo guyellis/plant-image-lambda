@@ -1,77 +1,76 @@
 'use strict';
 
-var assert = require('assert');
-var helper = require('./helper');
-var index = require('../src');
+const assert = require('assert');
+const helper = require('./helper');
+const index = require('../src');
 
 function GM() {
-  var _this = this;
-  return function() {
+  const _this = this;
+  return function () {
     return _this;
   };
 }
 
-GM.prototype.antialias = function() {
+GM.prototype.antialias = function () {
   return this;
 };
 
-GM.prototype.autoOrient = function() {
+GM.prototype.autoOrient = function () {
   return this;
 };
 
-GM.prototype.density = function() {
+GM.prototype.density = function () {
   return this;
 };
 
-GM.prototype.resize = function() {
+GM.prototype.resize = function () {
   return this;
 };
 
-GM.prototype.toBuffer = function(type, cb) {
+GM.prototype.toBuffer = function (type, cb) {
   cb(null, 'Fake Buffer');
 };
 
-GM.prototype.size = function(cb) {
-  cb.call(this, null, {width: 3000, height: 2000});
+GM.prototype.size = function (cb) {
+  cb.call(this, null, { width: 3000, height: 2000 });
 };
 
-var gm = new GM();
+const gm = new GM();
 
-var s3 = {
-  getObject: function(obj, cb) {
+const s3 = {
+  getObject(obj, cb) {
     cb(null, helper.fakeS3Object);
   },
-  putObject: function(obj, cb) {
+  putObject(obj, cb) {
     cb();
-  }
+  },
 };
 
-var https = {
-  request: function(options, cb) {
+const https = {
+  request(options, cb) {
     cb();
     return {
-      end: function() {},
-      on: function() {},
-      write: function() {}
+      end() {},
+      on() {},
+      write() {},
     };
-  }
+  },
 };
 
-var deps = {
-  s3: s3,
-  gm: gm,
-  https: https,
-  http: https
+const deps = {
+  s3,
+  gm,
+  https,
+  http: https,
 };
 
-describe('buildFromEvent', function() {
-
-  it('should run end-to-end', function(end) {
-    var ctx = {
-      done: function(err) {
+describe('buildFromEvent', () => {
+  it('should run end-to-end', (end) => {
+    const ctx = {
+      done(err) {
         assert(!err);
         end();
-      }
+      },
     };
 
     index.handlerDeps(deps, helper.fakeEvent, ctx);

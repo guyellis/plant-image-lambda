@@ -1,6 +1,6 @@
 'use strict';
 
-var imageSizes = require('./image-sizes');
+const imageSizes = require('./image-sizes');
 
 // #5
 // data:
@@ -11,10 +11,10 @@ var imageSizes = require('./image-sizes');
 //   s3Object
 //   buffer
 function getImageSize(req, next) {
-  var gm = req.deps.gm;
-  var data = req.data;
+  const gm = req.deps.gm;
+  const data = req.data;
   console.log('o5 getImageSize');
-  gm(data.buffer).size(function(err, size) {
+  gm(data.buffer).size((err, size) => {
     console.log('o5 got size:', size);
     data.imageSize = size;
     data.sizes = imageSizes.calcSizes(size.width);
@@ -24,5 +24,5 @@ function getImageSize(req, next) {
 }
 
 module.exports = {
-  getImageSize: getImageSize
+  getImageSize,
 };

@@ -10,16 +10,16 @@
 function convertToJpg(req, next) {
   // convert eps images to png
   console.time('convertToJpg');
-  var data = req.data;
-  var gm = req.deps.gm;
-  var response = data.s3Object;
-  console.log('Reponse content type: ' + response.ContentType);
+  const data = req.data;
+  const gm = req.deps.gm;
+  const response = data.s3Object;
+  console.log(`Reponse content type: ${response.ContentType}`);
   console.log('Conversion');
   gm(response.Body)
     .antialias(true)
     .density(300)
-    .toBuffer('JPG', function(err, buffer) {
-      if(err) {
+    .toBuffer('JPG', (err, buffer) => {
+      if (err) {
         console.error('convertToJpg error in toBuffer:', err);
       }
       data.buffer = buffer;
@@ -30,5 +30,5 @@ function convertToJpg(req, next) {
 
 
 module.exports = {
-  convertToJpg: convertToJpg,
+  convertToJpg,
 };
