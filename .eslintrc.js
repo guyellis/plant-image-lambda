@@ -1,4 +1,4 @@
-{
+module.exports = {
   "env": {
     "mocha": true,
     "node": true
@@ -20,4 +20,4 @@
     "no-underscore-dangle": 0,
     "security/detect-object-injection": [0]
   }
-}
+};
