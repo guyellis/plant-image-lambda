@@ -1,5 +1,5 @@
 {
-  "author": "",
+  "author": "Guy Ellis <wildfiction@gmail.com>",
   "bugs": {
     "url": "https://github.com/guyellis/plant-image-lambda/issues"
   },
@@ -16,7 +16,8 @@
     "eslint-plugin-jest": "21.15.1",
     "eslint-plugin-security": "1.4.0",
     "jest": "22.4.3",
-    "mocha": "5.1.1"
+    "mocha": "5.1.1",
+    "pre-commit": "1.2.2"
   },
   "engines": {
     "node": "8.11.2",
@@ -26,6 +27,14 @@
   "license": "MIT",
   "main": "index.js",
   "name": "plant-image-lambda",
+  "pre-commit": {
+    "colors": true,
+    "run": [
+      "lint",
+      "coverage"
+    ],
+    "silent": false
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/guyellis/plant-image-lambda.git"
@@ -35,6 +44,7 @@
     "clean": "make clean",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .js . --max-warnings 0",
+    "lintfix": "eslint --ext .js . --fix",
     "test": "jest",
     "upprod": "LAMBDA_FUNCTION_NAME=iPlant PLANT_IMAGE_HOST=$PLANT_IMAGE_HOST_PROD PLANT_IMAGE_PORT=$PLANT_IMAGE_PORT_PROD make uploadlambda",
     "uptest": "LAMBDA_FUNCTION_NAME=iPlantTest PLANT_IMAGE_HOST=$PLANT_IMAGE_HOST_TEST PLANT_IMAGE_PORT=$PLANT_IMAGE_PORT_TEST make uploadlambda"
