@@ -5,14 +5,14 @@
   },
   "dependencies": {
     "async": "2.6.0",
-    "aws-sdk": "2.240.1",
+    "aws-sdk": "2.242.1",
     "gm": "1.23.1"
   },
   "description": "Image Lambda for Plant Project",
   "devDependencies": {
     "eslint": "4.19.1",
     "eslint-config-airbnb-base": "12.1.0",
-    "eslint-plugin-import": "2.11.0",
+    "eslint-plugin-import": "2.12.0",
     "eslint-plugin-jest": "21.15.1",
     "eslint-plugin-security": "1.4.0",
     "jest": "22.4.3",
