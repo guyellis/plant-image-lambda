@@ -2,6 +2,8 @@
 
 const util = require('util');
 const outer = require('./outer');
+const Logger = require('lalog');
+const uuid = require('uuid');
 
 function handlerDeps(deps, event, ctx) {
   console.log('Reading options from event:', util.inspect(event, {
@@ -23,6 +25,15 @@ function handlerDeps(deps, event, ctx) {
       s3, gm, https, http,
     };
   }
+
+  // eslint-disable-next-line no-param-reassign
+  deps.logger = Logger.create({
+    serviceName: 'plant-image-lambda',
+    moduleName: 'n/a',
+    presets: {
+      trackId: uuid.v4(),
+    },
+  });
 
   const req = {
     event,

@@ -5,7 +5,14 @@ const { extractFromEvent } = require('../src/outer-1-extract-from-event');
 
 describe('extractFromEvent', () => {
   test('should build an object', (done) => {
-    const req = { event: helper.fakeEvent };
+    const req = {
+      event: helper.fakeEvent,
+      deps: {
+        logger: {
+          error: jest.fn(),
+        },
+      },
+    };
     const expected = {
       bucketName: 'example.com',
       fileName: '2016-08-27 10.20.04.jpg',

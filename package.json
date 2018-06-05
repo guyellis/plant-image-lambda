@@ -6,7 +6,9 @@
   "dependencies": {
     "async": "2.6.1",
     "aws-sdk": "2.251.1",
-    "gm": "1.23.1"
+    "gm": "1.23.1",
+    "lalog": "0.2.0",
+    "uuid": "3.2.1"
   },
   "description": "Image Lambda for Plant Project",
   "devDependencies": {
