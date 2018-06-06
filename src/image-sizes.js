@@ -5,23 +5,37 @@
  */
 function calcSizes(width) {
   if (width < 1) {
-    throw new Error('Unexpected width less than 1:', width);
+    throw new Error(`Unexpected width less than 1: ${width}`);
   }
 
-  const names = ['thumb', 'sm', 'md', 'lg', 'xl'];
-  const brackets = [100, 500, 1000, 1500, 2000];
+  const brackets = [{
+    bracket: 100,
+    name: 'thumb',
+  }, {
+    bracket: 500,
+    name: 'sm',
+  }, {
+    bracket: 1000,
+    name: 'md',
+  }, {
+    bracket: 1500,
+    name: 'lg',
+  }, {
+    bracket: 2000,
+    name: 'xl',
+  }];
 
-  return brackets.reduce((acc, bracket, index) => {
+  return brackets.reduce((acc, { bracket, name }, index) => {
     let w;
     if (width > bracket) {
       w = bracket;
-    } else if (index > 0 && width > brackets[index - 1] && width <= bracket) {
+    } else if (index > 0 && width > brackets[index - 1].bracket && width <= bracket) {
       w = width;
     } else if (index === 0 && width <= bracket) {
       w = width;
     }
     if (w) {
-      acc.push({ width: w, name: names[index] });
+      acc.push({ width: w, name });
     }
     return acc;
   }, []);

@@ -1,11 +1,10 @@
-
-
 const calcSizes = require('../src/image-sizes');
 
 function getExpected(sizes) {
   const names = ['thumb', 'sm', 'md', 'lg', 'xl'];
-  return sizes.map((size, index) => ({
-    width: size,
+  return sizes.map((width, index) => ({
+    width,
+    // eslint-disable-next-line security/detect-object-injection
     name: names[index],
   }));
 }
