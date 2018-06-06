@@ -16,7 +16,7 @@ function getImageFromS3(req) {
       Key: data.key,
     }, (err, s3Object) => {
       if (err) {
-        logger.error({
+        logger.timeEnd.error('getImageFromS3', {
           msg: 'Error in s3.getObject()',
           err,
         });

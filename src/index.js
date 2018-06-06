@@ -3,15 +3,12 @@
 const util = require('util');
 const pipeline = require('./outer');
 const Logger = require('lalog');
-const uuid = require('uuid');
 
 async function handlerDeps(deps, event, ctx) {
   const logger = Logger.create({
     serviceName: 'plant-image-lambda',
     moduleName: 'n/a',
-    presets: {
-      trackId: uuid.v4(),
-    },
+    addTrackId: true,
   });
 
   logger.trace({

@@ -28,7 +28,11 @@ function processImage(req) {
   if (size.width === targetSize.width) {
     req.buffer = response;
     logger.timeEnd('processImage', {
-      step, item, size, targetSize,
+      msg: 'width in size and targetSize already matched',
+      step,
+      item,
+      size,
+      targetSize,
     });
     return Promise.resolve(req);
   }
@@ -39,7 +43,7 @@ function processImage(req) {
     gm(response).resize(targetSize.width, height)
       .toBuffer('JPG', (err, buffer) => {
         if (err) {
-          logger.error({
+          logger.timeEnd.error('processImage', {
             msg: 'Error in gm(response).resize()',
             err,
             step,
@@ -92,10 +96,9 @@ function uploadImage(req) {
       ContentType: 'JPG',
     }, (err, result) => {
       if (err) {
-        logger.error({
+        logger.timeEnd.error('uploadImage', {
           msg: 'Error in s3.putObject()', err, bucket, outKey, step,
         });
-        logger.timeEnd('uploadImage');
         return reject(err);
       }
       logger.timeEnd('uploadImage', {

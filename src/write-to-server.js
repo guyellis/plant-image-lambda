@@ -10,10 +10,12 @@ const {
 
 async function httpPost(req) {
   const { deps: { logger } } = req;
+  const { presets: { trackId } } = logger;
 
   const putData = JSON.stringify({
     metadata: req.data.s3Object.Metadata,
     sizes: req.data.sizes,
+    trackId, // Allows receiver to use same trackId for logging
   });
 
   const port = parseInt(PLANT_IMAGE_PORT, 10);
