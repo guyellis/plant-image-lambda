@@ -1,5 +1,5 @@
 
-const imageFromS3 = require('../src/outer-2-get-image-from-s3');
+const getImageFromS3 = require('../src/outer-2-get-image-from-s3');
 
 const gm = {
   antialias() { return gm; },
@@ -19,11 +19,17 @@ const req = {
         cb(null, fakeS3Object);
       },
     },
+    logger: {
+      error: jest.fn(),
+      trace: jest.fn(),
+      time: jest.fn(),
+      timeEnd: jest.fn(),
+    },
   },
 };
 
 describe('getImageFromS3', () => {
-  test('should get a fake image', (done) => {
+  test('should get a fake image', async () => {
     const expected = {
       bucketName: fakeBucket,
       key: fakeKey,
@@ -33,10 +39,7 @@ describe('getImageFromS3', () => {
       bucketName: fakeBucket,
       key: fakeKey,
     };
-    imageFromS3.getImageFromS3(req, (err, actual) => {
-      expect(err).toBeFalsy();
-      expect(actual.data).toEqual(expected);
-      done();
-    });
+    const actual = await getImageFromS3(req);
+    expect(actual.data).toEqual(expected);
   });
 });

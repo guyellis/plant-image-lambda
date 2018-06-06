@@ -12,18 +12,29 @@
 //   imageType
 //   s3Object
 //   buffer
-function fixExif(req, next) {
-  const { gm } = req.deps;
-  const { data } = req;
-  console.log('o4 fixExif');
-  gm(data.buffer)
-    .autoOrient()
-    .toBuffer('JPG', (toBufferError, buffer) => {
-      data.buffer = buffer;
-      next(toBufferError, req);
-    });
+function fixExif(req) {
+  const { data, deps: { gm, logger } } = req;
+  const method = '4. fixExif()';
+
+  logger.trace({
+    method,
+  });
+
+  return new Promise((resolve, reject) => {
+    gm(data.buffer)
+      .autoOrient()
+      .toBuffer('JPG', (err, buffer) => {
+        if (err) {
+          logger.error({
+            method,
+            err,
+          });
+          return reject(err);
+        }
+        data.buffer = buffer;
+        return resolve(req);
+      });
+  });
 }
 
-module.exports = {
-  fixExif,
-};
+module.exports = fixExif;

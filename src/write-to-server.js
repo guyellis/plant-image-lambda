@@ -1,20 +1,26 @@
 
 const env = require('./env.json');
+const fetch = require('node-fetch');
 
-function httpPost(req, cb) {
-  console.log('env:', env);
+const {
+  PLANT_IMAGE_HOST,
+  PLANT_IMAGE_PORT,
+  PLANT_IMAGE_COMPLETE,
+} = env;
+
+async function httpPost(req) {
+  const { deps: { logger } } = req;
 
   const putData = JSON.stringify({
     metadata: req.data.s3Object.Metadata,
     sizes: req.data.sizes,
   });
 
-  console.log('PUT data:', putData);
+  const port = parseInt(PLANT_IMAGE_PORT, 10);
+  const protocol = port === 443 ? 'https' : 'http';
 
+  const url = `${protocol}://${PLANT_IMAGE_HOST}/api/image-complete?token=${PLANT_IMAGE_COMPLETE}`;
   const options = {
-    hostname: env.PLANT_IMAGE_HOST,
-    port: parseInt(env.PLANT_IMAGE_PORT, 10),
-    path: `/api/image-complete?token=${env.PLANT_IMAGE_COMPLETE}`,
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -22,26 +28,27 @@ function httpPost(req, cb) {
     },
   };
 
-  const https = options.port === 443 ? req.deps.https : req.deps.http;
+  try {
+    const response = await fetch(url, options);
+    logger.trace({
+      msg: 'Image sizing metadata update sent',
+      url,
+      options,
+      env,
+      putData,
+      status: response.status,
+    });
+  } catch (err) {
+    logger.error({
+      msg: 'Error sending image sizing metadata',
+      url,
+      options,
+      env,
+      putData,
+    });
+  }
 
-  console.log('PUT options:', options);
-
-  console.log('About to PUT to server...');
-  const request = https.request(options, (res) => {
-    console.log('response from https.request:', res);
-    cb(null, req);
-  });
-  request.write(putData);
-  request.end();
-
-  request.on('error', (e) => {
-    console.error('Error in http[s].request:', e);
-  });
-
-  console.log('Completed PUT to server...');
+  return req;
 }
 
-module.exports = {
-  httpPost,
-};
-
+module.exports = httpPost;

@@ -1,14 +1,23 @@
 
 
 const util = require('util');
-const outer = require('./outer');
+const pipeline = require('./outer');
 const Logger = require('lalog');
 const uuid = require('uuid');
 
-function handlerDeps(deps, event, ctx) {
-  console.log('Reading options from event:', util.inspect(event, {
-    depth: 5,
-  }));
+async function handlerDeps(deps, event, ctx) {
+  const logger = Logger.create({
+    serviceName: 'plant-image-lambda',
+    moduleName: 'n/a',
+    presets: {
+      trackId: uuid.v4(),
+    },
+  });
+
+  logger.trace({
+    msg: 'Reading options from event',
+    event: util.inspect(event, { depth: 5 }),
+  });
 
   if (!deps) {
     /* eslint-disable global-require */
@@ -27,22 +36,19 @@ function handlerDeps(deps, event, ctx) {
   }
 
   // eslint-disable-next-line no-param-reassign
-  deps.logger = Logger.create({
-    serviceName: 'plant-image-lambda',
-    moduleName: 'n/a',
-    presets: {
-      trackId: uuid.v4(),
-    },
-  });
+  deps.logger = logger;
 
   const req = {
     event,
     deps,
   };
 
-  outer.pipeline(req, (pipelineError) => {
-    ctx.done(pipelineError);
-  });
+  try {
+    await pipeline(req);
+    ctx.done();
+  } catch (err) {
+    ctx.done(err);
+  }
 }
 
 function handler(event, ctx) {

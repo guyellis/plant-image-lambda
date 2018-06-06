@@ -1,6 +1,3 @@
-
-
-const async = require('async');
 const util = require('util');
 
 const bucket = 'i.plaaant.com';
@@ -19,31 +16,47 @@ const bucket = 'i.plaaant.com';
 //       width
 //       name
 //     index
-function processImage(req, next) {
-  // eslint-disable-next-line no-plusplus
-  console.log(`i-${++req.step} processImage:`, req);
-  const { gm } = req.deps;
-  const response = req.input.buffer;
-  const { item } = req;
-  const targetSize = item.size;
-  console.time('processImage');
+function processImage(req) {
+  req.step += 1;
+  const {
+    deps: { gm, logger }, step, item, input: { buffer: response },
+  } = req;
+  const { size: targetSize } = item;
+  logger.time('processImage');
   const size = req.input.imageSize;
 
   if (size.width === targetSize.width) {
     req.buffer = response;
-    console.timeEnd('processImage');
-    return next(null, req);
+    logger.timeEnd('processImage', {
+      step, item, size, targetSize,
+    });
+    return Promise.resolve(req);
   }
 
   const scalingFactor = targetSize.width / size.width;
-  console.log('scalingFactor:', scalingFactor);
   const height = scalingFactor * size.height;
-  return gm(response).resize(targetSize.width, height)
-    .toBuffer('JPG', (err2, buffer) => {
-      req.buffer = buffer;
-      console.timeEnd('processImage');
-      next(err2, req);
-    });
+  return new Promise((resolve, reject) => {
+    gm(response).resize(targetSize.width, height)
+      .toBuffer('JPG', (err, buffer) => {
+        if (err) {
+          logger.error({
+            msg: 'Error in gm(response).resize()',
+            err,
+            step,
+            item,
+            size,
+            targetSize,
+            scalingFactor,
+          });
+          return reject(err);
+        }
+        req.buffer = buffer;
+        logger.timeEnd('processImage', {
+          step, item, size, targetSize, scalingFactor,
+        });
+        return resolve(req);
+      });
+  });
 }
 
 // #4
@@ -61,60 +74,78 @@ function processImage(req, next) {
 //       name
 //     index
 //   buffer
-function uploadImage(req, next) {
-  // eslint-disable-next-line no-plusplus
-  console.log(`i-${++req.step} uploadImage:`, req);
-  console.time('uploadImage');
-  const { s3 } = req.deps;
+function uploadImage(req) {
+  req.step += 1;
+  const {
+    deps: { s3, logger }, step,
+  } = req;
+
+  logger.time('uploadImage');
+
   const outKey = `${req.input.outKeyRoot + req.item.size.name}/${req.input.fileName}`;
-  console.log(`upload to path: ${outKey}`);
-  s3.putObject({
-    Bucket: bucket,
-    Key: outKey,
-    Body: req.buffer,
-    ContentType: 'JPG',
-  }, (err, result) => {
-    console.timeEnd('uploadImage');
-    next(err, result);
+
+  return new Promise((resolve, reject) => {
+    s3.putObject({
+      Bucket: bucket,
+      Key: outKey,
+      Body: req.buffer,
+      ContentType: 'JPG',
+    }, (err, result) => {
+      if (err) {
+        logger.error({
+          msg: 'Error in s3.putObject()', err, bucket, outKey, step,
+        });
+        logger.timeEnd('uploadImage');
+        return reject(err);
+      }
+      logger.timeEnd('uploadImage', {
+        bucket, outKey, step,
+      });
+      return resolve(result);
+    });
   });
 }
 
-function pipeline(req, cb) {
+async function pipeline(req) {
   Object.freeze(req.data);
   const { sizes } = req.data;
-  async.eachOfSeries(sizes, (size, index, callback) => {
-    const innerReq = {
-      item: {
-        size,
-        index,
-      },
-      input: req.data,
-      deps: req.deps,
-      step: 0,
-    };
+  const { deps: { logger } } = req;
 
-    async.waterfall([
-      processImage.bind(null, innerReq), // #3
-      uploadImage, // #4
-    ], (err2) => {
-      if (err2) {
-        console.error(`Waterfall error on step ${index}`, err2);
-      } else {
-        console.log(`End of step ${index}`);
-      }
-      return callback(err2);
-    });
-  }, (eachOfSeriesError) => {
-    const logData = util.inspect(req.data);
-    if (eachOfSeriesError) {
-      console.error('----> Unable to resize due to an error', logData, eachOfSeriesError);
-    } else {
-      console.log('----> Successfully resized ', logData);
+  let index = 0;
+  try {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const size of sizes) {
+      const innerReq = {
+        item: {
+          size,
+          index,
+        },
+        input: req.data,
+        deps: req.deps,
+        step: 0,
+      };
+
+      // eslint-disable-next-line no-await-in-loop
+      await processImage(innerReq); // #3
+      // eslint-disable-next-line no-await-in-loop
+      await uploadImage(innerReq); // #4
+
+      index += 1;
     }
-    return cb(eachOfSeriesError, req);
-  });
+
+    const logData = util.inspect(req.data);
+    logger.trace({
+      msg: 'Successfully resized',
+      logData,
+    });
+  } catch (err) {
+    const logData = util.inspect(req.data);
+    logger.error({
+      msg: 'Unable to resize due to an error',
+      logData,
+      err,
+    });
+  }
 }
 
-module.exports = {
-  pipeline,
-};
+module.exports = pipeline;

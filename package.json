@@ -8,6 +8,7 @@
     "aws-sdk": "2.251.1",
     "gm": "1.23.1",
     "lalog": "0.2.0",
+    "node-fetch": "2.1.2",
     "uuid": "3.2.1"
   },
   "description": "Image Lambda for Plant Project",

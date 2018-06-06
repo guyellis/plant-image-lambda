@@ -1,5 +1,5 @@
 
-const imageSizes = require('./image-sizes');
+const calcSizes = require('./image-sizes');
 
 // #5
 // data:
@@ -9,19 +9,33 @@ const imageSizes = require('./image-sizes');
 //   imageType
 //   s3Object
 //   buffer
-function getImageSize(req, next) {
-  const { gm } = req.deps;
-  const { data } = req;
-  console.log('o5 getImageSize');
-  gm(data.buffer).size((err, size) => {
-    console.log('o5 got size:', size);
-    data.imageSize = size;
-    data.sizes = imageSizes.calcSizes(size.width);
-    console.log('o5 size done:', data.sizes);
-    next(err, req);
+function getImageSize(req) {
+  const { data, deps: { gm, logger } } = req;
+  const method = '5. getImageSize()';
+
+  logger.trace({
+    method,
+  });
+
+  return new Promise((resolve, reject) => {
+    gm(data.buffer).size((err, size) => {
+      if (err) {
+        logger.error({
+          method,
+          err,
+        });
+        return reject(err);
+      }
+      data.imageSize = size;
+      data.sizes = calcSizes(size.width);
+      logger.trace({
+        msg: '5. getImageSize got size',
+        size,
+        sizes: data.sizes,
+      });
+      return resolve(req);
+    });
   });
 }
 
-module.exports = {
-  getImageSize,
-};
+module.exports = getImageSize;

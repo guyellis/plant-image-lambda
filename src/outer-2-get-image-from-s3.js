@@ -3,28 +3,34 @@
 
 // #2
 // data has: bucketName, key, fileName, imageType
-function getImageFromS3(req, cb) {
-  const { data } = req;
-  const { s3 } = req.deps;
-  console.time('getImageFromS3');
-  console.log('getImageFromS3');
+function getImageFromS3(req) {
+  const { data, deps: { s3, logger } } = req;
+  logger.time('getImageFromS3');
+  logger.trace({ msg: '2. getImageFromS3()' });
   // Download the image from S3 into a buffer.
   // sadly it downloads the image several times, but we couldn't place it outside
   // the variable was not recognized
-  s3.getObject({
-    Bucket: data.bucketName,
-    Key: data.key,
-  }, (err, s3Object) => {
-    data.s3Object = s3Object;
-    console.timeEnd('getImageFromS3');
-    return cb(err, req);
+  return new Promise((resolve, reject) => {
+    s3.getObject({
+      Bucket: data.bucketName,
+      Key: data.key,
+    }, (err, s3Object) => {
+      if (err) {
+        logger.error({
+          msg: 'Error in s3.getObject()',
+          err,
+        });
+        return reject(err);
+      }
+      data.s3Object = s3Object;
+      logger.timeEnd('getImageFromS3');
+      return resolve(req);
+    });
   });
 }
 
 
-module.exports = {
-  getImageFromS3,
-};
+module.exports = getImageFromS3;
 
 /*
 The s3Object returned by s3.getObject will look something like this:

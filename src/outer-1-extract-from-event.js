@@ -3,7 +3,7 @@
 const path = require('path');
 
 // #1
-function extractFromEvent(req, cb) {
+function extractFromEvent(req) {
   const { event, deps } = req;
   const { logger } = deps;
   // Object key may have spaces or unicode non-ASCII characters.
@@ -17,7 +17,7 @@ function extractFromEvent(req, cb) {
       key: event.Records[0].s3.object.key,
       decodedKey: key,
     });
-    return cb(msg);
+    throw new Error(msg);
   }
 
   const imageType = typeMatch[1].toLowerCase();
@@ -25,7 +25,7 @@ function extractFromEvent(req, cb) {
   if (!['jpg', 'gif', 'png', 'eps'].includes(imageType)) {
     const msg = `skipping non-image ${key}`;
     logger.error({ msg, imageType, key });
-    return cb(msg);
+    throw new Error(msg);
   }
 
   if (!key.includes('/orig/')) {
@@ -34,7 +34,7 @@ function extractFromEvent(req, cb) {
     // up/orig/ for prod
     const msg = `Not processing ${key} because it is not an original image.`;
     logger.error({ msg, key });
-    return cb(msg);
+    throw new Error(msg);
   }
 
   // Compute root of key for output
@@ -45,7 +45,7 @@ function extractFromEvent(req, cb) {
   if (!['test', 'up'].includes(outKeyRoot)) {
     const msg = `key does not start with a recognized folder:${key}`;
     logger.error({ msg, key });
-    return cb(msg);
+    throw new Error(msg);
   }
   outKeyRoot += '/';
 
@@ -57,10 +57,7 @@ function extractFromEvent(req, cb) {
     outKeyRoot,
   };
 
-  return cb(null, req);
+  return req;
 }
 
-module.exports = {
-  extractFromEvent,
-};
-
+module.exports = extractFromEvent;

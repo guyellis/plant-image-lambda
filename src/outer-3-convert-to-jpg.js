@@ -6,29 +6,33 @@
 //   fileName
 //   imageType
 //   s3Object
-function convertToJpg(req, next) {
-  // convert eps images to png
-  console.time('convertToJpg');
-  const { data } = req;
-  const { gm } = req.deps;
+function convertToJpg(req) {
+  const { data, deps: { gm, logger } } = req;
   const response = data.s3Object;
-  console.log(`Reponse content type: ${response.ContentType}`);
-  console.log('Conversion');
-  gm(response.Body)
-    .antialias(true)
-    .density(300)
-    .toBuffer('JPG', (err, buffer) => {
-      if (err) {
-        console.error('convertToJpg error in toBuffer:', err);
-      }
-      data.buffer = buffer;
-      console.timeEnd('convertToJpg');
-      next(err, req);
-    });
+
+  logger.time('convertToJpg');
+  logger.trace({
+    msg: `Response content type: ${response.ContentType}`,
+    method: '3. convertToJpg()',
+  });
+  return new Promise((resolve, reject) => {
+    gm(response.Body)
+      .antialias(true)
+      .density(300)
+      .toBuffer('JPG', (err, buffer) => {
+        if (err) {
+          logger.error({
+            msg: 'convertToJpg error in toBuffer',
+            method: 'convertToJpg()',
+            err,
+          });
+          return reject(err);
+        }
+        data.buffer = buffer;
+        logger.time('convertToJpg');
+        return resolve(req);
+      });
+  });
 }
 
-
-module.exports = {
-  convertToJpg,
-};
-
+module.exports = convertToJpg;

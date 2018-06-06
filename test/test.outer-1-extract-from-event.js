@@ -1,10 +1,10 @@
 
 
 const helper = require('./helper');
-const { extractFromEvent } = require('../src/outer-1-extract-from-event');
+const extractFromEvent = require('../src/outer-1-extract-from-event');
 
 describe('extractFromEvent', () => {
-  test('should build an object', (done) => {
+  test('should build an object', async () => {
     const req = {
       event: helper.fakeEvent,
       deps: {
@@ -13,6 +13,7 @@ describe('extractFromEvent', () => {
         },
       },
     };
+
     const expected = {
       bucketName: 'example.com',
       fileName: '2016-08-27 10.20.04.jpg',
@@ -21,10 +22,8 @@ describe('extractFromEvent', () => {
       outKeyRoot: 'test/',
     };
 
-    extractFromEvent(req, (err, actual) => {
-      expect(err).toBeFalsy();
-      expect(actual.data).toEqual(expected);
-      done();
-    });
+    const actual = await extractFromEvent(req);
+    expect(actual.data).toEqual(expected);
+    expect(req.deps.logger.error).not.toHaveBeenCalled();
   });
 });
