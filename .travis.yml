@@ -12,6 +12,7 @@ addons:
     - g++-4.8
 services:
   - mongodb
+install: npm install
 before_install:
 - npm install -g npm
 - npm install -g greenkeeper-lockfile@1
