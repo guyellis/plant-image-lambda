@@ -1,8 +1,8 @@
 
 
 const util = require('util');
-const pipeline = require('./outer');
 const Logger = require('lalog');
+const pipeline = require('./outer');
 
 async function handlerDeps(deps, event, ctx) {
   const logger = Logger.create({
