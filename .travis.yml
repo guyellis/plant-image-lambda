@@ -10,8 +10,6 @@ addons:
     packages:
     - gcc-4.8
     - g++-4.8
-services:
-  - mongodb
 install: npm install
 before_install:
 - npm install -g npm
