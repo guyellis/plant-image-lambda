@@ -1,6 +1,6 @@
 
-const env = require('./env.json');
 const fetch = require('node-fetch');
+const env = require('./env.json');
 
 const {
   PLANT_IMAGE_HOST,
