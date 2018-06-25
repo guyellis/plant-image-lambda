@@ -11,6 +11,7 @@
   },
   "description": "Image Lambda for Plant Project",
   "devDependencies": {
+    "concurrently": "3.6.0",
     "eslint": "4.19.1",
     "eslint-config-airbnb-base": "13.0.0",
     "eslint-plugin-import": "2.13.0",
@@ -30,8 +31,7 @@
   "pre-commit": {
     "colors": true,
     "run": [
-      "lint",
-      "coverage"
+      "precom"
     ],
     "silent": false
   },
@@ -45,7 +45,8 @@
     "coverage": "jest --coverage",
     "lint": "eslint --ext .js . --max-warnings 0",
     "lintfix": "eslint --ext .js . --fix",
-    "test": "jest --coverage && npm run lint",
+    "precom": "concurrently \"npm:lint\" \"npm:coverage\"",
+    "test": "npm run lint && npm run coverage",
     "upprod": "LAMBDA_FUNCTION_NAME=iPlant PLANT_IMAGE_HOST=$PLANT_IMAGE_HOST_PROD PLANT_IMAGE_PORT=$PLANT_IMAGE_PORT_PROD make uploadlambda",
     "uptest": "LAMBDA_FUNCTION_NAME=iPlantTest PLANT_IMAGE_HOST=$PLANT_IMAGE_HOST_TEST PLANT_IMAGE_PORT=$PLANT_IMAGE_PORT_TEST make uploadlambda"
   },
