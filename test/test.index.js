@@ -15,9 +15,7 @@ jest.mock('aws-sdk', () => ({
   },
 }));
 
-const index = require('../src');
-
-class GM {
+class mockGM {
   antialias() { return this; }
 
   autoOrient() { return this; }
@@ -36,11 +34,12 @@ class GM {
   }
 }
 
-const gm = () => new GM();
+jest.mock('gm', () => ({
+  // eslint-disable-next-line new-cap
+  subClass: () => new mockGM(),
+}));
 
-const deps = {
-  gm,
-};
+const index = require('../src');
 
 describe('buildFromEvent', () => {
   test('should run end-to-end', (end) => {
@@ -51,6 +50,6 @@ describe('buildFromEvent', () => {
       },
     };
 
-    index.handlerDeps(deps, helper.fakeEvent, ctx);
+    index.handler(helper.fakeEvent, ctx);
   });
 });

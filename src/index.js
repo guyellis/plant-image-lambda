@@ -1,9 +1,11 @@
 const AWS = require('aws-sdk');
 const util = require('util');
 const Logger = require('lalog');
+const gm = require('gm');
+
 const pipeline = require('./outer');
 
-async function handlerDeps(deps, event, ctx) {
+async function handler(event, ctx) {
   const logger = Logger.create({
     serviceName: 'plant-image-lambda',
     moduleName: 'n/a',
@@ -15,22 +17,13 @@ async function handlerDeps(deps, event, ctx) {
     event: util.inspect(event, { depth: 5 }),
   });
 
-  if (!deps) {
-    /* eslint-disable global-require */
-    const gm = require('gm').subClass({
+  const deps = {
+    s3: new AWS.S3(),
+    logger,
+    gm: gm.subClass({
       imageMagick: true,
-    });
-    /* eslint-enable global-require */
-    // eslint-disable-next-line no-param-reassign
-    deps = {
-      gm,
-    };
-  }
-
-  // eslint-disable-next-line no-param-reassign
-  deps.s3 = new AWS.S3();
-  // eslint-disable-next-line no-param-reassign
-  deps.logger = logger;
+    }),
+  };
 
   const req = {
     event,
@@ -45,11 +38,6 @@ async function handlerDeps(deps, event, ctx) {
   }
 }
 
-function handler(event, ctx) {
-  handlerDeps(null, event, ctx);
-}
-
 module.exports = {
   handler,
-  handlerDeps,
 };
