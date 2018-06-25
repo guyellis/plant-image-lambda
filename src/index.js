@@ -1,5 +1,4 @@
-
-
+const AWS = require('aws-sdk');
 const util = require('util');
 const Logger = require('lalog');
 const pipeline = require('./outer');
@@ -18,8 +17,6 @@ async function handlerDeps(deps, event, ctx) {
 
   if (!deps) {
     /* eslint-disable global-require */
-    const AWS = require('aws-sdk');
-    const s3 = new AWS.S3();
     const gm = require('gm').subClass({
       imageMagick: true,
     });
@@ -28,10 +25,12 @@ async function handlerDeps(deps, event, ctx) {
     /* eslint-enable global-require */
     // eslint-disable-next-line no-param-reassign
     deps = {
-      s3, gm, https, http,
+      gm, https, http,
     };
   }
 
+  // eslint-disable-next-line no-param-reassign
+  deps.s3 = new AWS.S3();
   // eslint-disable-next-line no-param-reassign
   deps.logger = logger;
 

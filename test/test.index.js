@@ -1,4 +1,20 @@
 const helper = require('./helper');
+
+const mocks3 = {
+  getObject(obj, cb) {
+    cb(null, helper.fakeS3Object);
+  },
+  putObject(obj, cb) {
+    cb();
+  },
+};
+
+jest.mock('aws-sdk', () => ({
+  S3: function S3() {
+    return mocks3;
+  },
+}));
+
 const index = require('../src');
 
 class GM {
@@ -22,14 +38,6 @@ class GM {
 
 const gm = () => new GM();
 
-const s3 = {
-  getObject(obj, cb) {
-    cb(null, helper.fakeS3Object);
-  },
-  putObject(obj, cb) {
-    cb();
-  },
-};
 
 const https = {
   request(options, cb) {
@@ -43,7 +51,6 @@ const https = {
 };
 
 const deps = {
-  s3,
   gm,
   https,
   http: https,
