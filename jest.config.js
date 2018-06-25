@@ -9,6 +9,7 @@ module.exports = {
     '!.eslintrc.js',
     '!**/node_modules/**',
     '!**/test/**',
+    '!index.js',
     '**/*.{js,jsx}',
   ],
   coverageThreshold: {

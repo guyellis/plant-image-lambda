@@ -75,4 +75,13 @@ describe('image', () => {
     expected = getExpected([100, 500, 1000, 1500, 2000]);
     expect(actual).toEqual(expected);
   });
+
+  test('should throw if size is under 1', () => {
+    try {
+      calcSizes(0);
+    } catch (e) {
+      expect(e.message).toBe('Unexpected width less than 1: 0');
+    }
+    expect.assertions(1);
+  });
 });
