@@ -10,7 +10,7 @@ const {
 
 async function httpPost(req) {
   const { deps: { logger } } = req;
-  const { presets: { trackId } } = logger;
+  const { presets: { trackId } = {} } = logger;
 
   const putData = JSON.stringify({
     metadata: req.data.s3Object.Metadata,
@@ -32,14 +32,22 @@ async function httpPost(req) {
 
   try {
     const response = await fetch(url, options);
-    logger.trace({
+    const logData = {
       msg: 'Image sizing metadata update sent',
       url,
       options,
       env,
       putData,
       status: response.status,
-    });
+    };
+    if (response.status === 200) {
+      logger.trace(logData);
+    } else {
+      logger.error({
+        ...logData,
+        msg: `Unexpected response status ${response.status} in PUT call`,
+      });
+    }
   } catch (err) {
     logger.error({
       msg: 'Error sending image sizing metadata',

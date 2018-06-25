@@ -31,6 +31,8 @@ global.loggerMockReset = () => {
   global.loggerMock.error = jest.fn(loggerMockFunction);
   global.loggerMock.fatal = jest.fn(loggerMockFunction);
   global.loggerMock.security = jest.fn(loggerMockFunction);
+  global.loggerMock.time = jest.fn();
+  global.loggerMock.timeEnd = jest.fn();
 };
 
 global.loggerMockReset();
