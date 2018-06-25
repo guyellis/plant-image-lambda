@@ -20,12 +20,10 @@ async function handlerDeps(deps, event, ctx) {
     const gm = require('gm').subClass({
       imageMagick: true,
     });
-    const https = require('https');
-    const http = require('http');
     /* eslint-enable global-require */
     // eslint-disable-next-line no-param-reassign
     deps = {
-      gm, https, http,
+      gm,
     };
   }
 

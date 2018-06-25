@@ -38,22 +38,8 @@ class GM {
 
 const gm = () => new GM();
 
-
-const https = {
-  request(options, cb) {
-    cb();
-    return {
-      end() {},
-      on() {},
-      write() {},
-    };
-  },
-};
-
 const deps = {
   gm,
-  https,
-  http: https,
 };
 
 describe('buildFromEvent', () => {
