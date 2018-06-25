@@ -1,28 +1,28 @@
 {
   "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Mocha",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceRoot}/node_modules/.bin/_mocha",
-      "stopOnEntry": false,
-      "args": [
-        "./test/**/*.js",
-        "--recursive"
-      ],
-      "cwd": "${workspaceRoot}",
-      "preLaunchTask": null,
-      "runtimeExecutable": null,
-      "runtimeArgs": [
-        "--nolazy"
-      ],
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "console": "integratedTerminal",
-      "sourceMaps": false,
-      "outDir": null
-    }
-  ]
+  "configurations": [{
+    "name": "Unit Test",
+    "type": "node",
+    "request": "launch",
+    "program": "${workspaceRoot}/node_modules/.bin/jest",
+    "args": ["-i"],
+    "env": {
+      "NODE_ENV": "development",
+    },
+    "cwd": "${workspaceRoot}"
+  }, {
+    "name": "Unit Test Focused",
+    "type": "node",
+    "request": "launch",
+    "program": "${workspaceRoot}/node_modules/.bin/jest",
+    "args": [
+      "${workspaceRoot}/test/test.index.js", // replace this file with the file to focus
+      "-i",
+      "--forceExit"
+    ],
+    "env": {
+      "NODE_ENV": "development",
+    },
+    "cwd": "${workspaceRoot}"
+  }]
 }
