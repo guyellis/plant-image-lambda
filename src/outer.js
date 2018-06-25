@@ -13,25 +13,16 @@ const httpPost = require('./write-to-server');
  * The output is a buffer/object/something that can then be sized etc. by
  * each of the different output sizes.
  * @param {object} req - request object with event and deps
- * @param {function} cb - callback to call once done
- * @returns {undefined}
+ * @returns {Promise}
  */
 async function pipeline(req) {
-  const { deps: { logger } } = req;
-  try {
-    extractFromEvent(req);
-    await getImageFromS3(req);
-    await convertToJpg(req);
-    await fixExif(req);
-    await getImageSize(req);
-    await innerPipeline(req);
-    return await httpPost(req);
-  } catch (err) {
-    return logger.error({
-      msg: 'Error in pipeline()',
-      err,
-    });
-  }
+  extractFromEvent(req);
+  await getImageFromS3(req);
+  await convertToJpg(req);
+  await fixExif(req);
+  await getImageSize(req);
+  await innerPipeline(req);
+  return httpPost(req);
 }
 
 module.exports = pipeline;

@@ -34,6 +34,11 @@ async function handler(event, ctx) {
     await pipeline(req);
     ctx.done();
   } catch (err) {
+    logger.error({
+      msg: 'Error in pipeline',
+      event: util.inspect(event, { depth: 5 }),
+      err,
+    });
     ctx.done(err);
   }
 }
