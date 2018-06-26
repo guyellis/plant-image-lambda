@@ -113,6 +113,17 @@ const loggerMockFunction = (errObj, extra) => {
   }
 };
 
+const loggerTimeEndMockFunction = (label, extraLogData) => {
+  if (typeof label !== 'string') {
+    throw new Error(`First param to lalog timeEnd method is not an string: ${typeof label}`);
+  }
+  if (extraLogData && !isObject(extraLogData)) {
+    throw new Error(`Second param to lalog timeEnd method is not an object: ${typeof extraLogData}`);
+  }
+  if (extraLogData) {
+    loggerMockFunction(extraLogData);
+  }
+};
 
 const mockLoggerReset = () => {
   // const levels = ['trace', 'info', 'warn', 'error', 'fatal', 'security'];
@@ -122,8 +133,9 @@ const mockLoggerReset = () => {
   mockLogger.error = jest.fn(loggerMockFunction);
   mockLogger.fatal = jest.fn(loggerMockFunction);
   mockLogger.security = jest.fn(loggerMockFunction);
+  mockLogger.timeEnd = jest.fn(loggerTimeEndMockFunction);
+  mockLogger.timeEnd.error = jest.fn(loggerTimeEndMockFunction);
   mockLogger.time = jest.fn();
-  mockLogger.timeEnd = jest.fn();
 };
 
 mockLoggerReset();

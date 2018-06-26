@@ -17,7 +17,7 @@ function getImageFromS3(req) {
     }, (err, s3Object) => {
       if (err) {
         logger.timeEnd.error('getImageFromS3', {
-          msg: 'Error in s3.getObject()',
+          msg: 'Error in s3.getObject() via getImageFromS3()',
           err,
         });
         return reject(err);
