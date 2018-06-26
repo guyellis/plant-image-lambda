@@ -9,12 +9,22 @@ const {
 } = env;
 
 async function httpPost(req) {
-  const { deps: { logger } } = req;
+  const {
+    deps: {
+      logger,
+    },
+    data: {
+      s3Object: {
+        Metadata: metadata,
+      },
+      sizes,
+    },
+  } = req;
   const { presets: { trackId } = {} } = logger;
 
   const putData = JSON.stringify({
-    metadata: req.data.s3Object.Metadata,
-    sizes: req.data.sizes,
+    metadata,
+    sizes,
     trackId, // Allows receiver to use same trackId for logging
   });
 

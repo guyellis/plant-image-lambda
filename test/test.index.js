@@ -1,6 +1,6 @@
 const helper = require('./helper');
 
-const mocks3 = {
+const mockS3 = {
   getObject(obj, cb) {
     cb(null, helper.fakeS3Object);
   },
@@ -11,7 +11,7 @@ const mocks3 = {
 
 jest.mock('aws-sdk', () => ({
   S3: function S3() {
-    return mocks3;
+    return mockS3;
   },
 }));
 
