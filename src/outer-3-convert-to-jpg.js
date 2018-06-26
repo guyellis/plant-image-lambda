@@ -8,15 +8,20 @@
 //   s3Object
 function convertToJpg(req) {
   const { data, deps: { gm, logger } } = req;
-  const response = data.s3Object;
+  const {
+    s3Object: {
+      ContentType,
+      Body,
+    },
+  } = data;
 
   logger.time('convertToJpg');
   logger.trace({
-    msg: `Response content type: ${response.ContentType}`,
+    msg: `Response content type: ${ContentType}`,
     method: '3. convertToJpg()',
   });
   return new Promise((resolve, reject) => {
-    gm(response.Body)
+    gm(Body)
       .antialias(true)
       .density(300)
       .toBuffer('JPG', (err, buffer) => {

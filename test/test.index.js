@@ -1,8 +1,8 @@
-const helper = require('./helper');
+const { mockGM, fakeEvent, fakeS3Object } = require('./helper');
 
 const mockS3 = {
   getObject(obj, cb) {
-    cb(null, helper.fakeS3Object);
+    cb(null, fakeS3Object);
   },
   putObject(obj, cb) {
     cb();
@@ -14,29 +14,6 @@ jest.mock('aws-sdk', () => ({
     return mockS3;
   },
 }));
-
-class mockGM {
-  constructor() {
-    return () => this;
-  }
-
-  antialias() { return this; }
-
-  autoOrient() { return this; }
-
-  density() { return this; }
-
-  resize() { return this; }
-
-  // eslint-disable-next-line class-methods-use-this
-  toBuffer(type, cb) {
-    cb(null, 'Fake Buffer');
-  }
-
-  size(cb) {
-    cb.call(this, null, { width: 3000, height: 2000 });
-  }
-}
 
 jest.mock('gm', () => ({
   // eslint-disable-next-line new-cap
@@ -61,6 +38,6 @@ describe('buildFromEvent', () => {
       },
     };
 
-    index.handler(helper.fakeEvent, ctx);
+    index.handler(fakeEvent, ctx);
   });
 });

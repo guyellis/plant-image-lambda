@@ -1,11 +1,6 @@
 const { mockLogger } = require('./helper');
 const getImageFromS3 = require('../src/outer-2-get-image-from-s3');
 
-const gm = {
-  antialias() { return gm; },
-  density() { return gm; },
-};
-
 const fakeBucket = 'Fake Bucket';
 const fakeKey = 'Fake Key';
 const fakeS3Object = 'Fake S3 Object';
