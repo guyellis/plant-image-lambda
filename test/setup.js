@@ -1,4 +1,4 @@
-const { loggerMock: mockLogger } = require('./helper');
+const { mockLogger } = require('./helper');
 
 jest.mock('lalog', () => ({
   create: ({ serviceName, moduleName }) => {

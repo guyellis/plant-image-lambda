@@ -99,7 +99,7 @@ const fakeS3Object = {
   Body: '<Buffer>',
 };
 
-const loggerMock = {};
+const mockLogger = {};
 
 const isObject = obj => obj !== null && typeof obj === 'object';
 
@@ -114,23 +114,23 @@ const loggerMockFunction = (errObj, extra) => {
 };
 
 
-const loggerMockReset = () => {
+const mockLoggerReset = () => {
   // const levels = ['trace', 'info', 'warn', 'error', 'fatal', 'security'];
-  loggerMock.trace = jest.fn(loggerMockFunction);
-  loggerMock.info = jest.fn(loggerMockFunction);
-  loggerMock.warn = jest.fn(loggerMockFunction);
-  loggerMock.error = jest.fn(loggerMockFunction);
-  loggerMock.fatal = jest.fn(loggerMockFunction);
-  loggerMock.security = jest.fn(loggerMockFunction);
-  loggerMock.time = jest.fn();
-  loggerMock.timeEnd = jest.fn();
+  mockLogger.trace = jest.fn(loggerMockFunction);
+  mockLogger.info = jest.fn(loggerMockFunction);
+  mockLogger.warn = jest.fn(loggerMockFunction);
+  mockLogger.error = jest.fn(loggerMockFunction);
+  mockLogger.fatal = jest.fn(loggerMockFunction);
+  mockLogger.security = jest.fn(loggerMockFunction);
+  mockLogger.time = jest.fn();
+  mockLogger.timeEnd = jest.fn();
 };
 
-loggerMockReset();
+mockLoggerReset();
 
 module.exports = {
   fakeEvent,
   fakeS3Object,
-  loggerMock,
-  loggerMockReset,
+  mockLogger,
+  mockLoggerReset,
 };
