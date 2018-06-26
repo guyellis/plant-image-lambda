@@ -8,7 +8,9 @@ function extractFromEvent(req) {
 
   // Object key may have spaces or unicode non-ASCII characters.
   const key = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
-  // Infer the image type.
+  // If there's one or more dots in the key then this next regex will return an array with
+  // two items. The first element will be the last dot and following characters and the
+  // second element will be the same withou the dot.
   const typeMatch = key.match(/\.([^.]*)$/);
   if (!typeMatch) {
     const msg = `unable to infer image type for key ${key}`;
