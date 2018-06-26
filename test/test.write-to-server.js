@@ -1,4 +1,3 @@
-
 const mockFetchResult = {
   status: 200,
 };
@@ -12,17 +11,18 @@ jest.mock('node-fetch', () => (() => {
   return mockFetchResult;
 }));
 
+const { loggerMock, loggerMockReset } = require('./helper');
 const writeToServer = require('../src/write-to-server');
 
 describe('write-to-server', () => {
   beforeEach(() => {
-    global.loggerMockReset();
+    loggerMockReset();
   });
 
   test('should log an error if node-fetch returns non-200', async () => {
     const req = {
       deps: {
-        logger: global.loggerMock,
+        logger: loggerMock,
       },
       data: {
         s3Object: {
@@ -37,13 +37,13 @@ describe('write-to-server', () => {
     const result = await writeToServer(req);
 
     expect(result).toBe(req);
-    expect(global.loggerMock.error).toHaveBeenCalledTimes(1);
+    expect(loggerMock.error).toHaveBeenCalledTimes(1);
   });
 
   test('should log an error if node-fetch throw', async () => {
     const req = {
       deps: {
-        logger: global.loggerMock,
+        logger: loggerMock,
       },
       data: {
         s3Object: {
@@ -58,6 +58,6 @@ describe('write-to-server', () => {
     const result = await writeToServer(req);
 
     expect(result).toBe(req);
-    expect(global.loggerMock.error).toHaveBeenCalledTimes(1);
+    expect(loggerMock.error).toHaveBeenCalledTimes(1);
   });
 });

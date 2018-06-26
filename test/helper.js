@@ -99,7 +99,38 @@ const fakeS3Object = {
   Body: '<Buffer>',
 };
 
+const loggerMock = {};
+
+const isObject = obj => obj !== null && typeof obj === 'object';
+
+const loggerMockFunction = (errObj, extra) => {
+  if (!isObject(errObj)) {
+    throw new Error(`First param to lalog logger method is not an object: ${typeof errObj}`);
+  }
+  if (extra) {
+    const { res, code } = extra;
+    res.status(code).send({ one: 1 });
+  }
+};
+
+
+const loggerMockReset = () => {
+  // const levels = ['trace', 'info', 'warn', 'error', 'fatal', 'security'];
+  loggerMock.trace = jest.fn(loggerMockFunction);
+  loggerMock.info = jest.fn(loggerMockFunction);
+  loggerMock.warn = jest.fn(loggerMockFunction);
+  loggerMock.error = jest.fn(loggerMockFunction);
+  loggerMock.fatal = jest.fn(loggerMockFunction);
+  loggerMock.security = jest.fn(loggerMockFunction);
+  loggerMock.time = jest.fn();
+  loggerMock.timeEnd = jest.fn();
+};
+
+loggerMockReset();
+
 module.exports = {
   fakeEvent,
   fakeS3Object,
+  loggerMock,
+  loggerMockReset,
 };
