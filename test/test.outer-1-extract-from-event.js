@@ -1,16 +1,18 @@
+const _ = require('lodash');
 
-
-const helper = require('./helper');
+const { fakeEvent, mockLogger, mockLoggerReset } = require('./helper');
 const extractFromEvent = require('../src/outer-1-extract-from-event');
 
 describe('extractFromEvent', () => {
+  beforeEach(() => {
+    mockLoggerReset();
+  });
+
   test('should build an object', async () => {
     const req = {
-      event: helper.fakeEvent,
+      event: fakeEvent,
       deps: {
-        logger: {
-          error: jest.fn(),
-        },
+        logger: mockLogger,
       },
     };
 
@@ -24,6 +26,26 @@ describe('extractFromEvent', () => {
 
     const actual = await extractFromEvent(req);
     expect(actual.data).toEqual(expected);
-    expect(req.deps.logger.error).not.toHaveBeenCalled();
+    expect(mockLogger.error).not.toHaveBeenCalled();
+  });
+
+  test('should throw if image type not recognized', async () => {
+    const req = {
+      event: _.cloneDeep(fakeEvent),
+      deps: {
+        logger: mockLogger,
+      },
+    };
+
+    req.event.Records[0].s3.object.key = 'abc.jjj';
+
+    try {
+      await extractFromEvent(req);
+    } catch (err) {
+      expect(err.message).toBe('skipping non-image abc.jjj');
+    }
+
+    expect(mockLogger.error).toHaveBeenCalledTimes(1);
+    expect.assertions(2);
   });
 });

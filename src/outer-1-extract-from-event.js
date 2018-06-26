@@ -4,28 +4,33 @@ const path = require('path');
 
 // #1
 function extractFromEvent(req) {
-  const { event, deps } = req;
-  const { logger } = deps;
+  const { event, deps: { logger } } = req;
+
   // Object key may have spaces or unicode non-ASCII characters.
   const key = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
   // Infer the image type.
   const typeMatch = key.match(/\.([^.]*)$/);
   if (!typeMatch) {
     const msg = `unable to infer image type for key ${key}`;
+    const err = new Error(msg);
     logger.error({
-      msg,
-      key: event.Records[0].s3.object.key,
       decodedKey: key,
+      err,
+      key: event.Records[0].s3.object.key,
+      msg,
     });
-    throw new Error(msg);
+    throw err;
   }
 
   const imageType = typeMatch[1].toLowerCase();
 
   if (!['jpg', 'gif', 'png', 'eps'].includes(imageType)) {
     const msg = `skipping non-image ${key}`;
-    logger.error({ msg, imageType, key });
-    throw new Error(msg);
+    const err = new Error(msg);
+    logger.error({
+      msg, imageType, key, err,
+    });
+    throw err;
   }
 
   if (!key.includes('/orig/')) {
@@ -33,8 +38,9 @@ function extractFromEvent(req) {
     // test/orig/ for test and
     // up/orig/ for prod
     const msg = `Not processing ${key} because it is not an original image.`;
-    logger.error({ msg, key });
-    throw new Error(msg);
+    const err = new Error(msg);
+    logger.error({ msg, key, err });
+    throw err;
   }
 
   // Compute root of key for output
@@ -44,8 +50,9 @@ function extractFromEvent(req) {
   let outKeyRoot = key.split('/')[0];
   if (!['test', 'up'].includes(outKeyRoot)) {
     const msg = `key does not start with a recognized folder:${key}`;
-    logger.error({ msg, key });
-    throw new Error(msg);
+    const err = new Error(msg);
+    logger.error({ msg, key, err });
+    throw err;
   }
   outKeyRoot += '/';
 
