@@ -1,6 +1,5 @@
 const { mockGM, fakeEvent } = require('./helper');
 
-
 jest.mock('gm', () => ({
   // eslint-disable-next-line new-cap
   subClass: () => new mockGM(),
@@ -12,7 +11,7 @@ jest.mock('node-fetch', () => (() => ({
 
 const index = require('../src');
 
-describe('buildFromEvent', () => {
+describe('index-handler', () => {
   test('should run end-to-end', (end) => {
     const ctx = {
       done(err) {

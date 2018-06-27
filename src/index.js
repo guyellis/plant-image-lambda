@@ -17,20 +17,20 @@ async function handler(event, ctx) {
     event: util.inspect(event, { depth: 5 }),
   });
 
-  const deps = {
-    s3: new AWS.S3(),
-    logger,
-    gm: gm.subClass({
-      imageMagick: true,
-    }),
-  };
-
-  const req = {
-    event,
-    deps,
-  };
-
   try {
+    const deps = {
+      s3: new AWS.S3(),
+      logger,
+      gm: gm.subClass({
+        imageMagick: true,
+      }),
+    };
+
+    const req = {
+      event,
+      deps,
+    };
+
     await pipeline(req);
     ctx.done();
   } catch (err) {
