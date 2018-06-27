@@ -11,6 +11,8 @@ jest.mock('node-fetch', () => (() => {
   return mockFetchResult;
 }));
 
+const env = require('../src/env.json');
+
 const { mockLogger, mockLoggerReset } = require('./helper');
 const writeToServer = require('../src/write-to-server');
 
@@ -59,5 +61,28 @@ describe('write-to-server', () => {
 
     expect(result).toBe(req);
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
+  });
+
+  test('should use https instead of http', async () => {
+    env.PLANT_IMAGE_PORT = '443';
+    const req = {
+      deps: {
+        logger: mockLogger,
+      },
+      data: {
+        s3Object: {
+          Metadata: 'fake-metadata',
+        },
+        sizes: 'fake-sizes',
+      },
+    };
+
+    mockFetchResult.status = 200;
+    mockThrow = false;
+
+    const result = await writeToServer(req);
+
+    expect(result).toBe(req);
+    expect(mockLogger.error).not.toHaveBeenCalled();
   });
 });

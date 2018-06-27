@@ -2,13 +2,13 @@
 const fetch = require('node-fetch');
 const env = require('./env.json');
 
-const {
-  PLANT_IMAGE_HOST,
-  PLANT_IMAGE_PORT,
-  PLANT_IMAGE_COMPLETE,
-} = env;
-
 async function httpPost(req) {
+  const {
+    PLANT_IMAGE_HOST,
+    PLANT_IMAGE_PORT,
+    PLANT_IMAGE_COMPLETE,
+  } = env;
+
   const {
     deps: {
       logger,
