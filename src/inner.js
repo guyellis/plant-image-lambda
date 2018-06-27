@@ -115,10 +115,11 @@ async function pipeline(req) {
   const { deps: { logger } } = req;
 
   let index = 0;
+  let innerReq;
   try {
     // eslint-disable-next-line no-restricted-syntax
     for (const size of sizes) {
-      const innerReq = {
+      innerReq = {
         item: {
           size,
           index,
@@ -144,10 +145,12 @@ async function pipeline(req) {
   } catch (err) {
     const logData = util.inspect(req.data);
     logger.error({
-      msg: 'Unable to resize due to an error',
-      logData,
       err,
+      innerReq,
+      logData,
+      msg: 'Unable to processImage() or uploadImage() due to an error',
     });
+    throw err;
   }
 }
 
