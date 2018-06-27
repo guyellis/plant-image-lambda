@@ -112,12 +112,22 @@ class mockGM {
   }
 }
 
+const mockS3 = {
+  getObject(obj, cb) {
+    cb(null, fakeS3Object);
+  },
+  putObject(obj, cb) {
+    cb();
+  },
+};
+
 module.exports = {
   fakeEvent,
   fakeS3Object,
+  mockGM,
   mockLogger,
   mockLoggerReset,
-  mockGM,
+  mockS3,
 };
 
 // Event Structure: http://docs.aws.amazon.com/AmazonS3/latest/dev/notification-content-structure.html

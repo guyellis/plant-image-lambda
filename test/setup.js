@@ -1,13 +1,5 @@
-const { mockLogger, fakeS3Object } = require('./helper');
+const { mockLogger, mockS3 } = require('./helper');
 
-const mockS3 = {
-  getObject(obj, cb) {
-    cb(null, fakeS3Object);
-  },
-  putObject(obj, cb) {
-    cb();
-  },
-};
 
 jest.mock('aws-sdk', () => ({
   S3: function S3() {

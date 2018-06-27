@@ -1,7 +1,13 @@
-const { mockLogger, mockGM: MockGM } = require('./helper');
+const {
+  mockLogger, mockGM: MockGM, mockS3, mockLoggerReset,
+} = require('./helper');
 const pipeline = require('../src/inner');
 
 describe('pipeline', () => {
+  beforeEach(() => {
+    mockLoggerReset();
+  });
+
   test('should throw if processImage throws', async () => {
     MockGM.prototype.toBuffer = (imageType, cb) => cb('fake-toBuffer-error');
     const gm = new MockGM();
@@ -29,5 +35,30 @@ describe('pipeline', () => {
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
     expect(mockLogger.timeEnd.error).toHaveBeenCalledTimes(1);
     expect.assertions(3);
+  });
+
+  test('should skip image processing if width is target width', async () => {
+    const gm = new MockGM();
+
+    const req = {
+      data: {
+        buffer: 'fake-buffer',
+        sizes: [{ width: 500 }],
+        imageSize: {
+          width: 500,
+        },
+      },
+      deps: {
+        gm,
+        logger: mockLogger,
+        s3: mockS3,
+      },
+    };
+
+    await pipeline(req);
+
+    expect(mockLogger.error).not.toHaveBeenCalledTimes(1);
+    expect(mockLogger.timeEnd).toHaveBeenCalledTimes(2);
+    expect.assertions(2);
   });
 });
