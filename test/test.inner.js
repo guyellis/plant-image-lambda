@@ -6,6 +6,7 @@ const pipeline = require('../src/inner');
 describe('pipeline', () => {
   beforeEach(() => {
     mockLoggerReset();
+    MockGM.prototype.toBuffer = (imageType, cb) => cb(null, 'fake-buffer');
   });
 
   test('should throw if processImage throws', async () => {
@@ -60,5 +61,38 @@ describe('pipeline', () => {
     expect(mockLogger.error).not.toHaveBeenCalledTimes(1);
     expect(mockLogger.timeEnd).toHaveBeenCalledTimes(2);
     expect.assertions(2);
+  });
+
+  test('should throw if uploadImage throws', async () => {
+    const gm = new MockGM();
+
+    const req = {
+      data: {
+        buffer: 'fake-buffer',
+        sizes: [{ width: 500 }, { width: 1000 }],
+        imageSize: {
+          width: 1200,
+        },
+      },
+      deps: {
+        gm,
+        logger: mockLogger,
+        s3: {
+          putObject(obj, cb) {
+            cb('fake-putObject-error');
+          },
+        },
+      },
+    };
+
+    try {
+      await pipeline(req);
+    } catch (err) {
+      expect(err).toEqual('fake-putObject-error');
+    }
+
+    expect(mockLogger.error).toHaveBeenCalledTimes(1);
+    expect(mockLogger.timeEnd.error).toHaveBeenCalledTimes(1);
+    expect.assertions(3);
   });
 });
