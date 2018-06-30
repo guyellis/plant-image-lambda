@@ -17,7 +17,7 @@
     "eslint-plugin-import": "2.13.0",
     "eslint-plugin-jest": "21.17.0",
     "eslint-plugin-security": "1.4.0",
-    "jest": "23.1.0",
+    "jest": "23.2.0",
     "lodash": "4.17.10",
     "pre-commit": "1.2.2"
   },
