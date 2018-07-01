@@ -5,8 +5,11 @@ lambda:
 	@if [ -z "${PLANT_IMAGE_HOST}" ]; then (echo "Please export PLANT_IMAGE_HOST" && exit 1); fi
 	@if [ -z "${PLANT_IMAGE_PORT}" ]; then (echo "Please export PLANT_IMAGE_PORT" && exit 1); fi
 	@if [ -z "${LOGGLY_TOKEN}" ]; then (echo "Please export LOGGLY_TOKEN" && exit 1); fi
-	@echo "Installing node modules (production)..."
+	@echo "Check Node Version..."
+	@npm run cnv
+	@echo "Remove existing node_modules..."
 	@rm -rf node_modules/
+	@echo "Installing node modules (production)..."
 	npm i --production --depth 0
 	@echo "Copying files to build..."
 	@rm -rf build/

@@ -11,6 +11,7 @@
   },
   "description": "Image Lambda for Plant Project",
   "devDependencies": {
+    "check-node-version": "3.2.0",
     "concurrently": "3.6.0",
     "eslint": "4.19.1",
     "eslint-config-airbnb-base": "13.0.0",
@@ -22,8 +23,8 @@
     "pre-commit": "1.2.2"
   },
   "engines": {
-    "node": "8.11.2",
-    "npm": "5.6.0"
+    "node": "8.10",
+    "npm": ">= 5.6.0"
   },
   "homepage": "https://github.com/guyellis/plant-image-lambda#readme",
   "license": "MIT",
@@ -43,13 +44,14 @@
   "scripts": {
     "build": "make lambda",
     "clean": "make clean",
+    "cnv": "check-node-version --package",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .js . --max-warnings 0",
     "lintfix": "eslint --ext .js . --fix",
     "precom": "concurrently \"npm:lint\" \"npm:coverage\"",
     "test": "npm run lint && npm run coverage",
-    "upprod": "LAMBDA_FUNCTION_NAME=iPlant PLANT_IMAGE_HOST=$PLANT_IMAGE_HOST_PROD PLANT_IMAGE_PORT=$PLANT_IMAGE_PORT_PROD make uploadlambda",
-    "uptest": "LAMBDA_FUNCTION_NAME=iPlantTest PLANT_IMAGE_HOST=$PLANT_IMAGE_HOST_TEST PLANT_IMAGE_PORT=$PLANT_IMAGE_PORT_TEST make uploadlambda"
+    "upprod": "make uploadlambda",
+    "uptest": "make uploadlambda"
   },
   "version": "2.0.0"
 }

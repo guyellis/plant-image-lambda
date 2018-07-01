@@ -1,15 +1,16 @@
 module.exports = {
   verbose: false,
   collectCoverageFrom: [
+    '!.eslintrc.js',
     '!**/.vscode/**',
+    '!**/build/**',
+    '!**/coverage/**',
     '!**/devops/**',
     '!**/docs/**',
-    '!**/coverage/**',
-    '!jest.config.js',
-    '!.eslintrc.js',
     '!**/node_modules/**',
     '!**/test/**',
     '!index.js',
+    '!jest.config.js',
     '**/*.{js,jsx}',
   ],
   coverageThreshold: {
