@@ -22,5 +22,5 @@ module.exports = {
     },
   },
   setupTestFrameworkScriptFile: './test/setup.js',
-  testMatch: ['**/test/**/test.*.js?(x)'],
+  testMatch: ['**/test/**/*.test.js?(x)'],
 };
