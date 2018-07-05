@@ -16,4 +16,5 @@ jest.mock('lalog', () => ({
     return mockLogger;
   },
   getLevel: () => 'info',
+  setLevel: jest.fn(),
 }));

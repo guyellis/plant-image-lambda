@@ -3,9 +3,13 @@ const util = require('util');
 const Logger = require('lalog');
 const gm = require('gm');
 
+const env = require('./env.json');
 const pipeline = require('./outer');
 
 async function handler(event, ctx) {
+  process.env.LOGGLY_TOKEN = env.LOGGLY_TOKEN;
+  Logger.setLevel(process.env.LALOG_LEVEL);
+
   const logger = Logger.create({
     serviceName: 'plant-image-lambda',
     moduleName: 'n/a',
