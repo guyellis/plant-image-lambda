@@ -16,6 +16,10 @@ const bucket = 'i.plaaant.com';
 //       width
 //       name
 //     index
+/**
+ * processImage
+ * @param {Request} req
+ */
 function processImage(req) {
   req.step += 1;
   const {

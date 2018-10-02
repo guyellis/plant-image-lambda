@@ -6,6 +6,11 @@ const gm = require('gm');
 const env = require('./env.json');
 const pipeline = require('./outer');
 
+/**
+ * Entry point from Lambda call
+ * @param {LambdaEvent} event
+ * @param {Context} ctx
+ */
 async function handler(event, ctx) {
   process.env.LOGGLY_TOKEN = env.LOGGLY_TOKEN;
   Logger.setLevel(process.env.LALOG_LEVEL);
