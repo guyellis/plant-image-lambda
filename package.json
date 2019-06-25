@@ -14,7 +14,7 @@
     "@types/node-fetch": "2.3.7",
     "check-node-version": "4.0.1",
     "concurrently": "4.1.0",
-    "eslint": "6.0.0",
+    "eslint": "6.0.1",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "2.17.3",
     "eslint-plugin-jest": "22.7.1",
