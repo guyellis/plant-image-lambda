@@ -13,7 +13,7 @@
   "devDependencies": {
     "@types/node-fetch": "2.3.7",
     "check-node-version": "4.0.1",
-    "concurrently": "4.1.0",
+    "concurrently": "4.1.1",
     "eslint": "6.0.0",
     "eslint-config-airbnb-base": "13.2.0",
     "eslint-plugin-import": "2.17.3",
