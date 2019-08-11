@@ -19,7 +19,7 @@
     "eslint-plugin-import": "2.18.2",
     "eslint-plugin-jest": "22.15.0",
     "eslint-plugin-security": "1.4.0",
-    "jest": "23.5.0",
+    "jest": "24.8.0",
     "lodash": "4.17.15",
     "pre-commit": "1.2.2",
     "typescript": "3.5.3"
