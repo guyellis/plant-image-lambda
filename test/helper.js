@@ -50,7 +50,7 @@ const fakeS3Object = {
 
 const mockLogger = {};
 
-const isObject = obj => obj !== null && typeof obj === 'object';
+const isObject = (obj) => obj !== null && typeof obj === 'object';
 
 const loggerMockFunction = (errObj, extra) => {
   if (!isObject(errObj)) {

@@ -1,5 +1,4 @@
 
-
 const convertToJpg = require('./outer-3-convert-to-jpg');
 const fixExif = require('./outer-4-fix-exif');
 const getImageFromS3 = require('./outer-2-get-image-from-s3');
