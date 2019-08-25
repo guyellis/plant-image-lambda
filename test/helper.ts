@@ -50,9 +50,9 @@ const fakeS3Object = {
 
 const mockLogger = {};
 
-const isObject = (obj) => obj !== null && typeof obj === 'object';
+const isObject = (obj: any) => obj !== null && typeof obj === 'object';
 
-const loggerMockFunction = (errObj, extra) => {
+const loggerMockFunction = (errObj: any, extra?: any) => {
   if (!isObject(errObj)) {
     throw new Error(`First param to lalog logger method is not an object: ${typeof errObj}`);
   }
@@ -62,7 +62,7 @@ const loggerMockFunction = (errObj, extra) => {
   }
 };
 
-const loggerTimeEndMockFunction = (label, extraLogData) => {
+const loggerTimeEndMockFunction = (label: any, extraLogData: any) => {
   if (typeof label !== 'string') {
     throw new Error(`First param to lalog timeEnd method is not an string: ${typeof label}`);
   }
@@ -76,14 +76,23 @@ const loggerTimeEndMockFunction = (label, extraLogData) => {
 
 const mockLoggerReset = () => {
   // const levels = ['trace', 'info', 'warn', 'error', 'fatal', 'security'];
+  // @ts-ignore
   mockLogger.trace = jest.fn(loggerMockFunction);
+  // @ts-ignore
   mockLogger.info = jest.fn(loggerMockFunction);
+  // @ts-ignore
   mockLogger.warn = jest.fn(loggerMockFunction);
+  // @ts-ignore
   mockLogger.error = jest.fn(loggerMockFunction);
+  // @ts-ignore
   mockLogger.fatal = jest.fn(loggerMockFunction);
+  // @ts-ignore
   mockLogger.security = jest.fn(loggerMockFunction);
+  // @ts-ignore
   mockLogger.timeEnd = jest.fn(loggerTimeEndMockFunction);
+  // @ts-ignore
   mockLogger.timeEnd.error = jest.fn(loggerTimeEndMockFunction);
+  // @ts-ignore
   mockLogger.time = jest.fn();
 };
 
@@ -91,6 +100,7 @@ mockLoggerReset();
 
 class mockGM {
   constructor() {
+    // @ts-ignore - intentionally done like this for testing
     return () => this;
   }
 
@@ -103,20 +113,20 @@ class mockGM {
   resize() { return this; }
 
   // eslint-disable-next-line class-methods-use-this
-  toBuffer(type, cb) {
+  toBuffer(_: any, cb: Function) {
     cb(null, 'Fake Buffer');
   }
 
-  size(cb) {
+  size(cb: Function) {
     cb.call(this, null, { width: 3000, height: 2000 });
   }
 }
 
 const mockS3 = {
-  getObject(obj, cb) {
+  getObject(_: any, cb: Function) {
     cb(null, fakeS3Object);
   },
-  putObject(obj, cb) {
+  putObject(_: any, cb: Function) {
     cb();
   },
 };

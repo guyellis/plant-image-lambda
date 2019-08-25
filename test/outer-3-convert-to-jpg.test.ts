@@ -1,9 +1,11 @@
-const { mockLogger, mockGM: MockGM } = require('./helper');
+export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
+
+const { mockLogger, mockGM: MockGM } = require('./helper'); // eslint-disable-line import/no-unresolved
 const convertToJpg = require('../src/outer-3-convert-to-jpg');
 
 describe('convertToJpg', () => {
   test('should throw if toBuffer rejects', async () => {
-    MockGM.prototype.toBuffer = (imageType, cb) => cb('fake-toBuffer-error');
+    MockGM.prototype.toBuffer = (_: any, cb: Function) => cb('fake-toBuffer-error');
     const gm = new MockGM();
 
     const req = {

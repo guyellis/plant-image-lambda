@@ -15,7 +15,7 @@ jest.mock('node-fetch', () => (() => {
 
 const env = require('../src/env'); // eslint-disable-line import/no-unresolved
 
-const { mockLogger, mockLoggerReset } = require('./helper');
+const { mockLogger, mockLoggerReset } = require('./helper'); // eslint-disable-line import/no-unresolved
 const writeToServer = require('../src/write-to-server');
 
 describe('write-to-server', () => {

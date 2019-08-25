@@ -1,4 +1,6 @@
-const { mockGM, fakeEvent } = require('./helper');
+export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
+
+const { mockGM, fakeEvent } = require('./helper'); // eslint-disable-line import/no-unresolved
 
 jest.mock('gm', () => ({
   // eslint-disable-next-line new-cap
@@ -14,7 +16,7 @@ const index = require('../src');
 describe('index-handler', () => {
   test('should run end-to-end', (end) => {
     const ctx = {
-      done(err) {
+      done(err: any) {
         expect(err).toBeFalsy();
         // 1 Assertion from above
         // 4 Assertions from logger.create()

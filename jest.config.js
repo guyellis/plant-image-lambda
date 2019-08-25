@@ -22,7 +22,7 @@ module.exports = {
       statements: 100,
     },
   },
-  setupFilesAfterEnv: ['./test/setup.js'],
+  setupFilesAfterEnv: ['./test/setup.ts'],
   testMatch: ['**/test/**/*.test.[j|t]s?(x)'],
   // Jasmine, jest's default test-runner, fails silently on afterAll within
   // a describe block. This is a bug that the jest team is not going to fix

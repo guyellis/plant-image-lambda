@@ -1,6 +1,6 @@
 export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
 
-const { mockLogger, mockGM: MockGM } = require('./helper');
+const { mockLogger, mockGM: MockGM } = require('./helper'); // eslint-disable-line import/no-unresolved
 const getImageSize = require('../src/outer-5-image-size');
 
 describe('getImageSize', () => {

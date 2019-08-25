@@ -1,4 +1,6 @@
-const { mockGM, fakeEvent /* , mockLogger */ } = require('./helper');
+export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
+
+const { mockGM, fakeEvent /* , mockLogger */ } = require('./helper'); // eslint-disable-line import/no-unresolved
 
 jest.mock('gm', () => ({
   // eslint-disable-next-line new-cap
@@ -18,7 +20,7 @@ const index = require('../src');
 describe('index-handler-error', () => {
   test('should log error if pipeline throws', (end) => {
     const ctx = {
-      done(err) {
+      done(err: any) {
         expect(err.message).toBe('fake-outer-pipeline-error');
 
         // TODO: The expect() below should work. When stepping through with

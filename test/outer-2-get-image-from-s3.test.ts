@@ -1,4 +1,6 @@
-const { mockLogger } = require('./helper');
+export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
+
+const { mockLogger } = require('./helper'); // eslint-disable-line import/no-unresolved
 const getImageFromS3 = require('../src/outer-2-get-image-from-s3');
 
 const fakeBucket = 'Fake Bucket';
@@ -16,7 +18,7 @@ describe('getImageFromS3', () => {
     const req = {
       deps: {
         s3: {
-          getObject(obj, cb) {
+          getObject(obj: any, cb: Function) {
             expect(fakeBucket).toBe(obj.Bucket);
             expect(fakeKey).toBe(obj.Key);
             cb(null, fakeS3Object);
@@ -38,7 +40,7 @@ describe('getImageFromS3', () => {
     const req = {
       deps: {
         s3: {
-          getObject(obj, cb) {
+          getObject(obj: any, cb: Function) {
             expect(fakeBucket).toBe(obj.Bucket);
             expect(fakeKey).toBe(obj.Key);
             cb('fake-s3-getObject-error');

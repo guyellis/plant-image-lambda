@@ -1,8 +1,10 @@
+export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
+
 const calcSizes = require('../src/image-sizes');
 
-function getExpected(sizes) {
+function getExpected(sizes: any) {
   const names = ['thumb', 'sm', 'md', 'lg', 'xl'];
-  return sizes.map((width, index) => ({
+  return sizes.map((width: any, index: any) => ({
     width,
     // eslint-disable-next-line security/detect-object-injection
     name: names[index],

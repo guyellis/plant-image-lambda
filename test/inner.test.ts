@@ -1,16 +1,18 @@
+export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
+
 const {
   mockLogger, mockGM: MockGM, mockS3, mockLoggerReset,
-} = require('./helper');
+} = require('./helper'); // eslint-disable-line import/no-unresolved
 const pipeline = require('../src/inner');
 
 describe('pipeline', () => {
   beforeEach(() => {
     mockLoggerReset();
-    MockGM.prototype.toBuffer = (imageType, cb) => cb(null, 'fake-buffer');
+    MockGM.prototype.toBuffer = (_: any, cb: Function) => cb(null, 'fake-buffer');
   });
 
   test('should throw if processImage throws', async () => {
-    MockGM.prototype.toBuffer = (imageType, cb) => cb('fake-toBuffer-error');
+    MockGM.prototype.toBuffer = (_: any, cb: Function) => cb('fake-toBuffer-error');
     const gm = new MockGM();
 
     const req = {
@@ -78,7 +80,7 @@ describe('pipeline', () => {
         gm,
         logger: mockLogger,
         s3: {
-          putObject(obj, cb) {
+          putObject(_: any, cb: Function) {
             cb('fake-putObject-error');
           },
         },
