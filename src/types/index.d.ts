@@ -1,11 +1,18 @@
 interface ImageSize {
-  width: number;
   name: string;
+  width: number;
+}
+
+interface LoggerPresets {
+  trackId?: string;
 }
 
 interface Logger {
+  error: Function;
+  presets?: LoggerPresets;
   time: Function;
   timeEnd: Function;
+  trace: Function;
 }
 
 interface RequestDeps {
@@ -28,10 +35,11 @@ interface RequestInput {
 }
 
 interface PlantRequest {
-  step: number;
-  event: any;
-  deps: RequestDeps;
-  item: RequestItem;
-  input: RequestInput;
   buffer: any;
+  data: any;
+  deps: RequestDeps;
+  event: any;
+  input: RequestInput;
+  item: RequestItem;
+  step: number;
 }

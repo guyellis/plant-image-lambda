@@ -1,12 +1,13 @@
+export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
 
 const fetch = require('node-fetch');
 const env = require('./env');
 
-async function httpPost(req) {
+async function httpPost(req: PlantRequest) {
   const {
+    PLANT_IMAGE_COMPLETE,
     PLANT_IMAGE_HOST,
     PLANT_IMAGE_PORT,
-    PLANT_IMAGE_COMPLETE,
   } = env;
 
   const {
@@ -20,7 +21,7 @@ async function httpPost(req) {
       sizes,
     },
   } = req;
-  const { presets: { trackId } = {} } = logger;
+  const { presets: { trackId } = {} as LoggerPresets } = logger;
 
   const putData = JSON.stringify({
     metadata,
@@ -43,12 +44,12 @@ async function httpPost(req) {
   try {
     const response = await fetch(url, options);
     const logData = {
-      msg: 'Image sizing metadata update sent',
-      url,
-      options,
       env,
+      msg: 'Image sizing metadata update sent',
+      options,
       putData,
       status: response.status,
+      url,
     };
     if (response.status === 200) {
       logger.trace(logData);
@@ -60,11 +61,11 @@ async function httpPost(req) {
     }
   } catch (err) {
     logger.error({
-      msg: 'Error sending image sizing metadata',
-      url,
-      options,
       env,
+      msg: 'Error sending image sizing metadata',
+      options,
       putData,
+      url,
     });
   }
 
