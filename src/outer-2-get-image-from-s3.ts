@@ -1,9 +1,13 @@
-// TODO: Replace console with logging
-/* eslint-disable no-console */
+// import entire SDK
+// import AWS from 'aws-sdk';
+// import AWS object without services
+// import AWS from 'aws-sdk/global';
+// import individual service
+import S3 from 'aws-sdk/clients/s3';
 
 // #2
 // data has: bucketName, key, fileName, imageType
-function getImageFromS3(req) {
+function getImageFromS3(req: {data: any; deps: { s3: S3; logger: any }}) {
   const { data, deps: { s3, logger } } = req;
   logger.time('getImageFromS3');
   logger.trace({ msg: '2. getImageFromS3()' });
@@ -29,7 +33,6 @@ function getImageFromS3(req) {
   });
 }
 
-
 module.exports = getImageFromS3;
 
 /*
@@ -45,5 +48,3 @@ The s3Object returned by s3.getObject will look something like this:
      originalname: 'zzzzzzzzzzzzzz.jpg' },
   Body: <Buffer
 */
-
-/* eslint-enable no-console */

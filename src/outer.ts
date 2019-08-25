@@ -1,3 +1,4 @@
+export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
 
 const convertToJpg = require('./outer-3-convert-to-jpg');
 const fixExif = require('./outer-4-fix-exif');
@@ -14,7 +15,7 @@ const httpPost = require('./write-to-server');
  * @param {object} req - request object with event and deps
  * @returns {Promise}
  */
-async function pipeline(req) {
+async function pipeline(req: object) {
   extractFromEvent(req);
   await getImageFromS3(req);
   await convertToJpg(req);

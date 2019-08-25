@@ -2,14 +2,14 @@
 const path = require('path');
 
 // #1
-function extractFromEvent(req) {
+function extractFromEvent(req: any) {
   const { event, deps: { logger } } = req;
 
   // Object key may have spaces or unicode non-ASCII characters.
   const key = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
   // If there's one or more dots in the key then this next regex will return an array with
   // two items. The first element will be the last dot and following characters and the
-  // second element will be the same withou the dot.
+  // second element will be the same without the dot.
   const typeMatch = key.match(/\.([^.]*)$/);
   if (!typeMatch) {
     const msg = `unable to infer image type for key ${key}`;
