@@ -14,6 +14,7 @@ module.exports = {
     sourceType:  'module',  // Allows for the use of imports
   },
   "plugins": [
+    'import',
     "security",
     "jest"
   ],
@@ -31,5 +32,14 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': [0],
     '@typescript-eslint/class-name-casing': [0],
     '@typescript-eslint/ban-ts-ignore': [0],
+  },
+  settings: {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      // use <root>/tsconfig.json
+      typescript: {}
+    }
   }
 };

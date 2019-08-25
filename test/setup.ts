@@ -1,5 +1,5 @@
 export {};
-const { mockLogger, mockS3 } = require('./helper'); // eslint-disable-line import/no-unresolved
+const { mockLogger, mockS3 } = require('./helper');
 
 
 jest.mock('aws-sdk', () => ({

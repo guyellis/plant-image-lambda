@@ -1,6 +1,6 @@
 export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
 
-const { mockLogger } = require('./helper'); // eslint-disable-line import/no-unresolved
+const { mockLogger } = require('./helper');
 const getImageFromS3 = require('../src/outer-2-get-image-from-s3');
 
 const fakeBucket = 'Fake Bucket';

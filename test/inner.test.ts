@@ -2,7 +2,7 @@ export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'
 
 const {
   mockLogger, mockGM: MockGM, mockS3, mockLoggerReset,
-} = require('./helper'); // eslint-disable-line import/no-unresolved
+} = require('./helper');
 const pipeline = require('../src/inner');
 
 describe('pipeline', () => {

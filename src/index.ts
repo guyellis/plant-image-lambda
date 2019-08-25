@@ -3,15 +3,13 @@ const util = require('util');
 const Logger = require('lalog');
 const gm = require('gm');
 
-const env = require('./env'); // eslint-disable-line import/no-unresolved
+const env = require('./env');
 const pipeline = require('./outer');
 
 /**
  * Entry point from Lambda call
- * @param {LambdaEvent} event
- * @param {Context} ctx
  */
-async function handler(event, ctx) {
+async function handler(event: LambdaEvent, ctx: Context) {
   process.env.LOGGLY_TOKEN = env.LOGGLY_TOKEN;
   Logger.setLevel(process.env.LALOG_LEVEL);
 

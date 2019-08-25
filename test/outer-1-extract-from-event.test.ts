@@ -2,7 +2,7 @@ export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'
 
 const _ = require('lodash');
 
-const { fakeEvent, mockLogger, mockLoggerReset } = require('./helper'); // eslint-disable-line import/no-unresolved
+const { fakeEvent, mockLogger, mockLoggerReset } = require('./helper');
 const extractFromEvent = require('../src/outer-1-extract-from-event');
 
 describe('extractFromEvent', () => {

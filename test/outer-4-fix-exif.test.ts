@@ -1,6 +1,6 @@
 export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
 
-const { mockLogger, mockGM: MockGM } = require('./helper'); // eslint-disable-line import/no-unresolved
+const { mockLogger, mockGM: MockGM } = require('./helper');
 const fixExif = require('../src/outer-4-fix-exif');
 
 describe('fixExif', () => {
