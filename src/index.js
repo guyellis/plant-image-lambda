@@ -3,7 +3,7 @@ const util = require('util');
 const Logger = require('lalog');
 const gm = require('gm');
 
-const env = require('./env.json');
+const env = require('./env'); // eslint-disable-line import/no-unresolved
 const pipeline = require('./outer');
 
 /**

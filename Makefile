@@ -8,6 +8,8 @@ lambda:
 	@if [ -z "${LALOG_LEVEL}" ]; then (echo "Please export LALOG_LEVEL" && exit 1); fi
 	@echo "Check Node Version"
 	@npm run cnv
+	@echo "Run TypeScript Transpiler"
+	@tsc
 	@echo "Remove existing node_modules"
 	@rm -rf node_modules/
 	@echo "Remove existing build/"
@@ -19,7 +21,7 @@ lambda:
 	@echo "Copying files to build/"
 	@cp index.js build/index.js
 	@cp -R node_modules build/node_modules
-	@cp -R src build/src
+	@cp -R dist/src build/src
 	@echo "Create env.json"
 	sh devops/setenv.sh
 	@echo "Create package archive"

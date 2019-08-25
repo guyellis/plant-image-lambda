@@ -1,5 +1,5 @@
-cat >build/src/env.json <<EOL
-{
+cat >build/src/env.ts <<EOL
+module.exports = {
 "LALOG_LEVEL": "$LALOG_LEVEL",
 "LOGGLY_TOKEN": "$LOGGLY_TOKEN",
 "PLANT_IMAGE_COMPLETE": "$PLANT_IMAGE_COMPLETE",

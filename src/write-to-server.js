@@ -1,6 +1,6 @@
 
 const fetch = require('node-fetch');
-const env = require('./env.json');
+const env = require('./env'); // eslint-disable-line import/no-unresolved
 
 async function httpPost(req) {
   const {

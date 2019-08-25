@@ -38,4 +38,5 @@ jspm_packages
 
 lambda-image.zip
 
-typings/
+# TypeScript output directory
+dist/
