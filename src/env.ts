@@ -1,3 +1,4 @@
+/* eslint-disable */
 module.exports = {
   "LALOG_LEVEL": "info",
   "LOGGLY_TOKEN": "fake-token",
@@ -5,3 +6,4 @@ module.exports = {
   "PLANT_IMAGE_HOST": "fake-host",
   "PLANT_IMAGE_PORT": "fake-port"
 };
+/* eslint-enable */

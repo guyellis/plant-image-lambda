@@ -5,8 +5,14 @@ module.exports = {
   },
   "extends": [
     "airbnb-base",
-    "plugin:security/recommended"
+    "plugin:security/recommended",
+    'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
   ],
+  parser: '@typescript-eslint/parser', // Specifies the ESLint parser
+  parserOptions:  {
+    ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features
+    sourceType:  'module',  // Allows for the use of imports
+  },
   "plugins": [
     "security",
     "jest"
@@ -17,5 +23,10 @@ module.exports = {
     "jest/no-identical-title": [2],
     "jest/prefer-to-have-length": [2],
     "jest/valid-expect": [2],
+    "@typescript-eslint/explicit-function-return-type": [0],
+    "@typescript-eslint/no-var-requires": [0],
+    '@typescript-eslint/no-empty-interface': [0],
+    '@typescript-eslint/no-explicit-any': [0],
+    '@typescript-eslint/class-name-casing': [0]
   }
 };

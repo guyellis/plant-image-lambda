@@ -1,3 +1,4 @@
+/** @type {jest.InitialOptions} */
 module.exports = {
   verbose: false,
   collectCoverageFrom: [
@@ -22,7 +23,7 @@ module.exports = {
     },
   },
   setupFilesAfterEnv: ['./test/setup.js'],
-  testMatch: ['**/test/**/*.test.js?(x)'],
+  testMatch: ['**/test/**/*.test.[j|t]s?(x)'],
   // Jasmine, jest's default test-runner, fails silently on afterAll within
   // a describe block. This is a bug that the jest team is not going to fix
   // because they plan to use jest-circus/runner by default in the near future.

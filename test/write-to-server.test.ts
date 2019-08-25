@@ -1,3 +1,5 @@
+export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
+
 const mockFetchResult = {
   status: 200,
 };

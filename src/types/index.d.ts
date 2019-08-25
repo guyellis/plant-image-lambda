@@ -19,11 +19,11 @@ interface Logger {
 interface RequestDeps {
   gm: object;
   logger: Logger;
-}  
+}
 
 interface RequestItem {
   size: ImageSize;
-}  
+}
 
 interface RequestInput {
   bucketName: string;

@@ -1,9 +1,11 @@
+export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
+
 const { mockLogger, mockGM: MockGM } = require('./helper');
 const getImageSize = require('../src/outer-5-image-size');
 
 describe('getImageSize', () => {
   test('should throw if size rejects', async () => {
-    MockGM.prototype.size = (cb) => cb('fake-size-error');
+    MockGM.prototype.size = (cb: Function) => cb('fake-size-error');
     const gm = new MockGM();
 
     const req = {
