@@ -15,7 +15,7 @@ const httpPost = require('./write-to-server');
  * @param {object} req - request object with event and deps
  * @returns {Promise}
  */
-async function pipeline(req: object) {
+async function pipeline(req: PlantRequest) {
   extractFromEvent(req);
   await getImageFromS3(req);
   await convertToJpg(req);

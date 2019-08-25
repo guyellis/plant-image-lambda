@@ -1,4 +1,6 @@
-const AWS = require('aws-sdk');
+import { Context, Handler, S3EventRecord } from 'aws-lambda'; // eslint-disable-line import/no-unresolved
+import AWS from 'aws-sdk';
+
 const util = require('util');
 const Logger = require('lalog');
 const gm = require('gm');
@@ -6,10 +8,14 @@ const gm = require('gm');
 const env = require('./env');
 const pipeline = require('./outer');
 
+interface MainEntry {
+  handler: Handler;
+}
+
 /**
  * Entry point from Lambda call
  */
-async function handler(event: LambdaEvent, ctx: Context) {
+async function handler(event: S3EventRecord, ctx: Context) {
   process.env.LOGGLY_TOKEN = env.LOGGLY_TOKEN;
   Logger.setLevel(process.env.LALOG_LEVEL);
 
@@ -33,7 +39,7 @@ async function handler(event: LambdaEvent, ctx: Context) {
       }),
     };
 
-    const req = {
+    const req: Partial<PlantRequest> = {
       event,
       deps,
     };
@@ -52,4 +58,4 @@ async function handler(event: LambdaEvent, ctx: Context) {
 
 module.exports = {
   handler,
-};
+} as MainEntry;

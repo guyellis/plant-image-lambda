@@ -14,6 +14,11 @@ module.exports = {
     '!jest.config.js',
     '**/*.{js,jsx}',
   ],
+  coveragePathIgnorePatterns: [
+    '<rootDir>/dist/',
+    '<rootDir>/node_modules/',
+    '<rootDir>/test/',
+  ],
   coverageThreshold: {
     global: {
       branches: 100,

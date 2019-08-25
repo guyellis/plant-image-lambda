@@ -3,14 +3,6 @@ interface ImageSize {
   name: string;
 }
 
-interface LambdaEvent {
-
-}
-
-interface Context {
-  done: Function;
-}
-
 interface Logger {
   time: Function;
   timeEnd: Function;
@@ -35,8 +27,9 @@ interface RequestInput {
   s3Object: object;
 }
 
-interface Request {
+interface PlantRequest {
   step: number;
+  event: any;
   deps: RequestDeps;
   item: RequestItem;
   input: RequestInput;
