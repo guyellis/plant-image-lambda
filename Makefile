@@ -10,10 +10,10 @@ lambda:
 	@npm run cnv
 	@echo "Remove existing node_modules"
 	@rm -rf node_modules/
-	@echo "Installing node modules (production)"
-	npm i --production --depth 0
 	@echo "Remove existing build/"
 	@rm -rf build/
+	@echo "Installing node modules (production)"
+	npm i --production --depth 0
 	@echo "Create new build/"
 	@mkdir build
 	@echo "Copying files to build/"
