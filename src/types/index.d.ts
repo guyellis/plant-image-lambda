@@ -1,5 +1,5 @@
 interface ImageSize {
-  height: number;
+  height?: number;
   name: string;
   width: number;
 }

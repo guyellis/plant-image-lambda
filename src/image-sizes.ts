@@ -1,10 +1,12 @@
+export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
+
 /**
  * Calculate the sizes to be used for resizing the image based on the current size
  * @param {number} width - the width of the original image
  * @return {ImageSize[]} - an array of up to 4 elements representing the size
  * in each group
  */
-function calcSizes(width) {
+function calcSizes(width: number): ImageSize[] {
   if (width < 1) {
     throw new Error(`Unexpected width less than 1: ${width}`);
   }
@@ -27,10 +29,7 @@ function calcSizes(width) {
   }];
 
   return brackets.reduce(
-    /**
-     * @param {ImageSize[]} acc
-     */
-    (acc, { bracket, name }, index) => {
+    (acc: ImageSize[], { bracket, name }, index) => {
       let w;
       if (width > bracket) {
         w = bracket;
