@@ -9,7 +9,7 @@ const calcSizes = require('./image-sizes');
 //   imageType
 //   s3Object
 //   buffer
-function getImageSize(req) {
+function getImageSize(req: PlantRequest) {
   const { data, deps: { gm, logger } } = req;
   const method = '5. getImageSize()';
 
@@ -18,7 +18,7 @@ function getImageSize(req) {
   });
 
   return new Promise((resolve, reject) => {
-    gm(data.buffer).size((err, size) => {
+    gm(data.buffer).size((err: any, size: any) => {
       if (err) {
         logger.error({
           method,

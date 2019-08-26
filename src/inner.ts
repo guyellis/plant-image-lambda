@@ -20,7 +20,7 @@ const bucket = 'i.plaaant.com';
  * processImage
  * @param {Request} req
  */
-function processImage(req) {
+function processImage(req: any) {
   req.step += 1;
   const {
     deps: { gm, logger }, step, item, input: { buffer: response },
@@ -31,7 +31,7 @@ function processImage(req) {
 
   if (size.width === targetSize.width) {
     req.buffer = response;
-    logger.timeEnd('processImage', {
+    (logger.timeEnd as TimeEndLoggerFunc)('processImage', {
       msg: 'width in size and targetSize already matched',
       step,
       item,
@@ -45,7 +45,7 @@ function processImage(req) {
   const height = scalingFactor * size.height;
   return new Promise((resolve, reject) => {
     gm(response).resize(targetSize.width, height)
-      .toBuffer('JPG', (err, buffer) => {
+      .toBuffer('JPG', (err: any, buffer: any) => {
         if (err) {
           logger.timeEnd.error('processImage', {
             msg: 'Error in gm(response).resize()',
@@ -59,7 +59,7 @@ function processImage(req) {
           return reject(err);
         }
         req.buffer = buffer;
-        logger.timeEnd('processImage', {
+        (logger.timeEnd as TimeEndLoggerFunc)('processImage', {
           step, item, size, targetSize, scalingFactor,
         });
         return resolve(req);
@@ -82,7 +82,7 @@ function processImage(req) {
 //       name
 //     index
 //   buffer
-function uploadImage(req) {
+function uploadImage(req: any) {
   req.step += 1;
   const {
     deps: { s3, logger }, step,
@@ -98,14 +98,15 @@ function uploadImage(req) {
       Key: outKey,
       Body: req.buffer,
       ContentType: 'JPG',
-    }, (err, result) => {
+    }, (err: any, result: any) => {
       if (err) {
-        logger.timeEnd.error('uploadImage', {
+        const errObj = {
           msg: 'Error in s3.putObject()', err, bucket, outKey, step,
-        });
+        };
+        (logger.timeEnd.error as TimeEndLoggerFunc)('uploadImage', errObj);
         return reject(err);
       }
-      logger.timeEnd('uploadImage', {
+      (logger.timeEnd as TimeEndLoggerFunc)('uploadImage', {
         bucket, outKey, step,
       });
       return resolve(result);
@@ -113,7 +114,7 @@ function uploadImage(req) {
   });
 }
 
-async function pipeline(req) {
+async function pipeline(req: PlantRequest) {
   Object.freeze(req.data);
   const { sizes } = req.data;
   const { deps: { logger } } = req;

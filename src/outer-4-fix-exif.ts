@@ -11,7 +11,7 @@
 //   imageType
 //   s3Object
 //   buffer
-function fixExif(req) {
+function fixExif(req: PlantRequest) {
   const { data, deps: { gm, logger } } = req;
   const method = '4. fixExif()';
 
@@ -22,7 +22,7 @@ function fixExif(req) {
   return new Promise((resolve, reject) => {
     gm(data.buffer)
       .autoOrient()
-      .toBuffer('JPG', (err, buffer) => {
+      .toBuffer('JPG', (err: any, buffer: any) => {
         if (err) {
           logger.error({
             method,

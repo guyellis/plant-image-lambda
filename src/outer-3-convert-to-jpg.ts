@@ -6,7 +6,7 @@
 //   fileName
 //   imageType
 //   s3Object
-function convertToJpg(req) {
+function convertToJpg(req: PlantRequest) {
   const { data, deps: { gm, logger } } = req;
   const {
     s3Object: {
@@ -24,7 +24,7 @@ function convertToJpg(req) {
     gm(Body)
       .antialias(true)
       .density(300)
-      .toBuffer('JPG', (err, buffer) => {
+      .toBuffer('JPG', (err: any, buffer: any) => {
         if (err) {
           logger.error({
             msg: 'convertToJpg error in toBuffer',

@@ -1,4 +1,5 @@
 interface ImageSize {
+  height: number;
   name: string;
   width: number;
 }
@@ -7,17 +8,26 @@ interface LoggerPresets {
   trackId?: string;
 }
 
+type TimeEndLoggerFunc = (timerName: string, logData?: object) => void;
+
+interface TimeEndLogger {
+  error: TimeEndLoggerFunc;
+}
+
+type LoggerFunc = (logData: object) => void;
+
 interface Logger {
-  error: Function;
+  error: LoggerFunc;
   presets?: LoggerPresets;
-  time: Function;
-  timeEnd: Function;
-  trace: Function;
+  time: (timerName: string) => void;
+  timeEnd: TimeEndLogger | TimeEndLoggerFunc;
+  trace: LoggerFunc;
 }
 
 interface RequestDeps {
-  gm: object;
+  gm: Function;
   logger: Logger;
+  s3: any;
 }
 
 interface RequestItem {
@@ -31,6 +41,7 @@ interface RequestInput {
   imageSize: ImageSize;
   imageType: string;
   key: string;
+  outKeyRoot: string;
   s3Object: object;
 }
 
