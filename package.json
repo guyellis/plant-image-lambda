@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "@types/aws-lambda": "8.10.31",
-    "aws-sdk": "2.528.0",
+    "aws-sdk": "2.529.0",
     "gm": "1.23.1",
     "lalog": "0.6.0",
     "node-fetch": "2.6.0"
