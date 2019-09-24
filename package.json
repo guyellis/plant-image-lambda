@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "@types/aws-lambda": "8.10.32",
-    "aws-sdk": "2.533.0",
+    "aws-sdk": "2.534.0",
     "gm": "1.23.1",
     "lalog": "0.6.0",
     "node-fetch": "2.6.0"
@@ -14,9 +14,9 @@
   "devDependencies": {
     "@types/jest": "24.0.18",
     "@types/node": "12.7.5",
-    "@types/node-fetch": "2.5.1",
+    "@types/node-fetch": "2.5.2",
     "@typescript-eslint/eslint-plugin": "2.3.0",
-    "@typescript-eslint/parser": "2.3.0",
+    "@typescript-eslint/parser": "2.3.1",
     "check-node-version": "4.0.1",
     "concurrently": "4.1.2",
     "eslint": "6.4.0",
