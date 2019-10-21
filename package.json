@@ -16,7 +16,7 @@
     "@types/node": "12.11.2",
     "@types/node-fetch": "2.5.2",
     "@typescript-eslint/eslint-plugin": "2.5.0",
-    "@typescript-eslint/parser": "2.4.0",
+    "@typescript-eslint/parser": "2.5.0",
     "check-node-version": "4.0.1",
     "concurrently": "5.0.0",
     "eslint": "6.5.1",
