@@ -12,7 +12,7 @@
   },
   "description": "Image Lambda for Plant Project",
   "devDependencies": {
-    "@types/jest": "24.0.21",
+    "@types/jest": "24.0.22",
     "@types/node": "12.12.6",
     "@types/node-fetch": "2.5.3",
     "@typescript-eslint/eslint-plugin": "2.6.1",
