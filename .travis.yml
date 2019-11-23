@@ -2,7 +2,6 @@ env:
   - CXX=g++-4.8
 language: node_js
 node_js:
-  - "10"
   - "12"
   - "13"
 addons:
@@ -14,7 +13,7 @@ addons:
     - g++-4.8
 install: npm install
 before_install:
-- npm install -g npm@6.1.0
+- npm install -g npm@6.12.1
 - npm install -g greenkeeper-lockfile@1
 before_script: greenkeeper-lockfile-update
 after_script: greenkeeper-lockfile-upload
