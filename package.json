@@ -33,12 +33,12 @@
     "typescript": "3.7.2"
   },
   "engines": {
-    "node": "8.10",
-    "npm": ">= 5.6.0"
+    "node": "12.13.1",
+    "npm": ">= 6.0.0"
   },
   "homepage": "https://github.com/guyellis/plant-image-lambda#readme",
   "license": "MIT",
-  "main": "index.js",
+  "main": "dist/index.js",
   "name": "plant-image-lambda",
   "pre-commit": {
     "colors": true,
@@ -57,9 +57,9 @@
     "cnv": "check-node-version --package",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .js --ext .ts . --max-warnings 0",
-    "lintfix": "eslint --ext .js --ext .ts . --fix",
+    "lintfix": "npm run lint -- --fix",
     "precom": "concurrently \"npm:lint\" \"npm:coverage\"",
-    "test": "tsc --incremental && npm run lint && npm run coverage",
+    "test": "tsc && npm run lint && npm run coverage",
     "upprod": "make uploadlambda",
     "uptest": "make uploadlambda"
   },
