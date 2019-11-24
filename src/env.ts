@@ -1,5 +1,5 @@
 /* eslint-disable */
-module.exports = {
+export default {
   "LALOG_LEVEL": "info",
   "LOGGLY_TOKEN": "fake-token",
   "PLANT_IMAGE_COMPLETE": "fake-value",
