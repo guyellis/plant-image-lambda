@@ -36,8 +36,8 @@ module.exports = {
   // https://github.com/facebook/jest/issues/6692
   // TODO: Remove the testRunner option and the previous comment when jest
   // updates the default test-runner to jest-circus.
-  testRunner: 'jest-circus/runner',
+  // testRunner: 'jest-circus/runner',
   transform: {
-    '.+\\.tsx?$': 'ts-jest',
+    '.+\\.ts$': 'ts-jest',
   },
 };
