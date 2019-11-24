@@ -2,11 +2,11 @@ export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'
 
 /**
  * Calculate the sizes to be used for resizing the image based on the current size
- * @param {number} width - the width of the original image
- * @return {ImageSize[]} - an array of up to 4 elements representing the size
+ * @param width - the width of the original image
+ * @return - an array of up to 4 elements representing the size
  * in each group
  */
-function calcSizes(width: number): ImageSize[] {
+const calcSizes = (width: number): ImageSize[] => {
   if (width < 1) {
     throw new Error(`Unexpected width less than 1: ${width}`);
   }
@@ -44,6 +44,6 @@ function calcSizes(width: number): ImageSize[] {
       return acc;
     }, [],
   );
-}
+};
 
 module.exports = calcSizes;
