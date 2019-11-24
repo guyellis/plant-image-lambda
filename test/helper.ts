@@ -1,4 +1,4 @@
-const fakeEvent = {
+export const fakeEvent = {
   Records: [{
     eventVersion: '2.0',
     eventSource: 'aws:s3',
@@ -35,7 +35,7 @@ const fakeEvent = {
   }],
 };
 
-const fakeS3Object = {
+export const fakeS3Object = {
   AcceptRanges: 'bytes',
   LastModified: 'Tue, 06 Sep 2016 22:45:04 GMT',
   ContentLength: '2718943',
@@ -48,7 +48,7 @@ const fakeS3Object = {
   Body: '<Buffer>',
 };
 
-const mockLogger = {};
+export const mockLogger = {};
 
 const isObject = (obj: any) => obj !== null && typeof obj === 'object';
 
@@ -74,7 +74,7 @@ const loggerTimeEndMockFunction = (label: any, extraLogData: any) => {
   }
 };
 
-const mockLoggerReset = () => {
+export const mockLoggerReset = () => {
   // const levels = ['trace', 'info', 'warn', 'error', 'fatal', 'security'];
   // @ts-ignore
   mockLogger.trace = jest.fn(loggerMockFunction);
@@ -98,7 +98,7 @@ const mockLoggerReset = () => {
 
 mockLoggerReset();
 
-class mockGM {
+export class mockGM {
   constructor() {
     // @ts-ignore - intentionally done like this for testing
     return () => this;
@@ -122,7 +122,7 @@ class mockGM {
   }
 }
 
-const mockS3 = {
+export const mockS3 = {
   getObject(_: any, cb: Function) {
     cb(null, fakeS3Object);
   },
@@ -131,14 +131,14 @@ const mockS3 = {
   },
 };
 
-module.exports = {
-  fakeEvent,
-  fakeS3Object,
-  mockGM,
-  mockLogger,
-  mockLoggerReset,
-  mockS3,
-};
+// module.exports = {
+//   fakeEvent,
+//   fakeS3Object,
+//   mockGM,
+//   mockLogger,
+//   mockLoggerReset,
+//   mockS3,
+// };
 
 // Event Structure: http://docs.aws.amazon.com/AmazonS3/latest/dev/notification-content-structure.html
 
