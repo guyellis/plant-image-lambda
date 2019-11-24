@@ -1,6 +1,4 @@
-export {};
-const { mockLogger, mockS3 } = require('./helper');
-
+import { mockLogger, mockS3 } from './helper';
 
 jest.mock('aws-sdk', () => ({
   S3: function S3() {
