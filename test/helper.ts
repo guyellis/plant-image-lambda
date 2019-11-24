@@ -1,4 +1,7 @@
-export const fakeEvent = {
+// eslint-disable-next-line import/no-unresolved
+import { S3EventRecord } from 'aws-lambda';
+
+export const fakeEvent: S3EventRecord = {
   Records: [{
     eventVersion: '2.0',
     eventSource: 'aws:s3',
@@ -33,7 +36,7 @@ export const fakeEvent = {
       },
     },
   }],
-};
+} as unknown as S3EventRecord;
 
 export const fakeS3Object = {
   AcceptRanges: 'bytes',

@@ -1,6 +1,9 @@
-export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
+// eslint-disable-next-line import/no-unresolved
+import { Context } from 'aws-lambda';
 
-const { mockGM, fakeEvent } = require('./helper');
+import { mockGM, fakeEvent } from './helper';
+
+import * as index from '../src';
 
 jest.mock('gm', () => ({
   // eslint-disable-next-line new-cap
@@ -11,11 +14,10 @@ jest.mock('node-fetch', () => (() => ({
   status: 200,
 })));
 
-const index = require('../src');
 
 describe('index-handler', () => {
   test('should run end-to-end', (end) => {
-    const ctx = {
+    const ctx: Context = {
       done(err: any) {
         expect(err).toBeFalsy();
         // 1 Assertion from above
@@ -23,7 +25,7 @@ describe('index-handler', () => {
         expect.assertions(5);
         end();
       },
-    };
+    } as Context;
 
     index.handler(fakeEvent, ctx);
   });

@@ -1,4 +1,5 @@
-import { Context, Handler, S3EventRecord } from 'aws-lambda'; // eslint-disable-line import/no-unresolved
+// eslint-disable-next-line import/no-unresolved
+import { Context, Handler, S3EventRecord } from 'aws-lambda';
 import AWS from 'aws-sdk';
 
 const util = require('util');
@@ -59,3 +60,7 @@ async function handler(event: S3EventRecord, ctx: Context) {
 module.exports = {
   handler,
 } as MainEntry;
+
+export {
+  handler,
+};
