@@ -32,6 +32,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': [0],
     '@typescript-eslint/class-name-casing': [0],
     '@typescript-eslint/ban-ts-ignore': [0],
+    'import/prefer-default-export': [0],
   },
   settings: {
     "import/parsers": {
