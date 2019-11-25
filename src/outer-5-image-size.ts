@@ -1,5 +1,5 @@
 
-const calcSizes = require('./image-sizes');
+import { calcSizes } from './image-sizes';
 
 // #5
 // data:

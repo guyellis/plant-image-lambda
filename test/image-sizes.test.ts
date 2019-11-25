@@ -1,6 +1,4 @@
-export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
-
-const calcSizes = require('../src/image-sizes');
+import { calcSizes } from '../src/image-sizes';
 
 function getExpected(sizes: any) {
   const names = ['thumb', 'sm', 'md', 'lg', 'xl'];

@@ -43,5 +43,3 @@ export const calcSizes = (width: number): ImageSize[] => {
     }, [],
   );
 };
-
-module.exports = calcSizes;
