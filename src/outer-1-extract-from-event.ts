@@ -1,5 +1,5 @@
 
-const path = require('path');
+import path from 'path';
 
 // #1
 function extractFromEvent(req: any) {

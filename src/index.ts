@@ -1,12 +1,12 @@
 // eslint-disable-next-line import/no-unresolved
 import { Context, Handler, S3EventRecord } from 'aws-lambda';
 import AWS from 'aws-sdk';
+import util from 'util';
+import Logger from 'lalog';
+import gm from 'gm';
 
-const util = require('util');
-const Logger = require('lalog');
-const gm = require('gm');
+import env from './env';
 
-const env = require('./env');
 const pipeline = require('./outer');
 
 interface MainEntry {
@@ -18,6 +18,7 @@ interface MainEntry {
  */
 async function handler(event: S3EventRecord, ctx: Context) {
   process.env.LOGGLY_TOKEN = env.LOGGLY_TOKEN;
+  // @ts-ignore - TODO Fix this
   Logger.setLevel(process.env.LALOG_LEVEL);
 
   const logger = Logger.create({

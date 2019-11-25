@@ -13,6 +13,7 @@ module.exports = {
     '!**/test/**',
     '!index.js',
     '!jest.config.js',
+    '!src/types/**',
     '**/*.{js,ts}',
   ],
   coveragePathIgnorePatterns: [

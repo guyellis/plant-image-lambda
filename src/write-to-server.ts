@@ -1,7 +1,5 @@
-export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
-
-const fetch = require('node-fetch');
-const env = require('./env');
+import fetch from 'node-fetch';
+import env from './env';
 
 async function httpPost(req: PlantRequest) {
   const {
@@ -42,6 +40,7 @@ async function httpPost(req: PlantRequest) {
   };
 
   try {
+    // @ts-ignore TODO Fix this
     const response = await fetch(url, options);
     const logData = {
       env,

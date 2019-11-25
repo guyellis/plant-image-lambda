@@ -1,4 +1,4 @@
-const util = require('util');
+import util from 'util';
 
 const bucket = 'i.plaaant.com';
 

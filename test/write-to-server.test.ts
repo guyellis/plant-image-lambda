@@ -1,4 +1,4 @@
-export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
+import env from '../src/env';
 
 const mockFetchResult = {
   status: 200,
@@ -13,7 +13,6 @@ jest.mock('node-fetch', () => (() => {
   return mockFetchResult;
 }));
 
-const env = require('../src/env');
 
 const { mockLogger, mockLoggerReset } = require('./helper');
 const writeToServer = require('../src/write-to-server');
