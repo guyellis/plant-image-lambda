@@ -1,4 +1,5 @@
 import util from 'util';
+import { TimeEndLoggerFunc, PlantRequest } from './types';
 
 const bucket = 'i.plaaant.com';
 

@@ -1,5 +1,6 @@
 import S3 from 'aws-sdk/clients/s3';
 import Logger from 'lalog';
+import { SubClass } from 'gm';
 
 interface ImageSize {
   height?: number;
@@ -7,9 +8,9 @@ interface ImageSize {
   width: number;
 }
 
-interface LoggerPresets {
-  trackId?: string;
-}
+// interface LoggerPresets {
+//   trackId?: string;
+// }
 
 export type TimeEndLoggerFunc = (timerName: string, logData?: object) => void;
 
@@ -33,7 +34,7 @@ type LoggerFunc = (logData: object) => void;
 // }
 
 export interface RequestDeps {
-  gm: Function;
+  gm: SubClass;
   logger: Logger;
   s3: S3;
 }

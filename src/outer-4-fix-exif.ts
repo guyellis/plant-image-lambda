@@ -1,3 +1,4 @@
+import { PlantRequest } from './types';
 
 // var gm = import('gm').subClass({
 //   imageMagick: true

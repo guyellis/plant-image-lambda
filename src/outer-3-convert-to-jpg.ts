@@ -1,3 +1,4 @@
+import { GetImageFromS3Response, GetImageFromS3Data } from './outer-2-get-image-from-s3';
 
 // #3
 // data:
@@ -6,7 +7,18 @@
 //   fileName
 //   imageType
 //   s3Object
-export const convertToJpg = (req: PlantRequest) => {
+
+
+export interface ConvertToJpgData extends GetImageFromS3Data {
+  buffer: Buffer;
+}
+
+export interface ConvertToJpgResponse extends Omit<GetImageFromS3Response, 'data'> {
+  data: ConvertToJpgData;
+}
+
+export const convertToJpg = async (
+  req: GetImageFromS3Response): Promise<ConvertToJpgResponse> => {
   const { data, deps: { gm, logger } } = req;
   const {
     s3Object: {
@@ -21,10 +33,10 @@ export const convertToJpg = (req: PlantRequest) => {
     method: '3. convertToJpg()',
   });
   return new Promise((resolve, reject) => {
-    gm(Body)
+    gm(Body as string)
       .antialias(true)
-      .density(300)
-      .toBuffer('JPG', (err: any, buffer: any) => {
+      .density(300, 300)
+      .toBuffer('JPG', (err: Error|null, buffer: Buffer) => {
         if (err) {
           logger.error({
             msg: 'convertToJpg error in toBuffer',
@@ -33,9 +45,17 @@ export const convertToJpg = (req: PlantRequest) => {
           });
           return reject(err);
         }
-        data.buffer = buffer;
+        const nextData: ConvertToJpgData = {
+          ...data,
+          buffer,
+        };
+        const response: ConvertToJpgResponse = {
+          ...req,
+          data: nextData,
+        };
+
         logger.time('convertToJpg');
-        return resolve(req);
+        return resolve(response);
       });
   });
 };
