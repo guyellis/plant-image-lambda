@@ -1,3 +1,3 @@
 
 /* istanbul ignore next */
-exports.handler = require('./src').handler;
+export { handler } from './src';
