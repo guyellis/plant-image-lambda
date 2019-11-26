@@ -34,7 +34,6 @@ describe('pipeline', () => {
       expect(err).toEqual('fake-toBuffer-error');
     }
 
-    // @ts-ignore TODO: Fix this
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
     // @ts-ignore TODO: Fix this
     expect(mockLogger.timeEnd.error).toHaveBeenCalledTimes(1);
@@ -61,9 +60,7 @@ describe('pipeline', () => {
 
     await pipeline(req);
 
-    // @ts-ignore TODO: Fix this
     expect(mockLogger.error).not.toHaveBeenCalledTimes(1);
-    // @ts-ignore TODO: Fix this
     expect(mockLogger.timeEnd).toHaveBeenCalledTimes(2);
     expect.assertions(2);
   });
@@ -96,7 +93,6 @@ describe('pipeline', () => {
       expect(err).toEqual('fake-putObject-error');
     }
 
-    // @ts-ignore TODO: Fix this
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
     // @ts-ignore TODO: Fix this
     expect(mockLogger.timeEnd.error).toHaveBeenCalledTimes(1);

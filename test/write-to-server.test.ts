@@ -38,7 +38,6 @@ describe('write-to-server', () => {
     const result = await writeToServer(req);
 
     expect(result).toBe(req);
-    // @ts-ignore
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
   });
 
@@ -61,7 +60,6 @@ describe('write-to-server', () => {
     const result = await writeToServer(req);
 
     expect(result).toBe(req);
-    // @ts-ignore
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
   });
 
@@ -86,7 +84,6 @@ describe('write-to-server', () => {
     const result = await writeToServer(req);
 
     expect(result).toBe(req);
-    // @ts-ignore
     expect(mockLogger.error).not.toHaveBeenCalled();
   });
 });

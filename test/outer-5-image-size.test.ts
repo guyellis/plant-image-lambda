@@ -24,7 +24,6 @@ describe('getImageSize', () => {
       expect(err).toEqual('fake-size-error');
     }
 
-    // @ts-ignore TODO: Fix this
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
     expect.assertions(2);
   });

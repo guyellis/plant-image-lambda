@@ -51,7 +51,7 @@ export const fakeS3Object = {
   Body: '<Buffer>',
 };
 
-export const mockLogger = {};
+export const mockLogger: Logger = {} as Logger;
 
 const isObject = (obj: any) => obj !== null && typeof obj === 'object';
 
@@ -79,23 +79,15 @@ const loggerTimeEndMockFunction = (label: any, extraLogData: any) => {
 
 export const mockLoggerReset = () => {
   // const levels = ['trace', 'info', 'warn', 'error', 'fatal', 'security'];
-  // @ts-ignore
   mockLogger.trace = jest.fn(loggerMockFunction);
-  // @ts-ignore
   mockLogger.info = jest.fn(loggerMockFunction);
-  // @ts-ignore
   mockLogger.warn = jest.fn(loggerMockFunction);
-  // @ts-ignore
   mockLogger.error = jest.fn(loggerMockFunction);
-  // @ts-ignore
   mockLogger.fatal = jest.fn(loggerMockFunction);
-  // @ts-ignore
   mockLogger.security = jest.fn(loggerMockFunction);
-  // @ts-ignore
   mockLogger.timeEnd = jest.fn(loggerTimeEndMockFunction);
   // @ts-ignore
   mockLogger.timeEnd.error = jest.fn(loggerTimeEndMockFunction);
-  // @ts-ignore
   mockLogger.time = jest.fn();
 };
 

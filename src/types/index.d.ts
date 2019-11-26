@@ -11,12 +11,17 @@ interface LoggerPresets {
 type TimeEndLoggerFunc = (timerName: string, logData?: object) => void;
 
 interface TimeEndLogger {
+  (timerName: string, logData?: object): void;
   error: TimeEndLoggerFunc;
 }
 
 type LoggerFunc = (logData: object) => void;
 
 interface Logger {
+  info: LoggerFunc;
+  warn: LoggerFunc;
+  fatal: LoggerFunc;
+  security: LoggerFunc;
   error: LoggerFunc;
   presets?: LoggerPresets;
   time: (timerName: string) => void;

@@ -23,7 +23,6 @@ describe('fixExif', () => {
       expect(err).toEqual('fake-toBuffer-error');
     }
 
-    // @ts-ignore
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
     expect.assertions(2);
   });
