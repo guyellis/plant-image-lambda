@@ -3,6 +3,7 @@ import {
 } from './helper';
 
 import { innerPipeline as pipeline } from '../src/inner';
+import { PlantRequest } from '../src/types';
 
 describe('pipeline', () => {
   beforeEach(() => {

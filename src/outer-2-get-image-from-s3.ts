@@ -1,39 +1,49 @@
-// import entire SDK
-// import AWS from 'aws-sdk';
-// import AWS object without services
-// import AWS from 'aws-sdk/global';
-// import individual service
-import S3 from 'aws-sdk/clients/s3';
-import Logger from 'lalog';
-
+import { GetObjectOutput } from 'aws-sdk/clients/s3';
 import { TimeEndLogger, TimeEndLoggerFunc } from './types';
+import { ExtractFromEventResponse, ExtractFromEventData } from './outer-1-extract-from-event';
+
+
+export interface GetImageFromS3Data extends ExtractFromEventData {
+  s3Object: GetObjectOutput;
+}
+
+export interface GetImageFromS3Response extends Omit<ExtractFromEventResponse, 'data'> {
+  data: GetImageFromS3Data;
+}
 
 // #2
 // data has: bucketName, key, fileName, imageType
-export const getImageFromS3 = (req: {data: any; deps: { s3: S3; logger: Logger }}) => {
+export const getImageFromS3 = async (
+  req: ExtractFromEventResponse): Promise<GetImageFromS3Response> => {
   const { data, deps: { s3, logger } } = req;
   logger.time('getImageFromS3');
   logger.trace({ msg: '2. getImageFromS3()' });
   // Download the image from S3 into a buffer.
   // sadly it downloads the image several times, but we couldn't place it outside
   // the variable was not recognized
-  return new Promise((resolve, reject) => {
-    s3.getObject({
+  try {
+    const s3Object: GetObjectOutput = await s3.getObject({
       Bucket: data.bucketName,
       Key: data.key,
-    }, (err, s3Object) => {
-      if (err) {
-        (logger.timeEnd as TimeEndLogger).error('getImageFromS3', {
-          msg: 'Error in s3.getObject() via getImageFromS3()',
-          err,
-        });
-        return reject(err);
-      }
-      data.s3Object = s3Object;
-      (logger.timeEnd as TimeEndLoggerFunc)('getImageFromS3');
-      return resolve(req);
+    }).promise();
+
+    const nextData: GetImageFromS3Data = {
+      ...data,
+      s3Object,
+    };
+    const response: GetImageFromS3Response = {
+      ...req,
+      data: nextData,
+    };
+    (logger.timeEnd as TimeEndLoggerFunc)('getImageFromS3');
+    return response;
+  } catch (err) {
+    (logger.timeEnd as TimeEndLogger).error('getImageFromS3', {
+      msg: 'Error in s3.getObject() via getImageFromS3()',
+      err,
     });
-  });
+    throw err;
+  }
 };
 
 /*

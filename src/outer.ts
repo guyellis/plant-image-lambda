@@ -7,7 +7,6 @@ import { extractFromEvent, BasicRequest } from './outer-1-extract-from-event';
 import { writeToServer as httpPost } from './write-to-server';
 
 import { innerPipeline } from './inner';
-import { PlantRequest } from './types';
 
 /**
  * pipeline does image pre-processing before we start resizing etc.
@@ -16,11 +15,11 @@ import { PlantRequest } from './types';
  * @param req - request object with event and deps
  */
 export const pipeline = async (req: BasicRequest) => {
-  const extractedRequest: PlantRequest = extractFromEvent(req) as PlantRequest;
-  await getImageFromS3(extractedRequest);
-  await convertToJpg(extractedRequest);
-  await fixExif(extractedRequest);
-  await getImageSize(extractedRequest);
-  await innerPipeline(extractedRequest);
-  return httpPost(extractedRequest);
+  const extractedRequest = extractFromEvent(req);
+  const imageFromS3 = await getImageFromS3(extractedRequest);
+  await convertToJpg(imageFromS3);
+  await fixExif(imageFromS3);
+  await getImageSize(imageFromS3);
+  await innerPipeline(imageFromS3);
+  return httpPost(imageFromS3);
 };

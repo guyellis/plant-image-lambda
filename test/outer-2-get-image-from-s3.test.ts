@@ -1,5 +1,6 @@
 import { mockLogger } from './helper';
 import { getImageFromS3 } from '../src/outer-2-get-image-from-s3';
+import { ExtractFromEventResponse } from '../src/outer-1-extract-from-event';
 
 const fakeBucket = 'Fake Bucket';
 const fakeKey = 'Fake Key';
@@ -13,13 +14,15 @@ describe('getImageFromS3', () => {
       s3Object: fakeS3Object,
     };
 
-    const req = {
+    const req: ExtractFromEventResponse = {
       deps: {
         s3: {
-          getObject(obj: any, cb: Function) {
+          getObject(obj: any) {
             expect(fakeBucket).toBe(obj.Bucket);
             expect(fakeKey).toBe(obj.Key);
-            cb(null, fakeS3Object);
+            return {
+              promise: () => Promise.resolve(fakeS3Object),
+            };
           },
         },
         logger: mockLogger,
@@ -28,9 +31,8 @@ describe('getImageFromS3', () => {
         bucketName: fakeBucket,
         key: fakeKey,
       },
-    };
+    } as unknown as ExtractFromEventResponse;
 
-    // @ts-ignore
     const actual = await getImageFromS3(req);
     expect(actual.data).toEqual(expected);
   });
@@ -39,10 +41,13 @@ describe('getImageFromS3', () => {
     const req = {
       deps: {
         s3: {
-          getObject(obj: any, cb: Function) {
+          getObject(obj: any) {
             expect(fakeBucket).toBe(obj.Bucket);
             expect(fakeKey).toBe(obj.Key);
-            cb('fake-s3-getObject-error');
+            return {
+              // eslint-disable-next-line prefer-promise-reject-errors
+              promise: () => Promise.reject('fake-s3-getObject-error'),
+            };
           },
         },
         logger: mockLogger,

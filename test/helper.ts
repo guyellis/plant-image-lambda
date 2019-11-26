@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import { S3Event } from 'aws-lambda';
+import Logger from 'lalog';
 
 export const fakeEvent: S3Event = {
   Records: [{
@@ -55,7 +56,8 @@ export const mockLogger: Logger = {} as Logger;
 
 const isObject = (obj: any) => obj !== null && typeof obj === 'object';
 
-const loggerMockFunction = (errObj: any, extra?: any) => {
+type LogFunction = (logData: any, response?: any) => Promise<any>;
+const loggerMockFunction: LogFunction = (errObj: any, extra?: any) => {
   if (!isObject(errObj)) {
     throw new Error(`First param to lalog logger method is not an object: ${typeof errObj}`);
   }
@@ -63,6 +65,7 @@ const loggerMockFunction = (errObj: any, extra?: any) => {
     const { res, code } = extra;
     res.status(code).send({ one: 1 });
   }
+  return Promise.resolve();
 };
 
 const loggerTimeEndMockFunction = (label: any, extraLogData: any) => {
@@ -85,6 +88,7 @@ export const mockLoggerReset = () => {
   mockLogger.error = jest.fn(loggerMockFunction);
   mockLogger.fatal = jest.fn(loggerMockFunction);
   mockLogger.security = jest.fn(loggerMockFunction);
+  // @ts-ignore
   mockLogger.timeEnd = jest.fn(loggerTimeEndMockFunction);
   // @ts-ignore
   mockLogger.timeEnd.error = jest.fn(loggerTimeEndMockFunction);
@@ -118,8 +122,10 @@ export class mockGM {
 }
 
 export const mockS3 = {
-  getObject(_: any, cb: Function) {
-    cb(null, fakeS3Object);
+  getObject() {
+    return {
+      promise: () => Promise.resolve(fakeS3Object),
+    };
   },
   putObject(_: any, cb: Function) {
     cb();
