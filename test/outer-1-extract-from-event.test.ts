@@ -1,8 +1,6 @@
-export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
+import _ from 'lodash';
+import { fakeEvent, mockLogger, mockLoggerReset } from './helper';
 
-const _ = require('lodash');
-
-const { fakeEvent, mockLogger, mockLoggerReset } = require('./helper');
 const extractFromEvent = require('../src/outer-1-extract-from-event');
 
 describe('extractFromEvent', () => {
@@ -28,6 +26,7 @@ describe('extractFromEvent', () => {
 
     const actual = await extractFromEvent(req);
     expect(actual.data).toEqual(expected);
+    // @ts-ignore TODO: Fix this
     expect(mockLogger.error).not.toHaveBeenCalled();
   });
 
@@ -39,6 +38,7 @@ describe('extractFromEvent', () => {
       },
     };
 
+    // @ts-ignore TODO: Fix this
     req.event.Records[0].s3.object.key = 'abcjjj';
 
     try {
@@ -47,6 +47,7 @@ describe('extractFromEvent', () => {
       expect(err.message).toBe('unable to infer image type for key abcjjj');
     }
 
+    // @ts-ignore TODO: Fix this
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
     expect.assertions(2);
   });
@@ -59,6 +60,7 @@ describe('extractFromEvent', () => {
       },
     };
 
+    // @ts-ignore TODO: Fix this
     req.event.Records[0].s3.object.key = 'abc.jjj';
 
     try {
@@ -67,6 +69,7 @@ describe('extractFromEvent', () => {
       expect(err.message).toBe('skipping non-image abc.jjj');
     }
 
+    // @ts-ignore TODO: Fix this
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
     expect.assertions(2);
   });
@@ -79,6 +82,7 @@ describe('extractFromEvent', () => {
       },
     };
 
+    // @ts-ignore TODO: Fix this
     req.event.Records[0].s3.object.key = 'test/bad/2016-08-27+10.20.04.jpg';
 
     try {
@@ -87,6 +91,7 @@ describe('extractFromEvent', () => {
       expect(err.message).toBe('Not processing test/bad/2016-08-27 10.20.04.jpg because it is not an original image.');
     }
 
+    // @ts-ignore TODO: Fix this
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
     expect.assertions(2);
   });
@@ -99,6 +104,7 @@ describe('extractFromEvent', () => {
       },
     };
 
+    // @ts-ignore TODO: Fix this
     req.event.Records[0].s3.object.key = 'bad/orig/2016-08-27+10.20.04.jpg';
 
     try {
@@ -107,6 +113,7 @@ describe('extractFromEvent', () => {
       expect(err.message).toBe('key does not start with a recognized folder:bad/orig/2016-08-27 10.20.04.jpg');
     }
 
+    // @ts-ignore TODO: Fix this
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
     expect.assertions(2);
   });

@@ -1,8 +1,7 @@
-export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
+import {
+  mockLogger, mockGM as MockGM, mockS3, mockLoggerReset,
+} from './helper';
 
-const {
-  mockLogger, mockGM: MockGM, mockS3, mockLoggerReset,
-} = require('./helper');
 const pipeline = require('../src/inner');
 
 describe('pipeline', () => {
@@ -35,7 +34,9 @@ describe('pipeline', () => {
       expect(err).toEqual('fake-toBuffer-error');
     }
 
+    // @ts-ignore TODO: Fix this
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
+    // @ts-ignore TODO: Fix this
     expect(mockLogger.timeEnd.error).toHaveBeenCalledTimes(1);
     expect.assertions(3);
   });
@@ -60,7 +61,9 @@ describe('pipeline', () => {
 
     await pipeline(req);
 
+    // @ts-ignore TODO: Fix this
     expect(mockLogger.error).not.toHaveBeenCalledTimes(1);
+    // @ts-ignore TODO: Fix this
     expect(mockLogger.timeEnd).toHaveBeenCalledTimes(2);
     expect.assertions(2);
   });
@@ -93,7 +96,9 @@ describe('pipeline', () => {
       expect(err).toEqual('fake-putObject-error');
     }
 
+    // @ts-ignore TODO: Fix this
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
+    // @ts-ignore TODO: Fix this
     expect(mockLogger.timeEnd.error).toHaveBeenCalledTimes(1);
     expect.assertions(3);
   });

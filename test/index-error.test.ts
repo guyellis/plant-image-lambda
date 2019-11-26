@@ -1,6 +1,4 @@
-export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
-
-const { mockGM, fakeEvent /* , mockLogger */ } = require('./helper');
+import { mockGM, fakeEvent /* , mockLogger */ } from './helper';
 
 jest.mock('gm', () => ({
   // eslint-disable-next-line new-cap
