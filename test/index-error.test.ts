@@ -1,5 +1,7 @@
 import { mockGM, fakeEvent /* , mockLogger */ } from './helper';
 
+const index = require('../src');
+
 jest.mock('gm', () => ({
   // eslint-disable-next-line new-cap
   subClass: () => new mockGM(),
@@ -13,7 +15,6 @@ jest.mock('../src/outer', () => () => {
   throw new Error('fake-outer-pipeline-error');
 });
 
-const index = require('../src');
 
 describe('index-handler-error', () => {
   test('should log error if pipeline throws', (end) => {

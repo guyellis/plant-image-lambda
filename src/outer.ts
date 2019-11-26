@@ -6,7 +6,7 @@ import { getImageFromS3 } from './outer-2-get-image-from-s3';
 import { extractFromEvent } from './outer-1-extract-from-event';
 import { writeToServer as httpPost } from './write-to-server';
 
-const innerPipeline = require('./inner');
+import { innerPipeline } from './inner';
 
 /**
  * pipeline does image pre-processing before we start resizing etc.

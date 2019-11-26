@@ -1,5 +1,5 @@
 
-// var gm = require('gm').subClass({
+// var gm = import('gm').subClass({
 //   imageMagick: true
 // });
 

@@ -114,7 +114,7 @@ function uploadImage(req: any) {
   });
 }
 
-async function pipeline(req: PlantRequest) {
+export const innerPipeline = async (req: PlantRequest) => {
   Object.freeze(req.data);
   const { sizes } = req.data;
   const { deps: { logger } } = req;
@@ -157,6 +157,4 @@ async function pipeline(req: PlantRequest) {
     });
     throw err;
   }
-}
-
-module.exports = pipeline;
+};

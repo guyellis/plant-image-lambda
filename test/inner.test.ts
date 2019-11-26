@@ -2,7 +2,7 @@ import {
   mockLogger, mockGM as MockGM, mockS3, mockLoggerReset,
 } from './helper';
 
-const pipeline = require('../src/inner');
+import { innerPipeline as pipeline } from '../src/inner';
 
 describe('pipeline', () => {
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('pipeline', () => {
     MockGM.prototype.toBuffer = (_: any, cb: Function) => cb('fake-toBuffer-error');
     const gm = new MockGM();
 
-    const req = {
+    const req: PlantRequest = {
       data: {
         buffer: 'fake-buffer',
         sizes: [{ width: 500 }, { width: 1000 }],
@@ -26,7 +26,7 @@ describe('pipeline', () => {
         gm,
         logger: mockLogger,
       },
-    };
+    } as unknown as PlantRequest;
 
     try {
       await pipeline(req);
@@ -44,7 +44,7 @@ describe('pipeline', () => {
   test('should skip image processing if width is target width', async () => {
     const gm = new MockGM();
 
-    const req = {
+    const req: PlantRequest = {
       data: {
         buffer: 'fake-buffer',
         sizes: [{ width: 500 }],
@@ -57,7 +57,7 @@ describe('pipeline', () => {
         logger: mockLogger,
         s3: mockS3,
       },
-    };
+    } as unknown as PlantRequest;
 
     await pipeline(req);
 
@@ -71,7 +71,7 @@ describe('pipeline', () => {
   test('should throw if uploadImage throws', async () => {
     const gm = new MockGM();
 
-    const req = {
+    const req: PlantRequest = {
       data: {
         buffer: 'fake-buffer',
         sizes: [{ width: 500 }, { width: 1000 }],
@@ -88,7 +88,7 @@ describe('pipeline', () => {
           },
         },
       },
-    };
+    } as unknown as PlantRequest;
 
     try {
       await pipeline(req);
