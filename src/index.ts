@@ -8,6 +8,7 @@ import { pipeline } from './outer';
 
 import env from './env';
 import { BasicRequest } from './outer-1-extract-from-event';
+import { RequestDeps } from './types';
 
 /**
  * Entry point from Lambda call

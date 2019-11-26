@@ -2,6 +2,7 @@
 import path from 'path';
 // eslint-disable-next-line import/no-unresolved
 import { S3Event } from 'aws-lambda';
+import { RequestDeps } from './types';
 
 export interface BasicRequest {
   deps: RequestDeps;

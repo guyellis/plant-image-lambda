@@ -7,6 +7,7 @@ import { extractFromEvent, BasicRequest } from './outer-1-extract-from-event';
 import { writeToServer as httpPost } from './write-to-server';
 
 import { innerPipeline } from './inner';
+import { PlantRequest } from './types';
 
 /**
  * pipeline does image pre-processing before we start resizing etc.

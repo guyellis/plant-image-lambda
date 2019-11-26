@@ -4,6 +4,9 @@
 // import AWS from 'aws-sdk/global';
 // import individual service
 import S3 from 'aws-sdk/clients/s3';
+import Logger from 'lalog';
+
+import { TimeEndLogger, TimeEndLoggerFunc } from './types';
 
 // #2
 // data has: bucketName, key, fileName, imageType

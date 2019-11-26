@@ -1,3 +1,6 @@
+import S3 from 'aws-sdk/clients/s3';
+import Logger from 'lalog';
+
 interface ImageSize {
   height?: number;
   name: string;
@@ -8,31 +11,31 @@ interface LoggerPresets {
   trackId?: string;
 }
 
-type TimeEndLoggerFunc = (timerName: string, logData?: object) => void;
+export type TimeEndLoggerFunc = (timerName: string, logData?: object) => void;
 
-interface TimeEndLogger {
+export interface TimeEndLogger {
   (timerName: string, logData?: object): void;
   error: TimeEndLoggerFunc;
 }
 
 type LoggerFunc = (logData: object) => void;
 
-interface Logger {
-  info: LoggerFunc;
-  warn: LoggerFunc;
-  fatal: LoggerFunc;
-  security: LoggerFunc;
-  error: LoggerFunc;
-  presets?: LoggerPresets;
-  time: (timerName: string) => void;
-  timeEnd: TimeEndLogger | TimeEndLoggerFunc;
-  trace: LoggerFunc;
-}
+// interface Logger {
+//   info: LoggerFunc;
+//   warn: LoggerFunc;
+//   fatal: LoggerFunc;
+//   security: LoggerFunc;
+//   error: LoggerFunc;
+//   presets?: LoggerPresets;
+//   time: (timerName: string) => void;
+//   timeEnd: TimeEndLogger | TimeEndLoggerFunc;
+//   trace: LoggerFunc;
+// }
 
-interface RequestDeps {
+export interface RequestDeps {
   gm: Function;
   logger: Logger;
-  s3: any;
+  s3: S3;
 }
 
 interface RequestItem {
@@ -50,7 +53,7 @@ interface RequestInput {
   s3Object: object;
 }
 
-interface PlantRequest {
+export interface PlantRequest {
   buffer: any;
   data: any;
   deps: RequestDeps;
