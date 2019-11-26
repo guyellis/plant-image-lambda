@@ -1,9 +1,8 @@
-export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
+import { getImageSize } from './outer-5-image-size';
 
 const convertToJpg = require('./outer-3-convert-to-jpg');
 const fixExif = require('./outer-4-fix-exif');
 const getImageFromS3 = require('./outer-2-get-image-from-s3');
-const getImageSize = require('./outer-5-image-size');
 const extractFromEvent = require('./outer-1-extract-from-event');
 const innerPipeline = require('./inner');
 const httpPost = require('./write-to-server');

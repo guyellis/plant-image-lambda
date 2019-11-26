@@ -9,7 +9,7 @@ import { calcSizes } from './image-sizes';
 //   imageType
 //   s3Object
 //   buffer
-function getImageSize(req: PlantRequest) {
+export const getImageSize = (req: PlantRequest) => {
   const { data, deps: { gm, logger } } = req;
   const method = '5. getImageSize()';
 
@@ -36,6 +36,4 @@ function getImageSize(req: PlantRequest) {
       return resolve(req);
     });
   });
-}
-
-module.exports = getImageSize;
+};

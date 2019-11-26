@@ -1,7 +1,6 @@
-export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
+import { mockLogger, mockGM as MockGM } from './helper';
 
-const { mockLogger, mockGM: MockGM } = require('./helper');
-const getImageSize = require('../src/outer-5-image-size');
+import { getImageSize } from '../src/outer-5-image-size';
 
 describe('getImageSize', () => {
   test('should throw if size rejects', async () => {
@@ -19,11 +18,13 @@ describe('getImageSize', () => {
     };
 
     try {
+      // @ts-ignore TODO: Fix this
       await getImageSize(req);
     } catch (err) {
       expect(err).toEqual('fake-size-error');
     }
 
+    // @ts-ignore TODO: Fix this
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
     expect.assertions(2);
   });
