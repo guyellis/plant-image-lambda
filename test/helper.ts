@@ -134,7 +134,7 @@ export const mockS3 = {
   },
 };
 
-// module.exports = {
+// export = {
 //   fakeEvent,
 //   fakeS3Object,
 //   mockGM,

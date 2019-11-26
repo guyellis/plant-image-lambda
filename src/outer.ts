@@ -12,10 +12,9 @@ import { innerPipeline } from './inner';
  * pipeline does image pre-processing before we start resizing etc.
  * The output is a buffer/object/something that can then be sized etc. by
  * each of the different output sizes.
- * @param {object} req - request object with event and deps
- * @returns {Promise}
+ * @param req - request object with event and deps
  */
-async function pipeline(req: PlantRequest) {
+export const pipeline = async (req: PlantRequest) => {
   extractFromEvent(req);
   await getImageFromS3(req);
   await convertToJpg(req);
@@ -23,6 +22,4 @@ async function pipeline(req: PlantRequest) {
   await getImageSize(req);
   await innerPipeline(req);
   return httpPost(req);
-}
-
-module.exports = pipeline;
+};

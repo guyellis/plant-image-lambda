@@ -1,26 +1,27 @@
-import { mockGM, fakeEvent /* , mockLogger */ } from './helper';
-
-const index = require('../src');
+// eslint-disable-next-line import/no-unresolved
+import { Context } from 'aws-lambda';
+import { mockGM as MockGM, fakeEvent /* , mockLogger */ } from './helper';
+import { pipeline } from '../src/outer';
+import { handler } from '../src';
 
 jest.mock('gm', () => ({
-  // eslint-disable-next-line new-cap
-  subClass: () => new mockGM(),
+  subClass: () => new MockGM(),
 }));
 
 jest.mock('node-fetch', () => (() => ({
   status: 200,
 })));
 
-jest.mock('../src/outer', () => () => {
-  throw new Error('fake-outer-pipeline-error');
-});
+jest.mock('../src/outer');
+const pipelineMock = pipeline as jest.Mock;
 
+pipelineMock.mockRejectedValue('fake-outer-pipeline-error');
 
 describe('index-handler-error', () => {
   test('should log error if pipeline throws', (end) => {
-    const ctx = {
+    const ctx: Context = {
       done(err: any) {
-        expect(err.message).toBe('fake-outer-pipeline-error');
+        expect(err).toBe('fake-outer-pipeline-error');
 
         // TODO: The expect() below should work. When stepping through with
         // the debugger this logger.error() method is hit but for some reason
@@ -33,8 +34,8 @@ describe('index-handler-error', () => {
         expect.assertions(5);
         end();
       },
-    };
+    } as Context;
 
-    index.handler(fakeEvent, ctx);
+    handler(fakeEvent, ctx);
   });
 });

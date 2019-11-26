@@ -1,17 +1,12 @@
 // eslint-disable-next-line import/no-unresolved
-import { Context, Handler, S3EventRecord } from 'aws-lambda';
+import { Context, S3EventRecord } from 'aws-lambda';
 import AWS from 'aws-sdk';
 import util from 'util';
 import Logger from 'lalog';
 import gm from 'gm';
+import { pipeline } from './outer';
 
 import env from './env';
-
-const pipeline = require('./outer');
-
-interface MainEntry {
-  handler: Handler;
-}
 
 /**
  * Entry point from Lambda call
@@ -41,10 +36,10 @@ async function handler(event: S3EventRecord, ctx: Context) {
       }),
     };
 
-    const req: Partial<PlantRequest> = {
+    const req: PlantRequest = {
       event,
       deps,
-    };
+    } as unknown as PlantRequest;
 
     await pipeline(req);
     ctx.done();
@@ -57,10 +52,6 @@ async function handler(event: S3EventRecord, ctx: Context) {
     ctx.done(err);
   }
 }
-
-module.exports = {
-  handler,
-} as MainEntry;
 
 export {
   handler,
