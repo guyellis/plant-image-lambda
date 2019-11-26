@@ -1,4 +1,6 @@
 import env from '../src/env';
+import { mockLogger, mockLoggerReset } from './helper';
+import { writeToServer } from '../src/write-to-server';
 
 const mockFetchResult = {
   status: 200,
@@ -12,10 +14,6 @@ jest.mock('node-fetch', () => (() => {
   }
   return mockFetchResult;
 }));
-
-
-const { mockLogger, mockLoggerReset } = require('./helper');
-const writeToServer = require('../src/write-to-server');
 
 describe('write-to-server', () => {
   beforeEach(() => {
@@ -36,10 +34,11 @@ describe('write-to-server', () => {
     };
 
     mockFetchResult.status = 400;
-
+    // @ts-ignore
     const result = await writeToServer(req);
 
     expect(result).toBe(req);
+    // @ts-ignore
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
   });
 
@@ -58,9 +57,11 @@ describe('write-to-server', () => {
 
     mockThrow = true;
 
+    // @ts-ignore
     const result = await writeToServer(req);
 
     expect(result).toBe(req);
+    // @ts-ignore
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
   });
 
@@ -81,9 +82,11 @@ describe('write-to-server', () => {
     mockFetchResult.status = 200;
     mockThrow = false;
 
+    // @ts-ignore
     const result = await writeToServer(req);
 
     expect(result).toBe(req);
+    // @ts-ignore
     expect(mockLogger.error).not.toHaveBeenCalled();
   });
 });

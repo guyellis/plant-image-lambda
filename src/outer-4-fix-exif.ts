@@ -11,7 +11,7 @@
 //   imageType
 //   s3Object
 //   buffer
-function fixExif(req: PlantRequest) {
+export const fixExif = (req: PlantRequest) => {
   const { data, deps: { gm, logger } } = req;
   const method = '4. fixExif()';
 
@@ -34,6 +34,4 @@ function fixExif(req: PlantRequest) {
         return resolve(req);
       });
   });
-}
-
-module.exports = fixExif;
+};

@@ -1,7 +1,5 @@
-export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
-
-const { mockLogger } = require('./helper');
-const getImageFromS3 = require('../src/outer-2-get-image-from-s3');
+import { mockLogger } from './helper';
+import { getImageFromS3 } from '../src/outer-2-get-image-from-s3';
 
 const fakeBucket = 'Fake Bucket';
 const fakeKey = 'Fake Key';
@@ -32,6 +30,7 @@ describe('getImageFromS3', () => {
       },
     };
 
+    // @ts-ignore
     const actual = await getImageFromS3(req);
     expect(actual.data).toEqual(expected);
   });
@@ -55,11 +54,13 @@ describe('getImageFromS3', () => {
     };
 
     try {
+    // @ts-ignore
       await getImageFromS3(req);
     } catch (err) {
       expect(err).toEqual('fake-s3-getObject-error');
     }
 
+    // @ts-ignore
     expect(mockLogger.timeEnd.error).toHaveBeenCalledTimes(1);
     expect.assertions(4);
   });

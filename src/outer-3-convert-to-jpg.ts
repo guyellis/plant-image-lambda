@@ -6,7 +6,7 @@
 //   fileName
 //   imageType
 //   s3Object
-function convertToJpg(req: PlantRequest) {
+export const convertToJpg = (req: PlantRequest) => {
   const { data, deps: { gm, logger } } = req;
   const {
     s3Object: {
@@ -38,6 +38,4 @@ function convertToJpg(req: PlantRequest) {
         return resolve(req);
       });
   });
-}
-
-module.exports = convertToJpg;
+};

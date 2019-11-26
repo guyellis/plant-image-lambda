@@ -2,7 +2,7 @@
 import path from 'path';
 
 // #1
-function extractFromEvent(req: any) {
+export const extractFromEvent = (req: any) => {
   const { event, deps: { logger } } = req;
 
   // Object key may have spaces or unicode non-ASCII characters.
@@ -66,6 +66,4 @@ function extractFromEvent(req: any) {
   };
 
   return req;
-}
-
-module.exports = extractFromEvent;
+};

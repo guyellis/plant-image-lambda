@@ -7,7 +7,7 @@ import S3 from 'aws-sdk/clients/s3';
 
 // #2
 // data has: bucketName, key, fileName, imageType
-function getImageFromS3(req: {data: any; deps: { s3: S3; logger: Logger }}) {
+export const getImageFromS3 = (req: {data: any; deps: { s3: S3; logger: Logger }}) => {
   const { data, deps: { s3, logger } } = req;
   logger.time('getImageFromS3');
   logger.trace({ msg: '2. getImageFromS3()' });
@@ -31,9 +31,7 @@ function getImageFromS3(req: {data: any; deps: { s3: S3; logger: Logger }}) {
       return resolve(req);
     });
   });
-}
-
-module.exports = getImageFromS3;
+};
 
 /*
 The s3Object returned by s3.getObject will look something like this:

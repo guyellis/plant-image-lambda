@@ -1,11 +1,12 @@
 import { getImageSize } from './outer-5-image-size';
+import { fixExif } from './outer-4-fix-exif';
 
-const convertToJpg = require('./outer-3-convert-to-jpg');
-const fixExif = require('./outer-4-fix-exif');
-const getImageFromS3 = require('./outer-2-get-image-from-s3');
-const extractFromEvent = require('./outer-1-extract-from-event');
+import { convertToJpg } from './outer-3-convert-to-jpg';
+import { getImageFromS3 } from './outer-2-get-image-from-s3';
+import { extractFromEvent } from './outer-1-extract-from-event';
+import { writeToServer as httpPost } from './write-to-server';
+
 const innerPipeline = require('./inner');
-const httpPost = require('./write-to-server');
 
 /**
  * pipeline does image pre-processing before we start resizing etc.

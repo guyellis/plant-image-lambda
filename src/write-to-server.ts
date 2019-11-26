@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import env from './env';
 
-async function httpPost(req: PlantRequest) {
+export const writeToServer = async (req: PlantRequest) => {
   const {
     PLANT_IMAGE_COMPLETE,
     PLANT_IMAGE_HOST,
@@ -69,6 +69,4 @@ async function httpPost(req: PlantRequest) {
   }
 
   return req;
-}
-
-module.exports = httpPost;
+};

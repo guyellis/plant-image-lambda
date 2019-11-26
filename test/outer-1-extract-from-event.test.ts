@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { fakeEvent, mockLogger, mockLoggerReset } from './helper';
 
-const extractFromEvent = require('../src/outer-1-extract-from-event');
+import { extractFromEvent } from '../src/outer-1-extract-from-event';
 
 describe('extractFromEvent', () => {
   beforeEach(() => {

@@ -1,7 +1,5 @@
-export {}; // To get around: Cannot redeclare block-scoped variable 'mockLogger'.ts(2451)
-
-const { mockLogger, mockGM: MockGM } = require('./helper');
-const convertToJpg = require('../src/outer-3-convert-to-jpg');
+import { mockLogger, mockGM as MockGM } from './helper';
+import { convertToJpg } from '../src/outer-3-convert-to-jpg';
 
 describe('convertToJpg', () => {
   test('should throw if toBuffer rejects', async () => {
@@ -20,11 +18,13 @@ describe('convertToJpg', () => {
     };
 
     try {
+    // @ts-ignore
       await convertToJpg(req);
     } catch (err) {
       expect(err).toEqual('fake-toBuffer-error');
     }
 
+    // @ts-ignore
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
     expect.assertions(2);
   });
