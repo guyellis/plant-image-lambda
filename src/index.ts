@@ -14,7 +14,8 @@ import { BasicRequest } from './outer-1-extract-from-event';
  */
 async function handler(event: S3Event, ctx: Context) {
   process.env.LOGGLY_TOKEN = env.LOGGLY_TOKEN;
-  // @ts-ignore - TODO Fix this
+
+  // @ts-ignore
   Logger.setLevel(process.env.LALOG_LEVEL);
 
   const logger = Logger.create({

@@ -8,8 +8,23 @@ export interface BasicRequest {
   event: S3Event;
 }
 
+const imageTypes = ['jpg', 'gif', 'png', 'eps'] as const;
+type ImageType = typeof imageTypes[number];
+
+export interface ExtractFromEventData {
+  bucketName: string;
+  key: string;
+  fileName: string;
+  imageType: ImageType;
+  outKeyRoot: string;
+}
+
+export interface ExtractFromEventResponse extends BasicRequest {
+  data: ExtractFromEventData;
+}
+
 // #1
-export const extractFromEvent = (req: BasicRequest) => {
+export const extractFromEvent = (req: BasicRequest): ExtractFromEventResponse => {
   const { event, deps: { logger } } = req;
 
   // Object key may have spaces or unicode non-ASCII characters.
@@ -30,9 +45,9 @@ export const extractFromEvent = (req: BasicRequest) => {
     throw err;
   }
 
-  const imageType = typeMatch[1].toLowerCase();
+  const imageType = typeMatch[1].toLowerCase() as ImageType;
 
-  if (!['jpg', 'gif', 'png', 'eps'].includes(imageType)) {
+  if (!imageTypes.includes(imageType)) {
     const msg = `skipping non-image ${key}`;
     const err = new Error(msg);
     logger.error({
