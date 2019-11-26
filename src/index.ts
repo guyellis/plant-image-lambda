@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
-import { Context, S3EventRecord } from 'aws-lambda';
+import { Context, S3Event } from 'aws-lambda';
 import AWS from 'aws-sdk';
 import util from 'util';
 import Logger from 'lalog';
@@ -7,11 +7,12 @@ import gm from 'gm';
 import { pipeline } from './outer';
 
 import env from './env';
+import { BasicRequest } from './outer-1-extract-from-event';
 
 /**
  * Entry point from Lambda call
  */
-async function handler(event: S3EventRecord, ctx: Context) {
+async function handler(event: S3Event, ctx: Context) {
   process.env.LOGGLY_TOKEN = env.LOGGLY_TOKEN;
   // @ts-ignore - TODO Fix this
   Logger.setLevel(process.env.LALOG_LEVEL);
@@ -28,7 +29,7 @@ async function handler(event: S3EventRecord, ctx: Context) {
   });
 
   try {
-    const deps = {
+    const deps: RequestDeps = {
       s3: new AWS.S3(),
       logger,
       gm: gm.subClass({
@@ -36,10 +37,10 @@ async function handler(event: S3EventRecord, ctx: Context) {
       }),
     };
 
-    const req: PlantRequest = {
+    const req: BasicRequest = {
       event,
       deps,
-    } as unknown as PlantRequest;
+    };
 
     await pipeline(req);
     ctx.done();

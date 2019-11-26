@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { fakeEvent, mockLogger, mockLoggerReset } from './helper';
 
-import { extractFromEvent } from '../src/outer-1-extract-from-event';
+import { extractFromEvent, BasicRequest } from '../src/outer-1-extract-from-event';
 
 describe('extractFromEvent', () => {
   beforeEach(() => {
@@ -9,12 +9,12 @@ describe('extractFromEvent', () => {
   });
 
   test('should build an object', async () => {
-    const req = {
+    const req: BasicRequest = {
       event: fakeEvent,
       deps: {
         logger: mockLogger,
       },
-    };
+    } as BasicRequest;
 
     const expected = {
       bucketName: 'example.com',
@@ -31,12 +31,12 @@ describe('extractFromEvent', () => {
   });
 
   test('should log and throw if no key match', async () => {
-    const req = {
+    const req: BasicRequest = {
       event: _.cloneDeep(fakeEvent),
       deps: {
         logger: mockLogger,
       },
-    };
+    } as BasicRequest;
 
     // @ts-ignore TODO: Fix this
     req.event.Records[0].s3.object.key = 'abcjjj';
@@ -53,12 +53,12 @@ describe('extractFromEvent', () => {
   });
 
   test('should log and throw if image type not recognized', async () => {
-    const req = {
+    const req: BasicRequest = {
       event: _.cloneDeep(fakeEvent),
       deps: {
         logger: mockLogger,
       },
-    };
+    } as BasicRequest;
 
     // @ts-ignore TODO: Fix this
     req.event.Records[0].s3.object.key = 'abc.jjj';
@@ -75,12 +75,12 @@ describe('extractFromEvent', () => {
   });
 
   test('should log and throw if orig missing from key', async () => {
-    const req = {
+    const req: BasicRequest = {
       event: _.cloneDeep(fakeEvent),
       deps: {
         logger: mockLogger,
       },
-    };
+    } as BasicRequest;
 
     // @ts-ignore TODO: Fix this
     req.event.Records[0].s3.object.key = 'test/bad/2016-08-27+10.20.04.jpg';
@@ -97,12 +97,12 @@ describe('extractFromEvent', () => {
   });
 
   test('should log and throw if root is not recognized', async () => {
-    const req = {
+    const req: BasicRequest = {
       event: _.cloneDeep(fakeEvent),
       deps: {
         logger: mockLogger,
       },
-    };
+    } as BasicRequest;
 
     // @ts-ignore TODO: Fix this
     req.event.Records[0].s3.object.key = 'bad/orig/2016-08-27+10.20.04.jpg';

@@ -3,7 +3,7 @@ import { fixExif } from './outer-4-fix-exif';
 
 import { convertToJpg } from './outer-3-convert-to-jpg';
 import { getImageFromS3 } from './outer-2-get-image-from-s3';
-import { extractFromEvent } from './outer-1-extract-from-event';
+import { extractFromEvent, BasicRequest } from './outer-1-extract-from-event';
 import { writeToServer as httpPost } from './write-to-server';
 
 import { innerPipeline } from './inner';
@@ -14,12 +14,12 @@ import { innerPipeline } from './inner';
  * each of the different output sizes.
  * @param req - request object with event and deps
  */
-export const pipeline = async (req: PlantRequest) => {
-  extractFromEvent(req);
-  await getImageFromS3(req);
-  await convertToJpg(req);
-  await fixExif(req);
-  await getImageSize(req);
-  await innerPipeline(req);
-  return httpPost(req);
+export const pipeline = async (req: BasicRequest) => {
+  const extractedRequest: PlantRequest = extractFromEvent(req) as PlantRequest;
+  await getImageFromS3(extractedRequest);
+  await convertToJpg(extractedRequest);
+  await fixExif(extractedRequest);
+  await getImageSize(extractedRequest);
+  await innerPipeline(extractedRequest);
+  return httpPost(extractedRequest);
 };

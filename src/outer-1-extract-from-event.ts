@@ -1,8 +1,15 @@
 
 import path from 'path';
+// eslint-disable-next-line import/no-unresolved
+import { S3Event } from 'aws-lambda';
+
+export interface BasicRequest {
+  deps: RequestDeps;
+  event: S3Event;
+}
 
 // #1
-export const extractFromEvent = (req: any) => {
+export const extractFromEvent = (req: BasicRequest) => {
   const { event, deps: { logger } } = req;
 
   // Object key may have spaces or unicode non-ASCII characters.
@@ -57,13 +64,14 @@ export const extractFromEvent = (req: any) => {
   }
   outKeyRoot += '/';
 
-  req.data = {
-    bucketName: event.Records[0].s3.bucket.name,
-    key,
-    fileName: path.basename(key),
-    imageType,
-    outKeyRoot,
+  return {
+    ...req,
+    data: {
+      bucketName: event.Records[0].s3.bucket.name,
+      key,
+      fileName: path.basename(key),
+      imageType,
+      outKeyRoot,
+    },
   };
-
-  return req;
 };
