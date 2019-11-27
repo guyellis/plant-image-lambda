@@ -13,6 +13,7 @@ module.exports = {
     '!**/test/**',
     '!index.js',
     '!jest.config.js',
+    '!prettier.config.js',
     '!index.ts',
     '!src/types/**',
     '**/*.{js,ts}',

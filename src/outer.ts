@@ -1,3 +1,5 @@
+import { Response } from 'node-fetch';
+
 import { getImageSize } from './outer-5-image-size';
 import { fixExif } from './outer-4-fix-exif';
 
@@ -7,7 +9,6 @@ import { extractFromEvent, BasicRequest } from './outer-1-extract-from-event';
 import { writeToServer as httpPost } from './write-to-server';
 
 import { innerPipeline } from './inner';
-import { PlantRequest } from './types';
 
 /**
  * pipeline does image pre-processing before we start resizing etc.
@@ -15,12 +16,12 @@ import { PlantRequest } from './types';
  * each of the different output sizes.
  * @param req - request object with event and deps
  */
-export const pipeline = async (req: BasicRequest): Promise<any> => {
+export const pipeline = async (req: BasicRequest): Promise<Readonly<Response | null>> => {
   const extractedRequest = extractFromEvent(req);
   const imageFromS3 = await getImageFromS3(extractedRequest);
   const jpgResponse = await convertToJpg(imageFromS3);
   const exifResponse = await fixExif(jpgResponse);
   const imageSizeResponse = await getImageSize(exifResponse);
   await innerPipeline(imageSizeResponse);
-  return httpPost(imageSizeResponse as PlantRequest);
+  return httpPost(imageSizeResponse);
 };

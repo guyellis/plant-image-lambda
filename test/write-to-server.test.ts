@@ -3,6 +3,7 @@ import _ from 'lodash';
 import env from '../src/env';
 import { mockLogger, mockLoggerReset } from './helper';
 import { writeToServer } from '../src/write-to-server';
+import { ImageSizeResponse } from '../src/outer-5-image-size';
 
 const mockFetchResult = {
   status: 200,
@@ -23,7 +24,7 @@ describe('write-to-server', () => {
   });
 
   test('should log an error if node-fetch returns non-200', async () => {
-    const req = {
+    const req = ({
       deps: {
         logger: mockLogger,
       },
@@ -33,18 +34,22 @@ describe('write-to-server', () => {
         },
         sizes: 'fake-sizes',
       },
-    };
+    } as unknown) as ImageSizeResponse;
 
     mockFetchResult.status = 400;
-    // @ts-ignore
+
     const result = await writeToServer(req);
 
-    expect(result).toBe(req);
+    expect(result).toMatchInlineSnapshot(`
+      Object {
+        "status": 400,
+      }
+    `);
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
   });
 
   test('should log an error if node-fetch throw', async () => {
-    const req = {
+    const req = ({
       deps: {
         logger: mockLogger,
       },
@@ -54,20 +59,19 @@ describe('write-to-server', () => {
         },
         sizes: 'fake-sizes',
       },
-    };
+    } as unknown) as ImageSizeResponse;
 
     mockThrow = true;
 
-    // @ts-ignore
     const result = await writeToServer(req);
 
-    expect(result).toBe(req);
+    expect(result).toMatchInlineSnapshot('null');
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
   });
 
   test('should use https instead of http', async () => {
     env.PLANT_IMAGE_PORT = '443';
-    const req = {
+    const req = ({
       deps: {
         logger: mockLogger,
       },
@@ -77,15 +81,18 @@ describe('write-to-server', () => {
         },
         sizes: 'fake-sizes',
       },
-    };
+    } as unknown) as ImageSizeResponse;
 
     mockFetchResult.status = 200;
     mockThrow = false;
 
-    // @ts-ignore
     const result = await writeToServer(req);
 
-    expect(result).toBe(req);
+    expect(result).toMatchInlineSnapshot(`
+      Object {
+        "status": 200,
+      }
+    `);
     expect(mockLogger.error).not.toHaveBeenCalled();
   });
 
@@ -95,7 +102,7 @@ describe('write-to-server', () => {
       trackId: 'fake-track-id',
     };
     env.PLANT_IMAGE_PORT = '443';
-    const req = {
+    const req = ({
       deps: {
         logger,
       },
@@ -105,15 +112,18 @@ describe('write-to-server', () => {
         },
         sizes: 'fake-sizes',
       },
-    };
+    } as unknown) as ImageSizeResponse;
 
     mockFetchResult.status = 200;
     mockThrow = false;
 
-    // @ts-ignore
     const result = await writeToServer(req);
     const logTraceMock = logger.trace as jest.Mock;
-    expect(result).toBe(req);
+    expect(result).toMatchInlineSnapshot(`
+      Object {
+        "status": 200,
+      }
+    `);
     expect(logger.error).not.toHaveBeenCalled();
     expect(logTraceMock.mock.calls[0]).toMatchSnapshot();
   });

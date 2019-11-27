@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`write-to-server should send trackId if on presets 1`] = `
+exports[`write-to-server should send trackId if on presets 2`] = `
 Array [
   Object {
     "env": Object {
@@ -12,8 +12,9 @@ Array [
     },
     "msg": "Image sizing metadata update sent",
     "options": Object {
+      "body": "{\\"metadata\\":\\"fake-metadata\\",\\"sizes\\":\\"fake-sizes\\",\\"trackId\\":\\"fake-track-id\\"}",
       "headers": Object {
-        "Content-Length": 75,
+        "Content-Length": "75",
         "Content-Type": "application/json",
       },
       "method": "PUT",

@@ -1,8 +1,9 @@
-import fetch from 'node-fetch';
+import fetch, { Response, RequestInit } from 'node-fetch';
 import env from './env';
-import { PlantRequest } from './types';
+import { ImageSizeResponse } from './outer-5-image-size';
 
-export const writeToServer = async (req: PlantRequest): Promise<PlantRequest> => {
+export const writeToServer = async (
+  req: Readonly<ImageSizeResponse>): Promise<Readonly<Response | null>> => {
   const {
     PLANT_IMAGE_COMPLETE,
     PLANT_IMAGE_HOST,
@@ -33,17 +34,19 @@ export const writeToServer = async (req: PlantRequest): Promise<PlantRequest> =>
   const protocol = port === 443 ? 'https' : 'http';
 
   const url = `${protocol}://${PLANT_IMAGE_HOST}/api/image-complete?token=${PLANT_IMAGE_COMPLETE}`;
-  const options = {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      'Content-Length': Buffer.byteLength(putData),
-    },
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    'Content-Length': Buffer.byteLength(putData).toString(),
   };
+  const options: RequestInit = {
+    body: putData,
+    headers,
+    method: 'PUT',
+  };
+  let response: Response | null = null;
 
   try {
-    // @ts-ignore TODO Fix this
-    const response = await fetch(url, options);
+    response = await fetch(url, options);
     const logData = {
       env,
       msg: 'Image sizing metadata update sent',
@@ -70,5 +73,5 @@ export const writeToServer = async (req: PlantRequest): Promise<PlantRequest> =>
     });
   }
 
-  return req;
+  return response;
 };
