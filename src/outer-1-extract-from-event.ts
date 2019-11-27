@@ -25,7 +25,9 @@ export interface ExtractFromEventResponse extends BasicRequest {
 }
 
 // #1
-export const extractFromEvent = (req: BasicRequest): ExtractFromEventResponse => {
+export const extractFromEvent = (
+  req: Readonly<BasicRequest>,
+): Readonly<ExtractFromEventResponse> => {
   const { event, deps: { logger } } = req;
 
   // Object key may have spaces or unicode non-ASCII characters.

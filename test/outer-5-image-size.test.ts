@@ -1,6 +1,7 @@
 import { mockLogger, mockGM as MockGM } from './helper';
 
 import { getImageSize } from '../src/outer-5-image-size';
+import { ConvertToJpgResponse } from '../src/outer-3-convert-to-jpg';
 
 describe('getImageSize', () => {
   test('should throw if size rejects', async () => {
@@ -15,10 +16,9 @@ describe('getImageSize', () => {
         gm,
         logger: mockLogger,
       },
-    };
+    } as unknown as ConvertToJpgResponse;
 
     try {
-      // @ts-ignore TODO: Fix this
       await getImageSize(req);
     } catch (err) {
       expect(err).toEqual('fake-size-error');

@@ -1,5 +1,6 @@
 import { mockLogger, mockGM as MockGM } from './helper';
 import { fixExif } from '../src/outer-4-fix-exif';
+import { ConvertToJpgResponse } from '../src/outer-3-convert-to-jpg';
 
 describe('fixExif', () => {
   test('should throw if toBuffer rejects', async () => {
@@ -14,10 +15,9 @@ describe('fixExif', () => {
         gm,
         logger: mockLogger,
       },
-    };
+    } as unknown as ConvertToJpgResponse;
 
     try {
-      // @ts-ignore
       await fixExif(req);
     } catch (err) {
       expect(err).toEqual('fake-toBuffer-error');

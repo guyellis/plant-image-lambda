@@ -16,7 +16,7 @@ import { innerPipeline } from './inner';
  * each of the different output sizes.
  * @param req - request object with event and deps
  */
-export const pipeline = async (req: BasicRequest): Promise<Readonly<Response | null>> => {
+export const pipeline = async (req: Readonly<BasicRequest>): Promise<Readonly<Response | null>> => {
   const extractedRequest = extractFromEvent(req);
   const imageFromS3 = await getImageFromS3(extractedRequest);
   const jpgResponse = await convertToJpg(imageFromS3);

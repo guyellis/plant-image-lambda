@@ -1,5 +1,6 @@
 import { mockLogger, mockGM as MockGM } from './helper';
 import { convertToJpg } from '../src/outer-3-convert-to-jpg';
+import { GetImageFromS3Response } from '../src/outer-2-get-image-from-s3';
 
 describe('convertToJpg', () => {
   test('should throw if toBuffer rejects', async () => {
@@ -15,10 +16,9 @@ describe('convertToJpg', () => {
         gm,
         logger: mockLogger,
       },
-    };
+    } as unknown as GetImageFromS3Response;
 
     try {
-    // @ts-ignore
       await convertToJpg(req);
     } catch (err) {
       expect(err).toEqual('fake-toBuffer-error');

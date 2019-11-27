@@ -13,7 +13,7 @@ import { ConvertToJpgResponse, ConvertToJpgData } from './outer-3-convert-to-jpg
 //   s3Object
 //   buffer
 export const fixExif = async (
-  req: Readonly<ConvertToJpgResponse>): Promise<ConvertToJpgResponse> => {
+  req: Readonly<ConvertToJpgResponse>): Promise<Readonly<ConvertToJpgResponse>> => {
   const { data, deps: { gm, logger } } = req;
   const method = '4. fixExif()';
 

@@ -22,7 +22,7 @@ export interface ImageSizeResponse extends Omit<ConvertToJpgResponse, 'data'> {
 //   s3Object
 //   buffer
 export const getImageSize = async (
-  req: Readonly<ConvertToJpgResponse>): Promise<ImageSizeResponse> => {
+  req: Readonly<ConvertToJpgResponse>): Promise<Readonly<ImageSizeResponse>> => {
   const { data, deps: { gm, logger } } = req;
   const method = '5. getImageSize()';
 

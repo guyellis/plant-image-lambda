@@ -27,7 +27,9 @@ interface UploadImageReqOptions {
   buffer: Buffer;
 }
 
-function processImage(req: Readonly<ProcessImageReqOptions>): Promise<UploadImageReqOptions> {
+function processImage(
+  req: Readonly<ProcessImageReqOptions>,
+): Promise<Readonly<UploadImageReqOptions>> {
   const step = req.step + 1;
   const {
     deps: { gm, logger }, item, input: { buffer: response },

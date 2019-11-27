@@ -56,10 +56,9 @@ describe('getImageFromS3', () => {
         bucketName: fakeBucket,
         key: fakeKey,
       },
-    };
+    } as unknown as ExtractFromEventResponse;
 
     try {
-    // @ts-ignore
       await getImageFromS3(req);
     } catch (err) {
       expect(err).toEqual('fake-s3-getObject-error');
