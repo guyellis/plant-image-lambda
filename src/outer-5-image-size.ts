@@ -1,5 +1,6 @@
 
 import { calcSizes } from './image-sizes';
+import { PlantRequest } from './types';
 
 // #5
 // data:

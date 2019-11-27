@@ -1,3 +1,5 @@
+import { ImageSize } from './types';
+
 /**
  * Calculate the sizes to be used for resizing the image based on the current size
  * @param width - the width of the original image

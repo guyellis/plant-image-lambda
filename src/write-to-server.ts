@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import env from './env';
+import { PlantRequest } from './types';
 
 export const writeToServer = async (req: PlantRequest) => {
   const {
@@ -19,7 +20,8 @@ export const writeToServer = async (req: PlantRequest) => {
       sizes,
     },
   } = req;
-  const { presets: { trackId } = {} as LoggerPresets } = logger;
+  const { presets } = logger;
+  const { trackId } = presets ?? {};
 
   const putData = JSON.stringify({
     metadata,

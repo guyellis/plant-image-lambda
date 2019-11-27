@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`write-to-server should send trackId if on presets 1`] = `
+Array [
+  Object {
+    "env": Object {
+      "LALOG_LEVEL": "info",
+      "LOGGLY_TOKEN": "fake-token",
+      "PLANT_IMAGE_COMPLETE": "fake-value",
+      "PLANT_IMAGE_HOST": "fake-host",
+      "PLANT_IMAGE_PORT": "443",
+    },
+    "msg": "Image sizing metadata update sent",
+    "options": Object {
+      "headers": Object {
+        "Content-Length": 75,
+        "Content-Type": "application/json",
+      },
+      "method": "PUT",
+    },
+    "putData": "{\\"metadata\\":\\"fake-metadata\\",\\"sizes\\":\\"fake-sizes\\",\\"trackId\\":\\"fake-track-id\\"}",
+    "status": 200,
+    "url": "https://fake-host/api/image-complete?token=fake-value",
+  },
+]
+`;

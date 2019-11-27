@@ -20,7 +20,7 @@ export const pipeline = async (req: BasicRequest) => {
   const imageFromS3 = await getImageFromS3(extractedRequest);
   const jpgResponse = await convertToJpg(imageFromS3);
   await fixExif(jpgResponse as PlantRequest);
-  await getImageSize(jpgResponse);
+  await getImageSize(jpgResponse as PlantRequest);
   await innerPipeline(jpgResponse as PlantRequest);
-  return httpPost(jpgResponse);
+  return httpPost(jpgResponse as PlantRequest);
 };
