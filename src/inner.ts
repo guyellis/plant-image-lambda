@@ -1,5 +1,6 @@
 import util from 'util';
-import { TimeEndLoggerFunc, PlantRequest } from './types';
+import { TimeEndLoggerFunc } from './types';
+import { ImageSizeResponse } from './outer-5-image-size';
 
 const bucket = 'i.plaaant.com';
 
@@ -19,7 +20,7 @@ const bucket = 'i.plaaant.com';
 //     index
 /**
  * processImage
- * @param {Request} req
+ * @param req
  */
 function processImage(req: any) {
   req.step += 1;
@@ -115,7 +116,7 @@ function uploadImage(req: any) {
   });
 }
 
-export const innerPipeline = async (req: PlantRequest) => {
+export const innerPipeline = async (req: Readonly<ImageSizeResponse>): Promise<void> => {
   Object.freeze(req.data);
   const { sizes } = req.data;
   const { deps: { logger } } = req;

@@ -8,7 +8,6 @@ import { GetImageFromS3Response, GetImageFromS3Data } from './outer-2-get-image-
 //   imageType
 //   s3Object
 
-
 export interface ConvertToJpgData extends GetImageFromS3Data {
   buffer: Buffer;
 }

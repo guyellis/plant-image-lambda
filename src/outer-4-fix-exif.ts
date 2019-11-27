@@ -1,4 +1,4 @@
-import { PlantRequest } from './types';
+import { ConvertToJpgResponse, ConvertToJpgData } from './outer-3-convert-to-jpg';
 
 // var gm = import('gm').subClass({
 //   imageMagick: true
@@ -12,7 +12,8 @@ import { PlantRequest } from './types';
 //   imageType
 //   s3Object
 //   buffer
-export const fixExif = (req: PlantRequest) => {
+export const fixExif = async (
+  req: Readonly<ConvertToJpgResponse>): Promise<ConvertToJpgResponse> => {
   const { data, deps: { gm, logger } } = req;
   const method = '4. fixExif()';
 
@@ -23,7 +24,7 @@ export const fixExif = (req: PlantRequest) => {
   return new Promise((resolve, reject) => {
     gm(data.buffer)
       .autoOrient()
-      .toBuffer('JPG', (err: any, buffer: any) => {
+      .toBuffer('JPG', (err: Error | null, buffer: Buffer) => {
         if (err) {
           logger.error({
             method,
@@ -31,8 +32,18 @@ export const fixExif = (req: PlantRequest) => {
           });
           return reject(err);
         }
-        data.buffer = buffer;
-        return resolve(req);
+
+        const nextData: ConvertToJpgData = {
+          ...data,
+          buffer,
+        };
+
+        const response: ConvertToJpgResponse = {
+          ...req,
+          data: nextData,
+        };
+
+        return resolve(response);
       });
   });
 };
