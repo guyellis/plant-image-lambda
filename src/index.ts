@@ -13,7 +13,7 @@ import { RequestDeps } from './types';
 /**
  * Entry point from Lambda call
  */
-async function handler(event: S3Event, ctx: Context) {
+async function handler(event: S3Event, ctx: Context): Promise<void> {
   process.env.LOGGLY_TOKEN = env.LOGGLY_TOKEN;
 
   // @ts-ignore

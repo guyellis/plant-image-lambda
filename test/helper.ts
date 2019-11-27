@@ -54,7 +54,7 @@ export const fakeS3Object = {
 
 export const mockLogger: Logger = {} as Logger;
 
-const isObject = (obj: any) => obj !== null && typeof obj === 'object';
+const isObject = (obj: any): boolean => obj !== null && typeof obj === 'object';
 
 type LogFunction = (logData: any, response?: any) => Promise<any>;
 const loggerMockFunction: LogFunction = (errObj: any, extra?: any) => {
@@ -68,7 +68,7 @@ const loggerMockFunction: LogFunction = (errObj: any, extra?: any) => {
   return Promise.resolve();
 };
 
-const loggerTimeEndMockFunction = (label: any, extraLogData: any) => {
+const loggerTimeEndMockFunction = (label: any, extraLogData: any): void => {
   if (typeof label !== 'string') {
     throw new Error(`First param to lalog timeEnd method is not an string: ${typeof label}`);
   }
@@ -80,7 +80,7 @@ const loggerTimeEndMockFunction = (label: any, extraLogData: any) => {
   }
 };
 
-export const mockLoggerReset = () => {
+export const mockLoggerReset = (): void => {
   // const levels = ['trace', 'info', 'warn', 'error', 'fatal', 'security'];
   mockLogger.trace = jest.fn(loggerMockFunction);
   mockLogger.info = jest.fn(loggerMockFunction);

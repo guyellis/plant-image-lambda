@@ -15,7 +15,7 @@ import { PlantRequest } from './types';
  * each of the different output sizes.
  * @param req - request object with event and deps
  */
-export const pipeline = async (req: BasicRequest) => {
+export const pipeline = async (req: BasicRequest): Promise<any> => {
   const extractedRequest = extractFromEvent(req);
   const imageFromS3 = await getImageFromS3(extractedRequest);
   const jpgResponse = await convertToJpg(imageFromS3);

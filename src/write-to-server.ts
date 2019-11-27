@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import env from './env';
 import { PlantRequest } from './types';
 
-export const writeToServer = async (req: PlantRequest) => {
+export const writeToServer = async (req: PlantRequest): Promise<PlantRequest> => {
   const {
     PLANT_IMAGE_COMPLETE,
     PLANT_IMAGE_HOST,

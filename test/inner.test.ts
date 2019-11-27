@@ -8,11 +8,11 @@ import { PlantRequest } from '../src/types';
 describe('pipeline', () => {
   beforeEach(() => {
     mockLoggerReset();
-    MockGM.prototype.toBuffer = (_: any, cb: Function) => cb(null, 'fake-buffer');
+    MockGM.prototype.toBuffer = (_: any, cb: Function): void => cb(null, 'fake-buffer');
   });
 
   test('should throw if processImage throws', async () => {
-    MockGM.prototype.toBuffer = (_: any, cb: Function) => cb('fake-toBuffer-error');
+    MockGM.prototype.toBuffer = (_: any, cb: Function): void => cb('fake-toBuffer-error');
     const gm = new MockGM();
 
     const req: PlantRequest = {

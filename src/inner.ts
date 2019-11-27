@@ -22,7 +22,7 @@ const bucket = 'i.plaaant.com';
  * processImage
  * @param req
  */
-function processImage(req: any) {
+function processImage(req: any): Promise<any> {
   req.step += 1;
   const {
     deps: { gm, logger }, step, item, input: { buffer: response },
@@ -84,7 +84,7 @@ function processImage(req: any) {
 //       name
 //     index
 //   buffer
-function uploadImage(req: any) {
+function uploadImage(req: any): Promise<any> {
   req.step += 1;
   const {
     deps: { s3, logger }, step,
