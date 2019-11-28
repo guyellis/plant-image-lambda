@@ -74,13 +74,13 @@ const loggerTimeEndMockFunction: TimeLogFunction = async (
     throw new Error(`1st param to lalog timeEnd method is not an string: ${typeof label}`);
   }
   if (level && typeof level !== 'string') {
-    throw new Error(`2nd param to lalog timeEnd method is not an string: ${typeof label}`);
+    throw new Error(`2nd param to lalog timeEnd method is not an string: ${typeof level}`);
   }
   if (extraLogData && !isObject(extraLogData)) {
     throw new Error(`3rd param to lalog timeEnd method is not an object: ${typeof extraLogData}`);
   }
   if (extraLogData) {
-    loggerMockFunction(extraLogData);
+    return loggerMockFunction(extraLogData);
   }
   return Promise.resolve();
 };
