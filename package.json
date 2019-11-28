@@ -7,7 +7,7 @@
     "@types/lodash": "4.14.149",
     "aws-sdk": "2.580.0",
     "gm": "1.23.1",
-    "lalog": "0.7.0",
+    "lalog": "0.8.0",
     "node-fetch": "2.6.0"
   },
   "description": "Image Lambda for Plant Project",

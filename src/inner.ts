@@ -1,7 +1,7 @@
 import util from 'util';
 import { PutObjectOutput } from 'aws-sdk/clients/s3';
 import { AWSError } from 'aws-sdk';
-import { TimeEndLoggerFunc, ImageSize, RequestDeps } from './types';
+import { ImageSize, RequestDeps } from './types';
 import { ImageSizeResponse, ImageSizeData } from './outer-5-image-size';
 
 const bucket = 'i.plaaant.com';
@@ -50,7 +50,7 @@ function processImage(
   };
 
   if (size.width === targetSize.width) {
-    (logger.timeEnd as TimeEndLoggerFunc)('processImage', {
+    logger.timeEnd('processImage', 'info', {
       msg: 'width in size and targetSize already matched',
       step,
       item,
@@ -66,8 +66,7 @@ function processImage(
     gm(response).resize(targetSize.width, height)
       .toBuffer('JPG', (err: Error|null, buffer: Buffer) => {
         if (err) {
-          // @ts-ignore
-          logger.timeEnd.error('processImage', {
+          logger.timeEnd('processImage', 'error', {
             msg: 'Error in gm(response).resize()',
             err,
             step,
@@ -78,7 +77,7 @@ function processImage(
           });
           return reject(err);
         }
-        (logger.timeEnd as TimeEndLoggerFunc)('processImage', {
+        logger.timeEnd('processImage', 'info', {
           step, item, size, targetSize, scalingFactor,
         });
         return resolve(getResponse(buffer));
@@ -107,10 +106,10 @@ function uploadImage(req: Readonly<UploadImageReqOptions>): Promise<Readonly<Put
         const errObj = {
           msg: 'Error in s3.putObject()', err, bucket, outKey, step,
         };
-        (logger.timeEnd.error as TimeEndLoggerFunc)('uploadImage', errObj);
+        logger.timeEnd('uploadImage', 'error', errObj);
         return reject(err);
       }
-      (logger.timeEnd as TimeEndLoggerFunc)('uploadImage', {
+      logger.timeEnd('uploadImage', 'info', {
         bucket, outKey, step,
       });
       return resolve(result);

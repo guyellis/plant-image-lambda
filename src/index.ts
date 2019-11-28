@@ -2,7 +2,7 @@
 import { Context, S3Event } from 'aws-lambda';
 import AWS from 'aws-sdk';
 import util from 'util';
-import Logger from 'lalog';
+import Logger, { LevelType } from 'lalog';
 import gm from 'gm';
 import { pipeline } from './outer';
 
@@ -16,8 +16,8 @@ import { RequestDeps } from './types';
 async function handler(event: S3Event, ctx: Context): Promise<void> {
   process.env.LOGGLY_TOKEN = env.LOGGLY_TOKEN;
 
-  // @ts-ignore
-  Logger.setLevel(process.env.LALOG_LEVEL);
+  const level: LevelType = (process.env.LALOG_LEVEL || 'info') as LevelType;
+  Logger.setLevel(level);
 
   const logger = Logger.create({
     serviceName: 'plant-image-lambda',

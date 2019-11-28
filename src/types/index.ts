@@ -8,31 +8,6 @@ export interface ImageSize {
   width: number;
 }
 
-// interface LoggerPresets {
-//   trackId?: string;
-// }
-
-export type TimeEndLoggerFunc = (timerName: string, logData?: object) => void;
-
-export interface TimeEndLogger {
-  (timerName: string, logData?: object): void;
-  error: TimeEndLoggerFunc;
-}
-
-type LoggerFunc = (logData: object) => void;
-
-// interface Logger {
-//   info: LoggerFunc;
-//   warn: LoggerFunc;
-//   fatal: LoggerFunc;
-//   security: LoggerFunc;
-//   error: LoggerFunc;
-//   presets?: LoggerPresets;
-//   time: (timerName: string) => void;
-//   timeEnd: TimeEndLogger | TimeEndLoggerFunc;
-//   trace: LoggerFunc;
-// }
-
 export interface RequestDeps {
   gm: SubClass;
   logger: Logger;

@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import { S3Event } from 'aws-lambda';
-import Logger from 'lalog';
+import Logger, { LogFunction, TimeLogFunction, LevelType } from 'lalog';
 
 export const fakeEvent: S3Event = {
   Records: [{
@@ -56,7 +56,6 @@ export const mockLogger: Logger = {} as Logger;
 
 const isObject = (obj: any): boolean => obj !== null && typeof obj === 'object';
 
-type LogFunction = (logData: any, response?: any) => Promise<any>;
 const loggerMockFunction: LogFunction = (errObj: any, extra?: any) => {
   if (!isObject(errObj)) {
     throw new Error(`First param to lalog logger method is not an object: ${typeof errObj}`);
@@ -68,16 +67,22 @@ const loggerMockFunction: LogFunction = (errObj: any, extra?: any) => {
   return Promise.resolve();
 };
 
-const loggerTimeEndMockFunction = (label: any, extraLogData: any): void => {
+const loggerTimeEndMockFunction: TimeLogFunction = async (
+  label: any, level?: LevelType, extraLogData?: any,
+): Promise<any> => {
   if (typeof label !== 'string') {
-    throw new Error(`First param to lalog timeEnd method is not an string: ${typeof label}`);
+    throw new Error(`1st param to lalog timeEnd method is not an string: ${typeof label}`);
+  }
+  if (level && typeof level !== 'string') {
+    throw new Error(`2nd param to lalog timeEnd method is not an string: ${typeof label}`);
   }
   if (extraLogData && !isObject(extraLogData)) {
-    throw new Error(`Second param to lalog timeEnd method is not an object: ${typeof extraLogData}`);
+    throw new Error(`3rd param to lalog timeEnd method is not an object: ${typeof extraLogData}`);
   }
   if (extraLogData) {
     loggerMockFunction(extraLogData);
   }
+  return Promise.resolve();
 };
 
 export const mockLoggerReset = (): void => {
@@ -88,10 +93,7 @@ export const mockLoggerReset = (): void => {
   mockLogger.error = jest.fn(loggerMockFunction);
   mockLogger.fatal = jest.fn(loggerMockFunction);
   mockLogger.security = jest.fn(loggerMockFunction);
-  // @ts-ignore
   mockLogger.timeEnd = jest.fn(loggerTimeEndMockFunction);
-  // @ts-ignore
-  mockLogger.timeEnd.error = jest.fn(loggerTimeEndMockFunction);
   mockLogger.time = jest.fn();
 };
 
