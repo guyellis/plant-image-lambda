@@ -36,8 +36,7 @@ describe('pipeline', () => {
     }
 
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
-    // @ts-ignore TODO: Fix this
-    expect(mockLogger.timeEnd.error).toHaveBeenCalledTimes(1);
+    expect(mockLogger.timeEnd).toHaveBeenCalledTimes(1);
     expect.assertions(3);
   });
 
@@ -95,8 +94,7 @@ describe('pipeline', () => {
     }
 
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
-    // @ts-ignore TODO: Fix this
-    expect(mockLogger.timeEnd.error).toHaveBeenCalledTimes(1);
+    expect(mockLogger.timeEnd).toHaveBeenCalledTimes(2);
     expect.assertions(3);
   });
 });

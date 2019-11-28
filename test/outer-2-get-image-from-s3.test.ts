@@ -64,8 +64,7 @@ describe('getImageFromS3', () => {
       expect(err).toEqual('fake-s3-getObject-error');
     }
 
-    // @ts-ignore
-    expect(mockLogger.timeEnd.error).toHaveBeenCalledTimes(1);
+    expect(mockLogger.timeEnd).toHaveBeenCalledTimes(2);
     expect.assertions(4);
   });
 });

@@ -1,5 +1,4 @@
 import { GetObjectOutput } from 'aws-sdk/clients/s3';
-import { TimeEndLogger, TimeEndLoggerFunc } from './types';
 import { ExtractFromEventResponse, ExtractFromEventData } from './outer-1-extract-from-event';
 
 
@@ -35,10 +34,10 @@ export const getImageFromS3 = async (
       ...req,
       data: nextData,
     };
-    (logger.timeEnd as TimeEndLoggerFunc)('getImageFromS3');
+    logger.timeEnd('getImageFromS3');
     return response;
   } catch (err) {
-    (logger.timeEnd as TimeEndLogger).error('getImageFromS3', {
+    logger.timeEnd('getImageFromS3', 'error', {
       msg: 'Error in s3.getObject() via getImageFromS3()',
       err,
     });
