@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
 import { S3Event } from 'aws-lambda';
 import Logger, { LogFunction, TimeLogFunction, LevelType } from 'lalog';
+import { GetObjectOutput } from 'aws-sdk/clients/s3';
 
 export const fakeEvent: S3Event = {
   Records: [{
@@ -37,12 +38,12 @@ export const fakeEvent: S3Event = {
       },
     },
   }],
-} as unknown as S3Event;
+};
 
-export const fakeS3Object = {
+export const fakeS3Object: GetObjectOutput = {
   AcceptRanges: 'bytes',
-  LastModified: 'Tue, 06 Sep 2016 22:45:04 GMT',
-  ContentLength: '2718943',
+  LastModified: new Date('Tue, 06 Sep 2016 22:45:04 GMT'),
+  ContentLength: 2718943,
   ETag: '"244c6ae2eeaf49e7f84070864aa3fa26"',
   ContentType: 'image/jpeg',
   Metadata: {
@@ -133,15 +134,6 @@ export const mockS3 = {
     cb();
   },
 };
-
-// export = {
-//   fakeEvent,
-//   fakeS3Object,
-//   mockGM,
-//   mockLogger,
-//   mockLoggerReset,
-//   mockS3,
-// };
 
 // Event Structure: http://docs.aws.amazon.com/AmazonS3/latest/dev/notification-content-structure.html
 
