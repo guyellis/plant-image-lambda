@@ -19,7 +19,7 @@ lambda:
 	@echo "Create devops/env.ts"
 	@ts-node devops/setenv.ts
 	@echo "Transpile devops/env.ts"
-	@tsc devops/env.ts --outDir dist/
+	@tsc devops/env.ts --outDir dist/src/
 	@echo "Remove existing node_modules"
 	@rm -rf node_modules/
 	@echo "Installing node modules (production)"
