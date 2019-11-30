@@ -6,24 +6,29 @@ lambda:
 	@if [ -z "${PLANT_IMAGE_PORT}" ]; then (echo "Please export PLANT_IMAGE_PORT" && exit 1); fi
 	@if [ -z "${LOGGLY_TOKEN}" ]; then (echo "Please export LOGGLY_TOKEN" && exit 1); fi
 	@if [ -z "${LALOG_LEVEL}" ]; then (echo "Please export LALOG_LEVEL" && exit 1); fi
+	@echo "Installing node modules (all)"
+	npm i --depth 0
 	@echo "Check Node Version"
 	@npm run cnv
-	@echo "Run TypeScript Transpiler"
-	@tsc
-	@echo "Remove existing node_modules"
-	@rm -rf node_modules/
 	@echo "Remove existing build/"
 	@rm -rf build/
+	@echo "Remove existing dist/"
+	@rm -rf dist/
+	@echo "Run TypeScript Transpiler"
+	@tsc
+	@echo "Create devops/env.ts"
+	@ts-node devops/setenv.ts
+	@echo "Transpile devops/env.ts"
+	@tsc devops/env.ts --outDir dist/
+	@echo "Remove existing node_modules"
+	@rm -rf node_modules/
 	@echo "Installing node modules (production)"
 	npm i --production --depth 0
 	@echo "Create new build/"
 	@mkdir build
 	@echo "Copying files to build/"
-	@cp index.js build/index.js
 	@cp -R node_modules build/node_modules
-	@cp -R dist/src build/src
-	@echo "Create env.json"
-	sh devops/setenv.sh
+	@cp -R dist/* build/
 	@echo "Create package archive"
 	@cd build && zip -rq lambda-image.zip .
 	@mv build/lambda-image.zip ./

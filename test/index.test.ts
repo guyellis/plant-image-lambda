@@ -17,6 +17,7 @@ jest.mock('node-fetch', () => (() => ({
 
 describe('index-handler', () => {
   test('should run end-to-end', (end) => {
+    delete process.env.LALOG_LEVEL;
     const ctx: Context = {
       done(err: any) {
         expect(err).toBeFalsy();

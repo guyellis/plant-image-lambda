@@ -40,3 +40,8 @@ lambda-image.zip
 
 # TypeScript output directory
 dist/
+
+# The env.ts file is the environment file that's generated at
+# build time and should not be saved because it will have
+# sensitive info in it.
+devops/env.ts
