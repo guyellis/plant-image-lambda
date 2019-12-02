@@ -1,3 +1,4 @@
+import { GetObjectRequest } from 'aws-sdk/clients/s3';
 import { mockLogger } from './helper';
 import { getImageFromS3 } from '../src/outer-2-get-image-from-s3';
 import { ExtractFromEventResponse } from '../src/outer-1-extract-from-event';
@@ -17,7 +18,7 @@ describe('getImageFromS3', () => {
     const req: ExtractFromEventResponse = {
       deps: {
         s3: {
-          getObject(obj: any) {
+          getObject(obj: GetObjectRequest) {
             expect(fakeBucket).toBe(obj.Bucket);
             expect(fakeKey).toBe(obj.Key);
             return {
@@ -41,7 +42,7 @@ describe('getImageFromS3', () => {
     const req = {
       deps: {
         s3: {
-          getObject(obj: any) {
+          getObject(obj: GetObjectRequest) {
             expect(fakeBucket).toBe(obj.Bucket);
             expect(fakeKey).toBe(obj.Key);
             return {

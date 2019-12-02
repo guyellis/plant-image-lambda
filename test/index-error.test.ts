@@ -20,7 +20,7 @@ pipelineMock.mockRejectedValue('fake-outer-pipeline-error');
 describe('index-handler-error', () => {
   test('should log error if pipeline throws', (end) => {
     const ctx: Context = {
-      done(err: any) {
+      done(err: Error|null) {
         expect(err).toBe('fake-outer-pipeline-error');
 
         // TODO: The expect() below should work. When stepping through with

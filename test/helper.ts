@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
 import { S3Event } from 'aws-lambda';
 import Logger, { LogFunction, TimeLogFunction, LevelType } from 'lalog';
-import { GetObjectOutput } from 'aws-sdk/clients/s3';
+import { GetObjectOutput, PutObjectRequest } from 'aws-sdk/clients/s3';
 
 export const fakeEvent: S3Event = {
   Records: [{
@@ -130,7 +130,7 @@ export const mockS3 = {
       promise: () => Promise.resolve(fakeS3Object),
     };
   },
-  putObject(_: any, cb: Function) {
+  putObject(_: PutObjectRequest, cb: Function) {
     cb();
   },
 };

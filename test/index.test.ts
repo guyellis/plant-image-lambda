@@ -19,7 +19,7 @@ describe('index-handler', () => {
   test('should run end-to-end', (end) => {
     delete process.env.LALOG_LEVEL;
     const ctx: Context = {
-      done(err: any) {
+      done(err: Error|null) {
         expect(err).toBeFalsy();
         // 1 Assertion from above
         // 4 Assertions from logger.create()
