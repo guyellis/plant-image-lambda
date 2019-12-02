@@ -1,6 +1,6 @@
 import S3 from 'aws-sdk/clients/s3';
 import Logger from 'lalog';
-import { SubClass } from 'gm';
+import sharp from 'sharp';
 
 export interface ImageSize {
   height?: number;
@@ -8,8 +8,10 @@ export interface ImageSize {
   width: number;
 }
 
+type sharpMethod = (input?: string | Buffer, options?: sharp.SharpOptions) => sharp.Sharp;
+
 export interface RequestDeps {
-  gm: SubClass;
+  sharp: sharpMethod;
   logger: Logger;
   s3: S3;
 }

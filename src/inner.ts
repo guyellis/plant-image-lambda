@@ -1,6 +1,7 @@
 import util from 'util';
 import { PutObjectOutput } from 'aws-sdk/clients/s3';
 import { AWSError } from 'aws-sdk';
+
 import { ImageSize, RequestDeps } from './types';
 import { ImageSizeResponse, ImageSizeData } from './outer-5-image-size';
 
@@ -27,12 +28,12 @@ interface UploadImageReqOptions {
   buffer: Buffer;
 }
 
-function processImage(
+const processImage = async (
   req: Readonly<ProcessImageReqOptions>,
-): Promise<Readonly<UploadImageReqOptions>> {
+): Promise<Readonly<UploadImageReqOptions>> => {
   const step = req.step + 1;
   const {
-    deps: { gm, logger }, item, input: { buffer: response },
+    deps: { logger }, item, input: { jpeg },
   } = req;
   const { size: targetSize } = item;
   logger.time('processImage');
@@ -49,43 +50,37 @@ function processImage(
     return res;
   };
 
-  if (size.width === targetSize.width) {
+  try {
+    let buffer: Buffer;
+    let msg: string;
+    if (size.width === targetSize.width) {
+      msg = 'width in size and targetSize already matched';
+      buffer = await jpeg.toBuffer();
+    } else {
+      msg = `Image resized to width: ${targetSize.width}`;
+      buffer = await jpeg.resize(targetSize.width).toBuffer();
+    }
     logger.timeEnd('processImage', 'info', {
-      msg: 'width in size and targetSize already matched',
+      step, item, size, targetSize, msg,
+    });
+
+    return getResponse(buffer);
+  } catch (err) {
+    logger.timeEnd('processImage', 'error', {
+      msg: 'Error in scale.resize()',
+      err,
       step,
       item,
       size,
       targetSize,
     });
-    return Promise.resolve(getResponse(response));
+    throw err;
   }
+};
 
-  const scalingFactor = targetSize.width / size.width;
-  const height = scalingFactor * size.height;
-  return new Promise((resolve, reject) => {
-    gm(response).resize(targetSize.width, height)
-      .toBuffer('JPG', (err: Error|null, buffer: Buffer) => {
-        if (err) {
-          logger.timeEnd('processImage', 'error', {
-            msg: 'Error in gm(response).resize()',
-            err,
-            step,
-            item,
-            size,
-            targetSize,
-            scalingFactor,
-          });
-          return reject(err);
-        }
-        logger.timeEnd('processImage', 'info', {
-          step, item, size, targetSize, scalingFactor,
-        });
-        return resolve(getResponse(buffer));
-      });
-  });
-}
-
-function uploadImage(req: Readonly<UploadImageReqOptions>): Promise<Readonly<PutObjectOutput>> {
+const uploadImage = async (
+  req: Readonly<UploadImageReqOptions>,
+): Promise<Readonly<PutObjectOutput>> => {
   const step = req.step + 1;
   const {
     deps: { s3, logger },
@@ -115,7 +110,7 @@ function uploadImage(req: Readonly<UploadImageReqOptions>): Promise<Readonly<Put
       return resolve(result);
     });
   });
-}
+};
 
 export const innerPipeline = async (req: Readonly<ImageSizeResponse>): Promise<void> => {
   Object.freeze(req.data);

@@ -100,29 +100,29 @@ export const mockLoggerReset = (): void => {
 
 mockLoggerReset();
 
-export class mockGM {
-  constructor() {
-    // @ts-ignore - intentionally done like this for testing
-    return () => this;
-  }
+// export class mockGM {
+//   constructor() {
+//     // @ts-ignore - intentionally done like this for testing
+//     return () => this;
+//   }
 
-  antialias() { return this; }
+//   antialias() { return this; }
 
-  autoOrient() { return this; }
+//   autoOrient() { return this; }
 
-  density() { return this; }
+//   density() { return this; }
 
-  resize() { return this; }
+//   resize() { return this; }
 
-  // eslint-disable-next-line class-methods-use-this
-  toBuffer(_: any, cb: Function) {
-    cb(null, 'Fake Buffer');
-  }
+//   // eslint-disable-next-line class-methods-use-this
+//   toBuffer(_: any, cb: Function) {
+//     cb(null, 'Fake Buffer');
+//   }
 
-  size(cb: Function) {
-    cb.call(this, null, { width: 3000, height: 2000 });
-  }
-}
+//   size(cb: Function) {
+//     cb.call(this, null, { width: 3000, height: 2000 });
+//   }
+// }
 
 export const mockS3 = {
   getObject() {

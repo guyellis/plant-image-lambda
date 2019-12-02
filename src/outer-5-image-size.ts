@@ -1,17 +1,50 @@
-import { Dimensions } from 'gm';
+import { Metadata } from 'sharp';
+import Logger from 'lalog';
 
 import { calcSizes } from './image-sizes';
 import { ConvertToJpgResponse, ConvertToJpgData } from './outer-3-convert-to-jpg';
 import { ImageSize } from './types';
 
+
 export interface ImageSizeData extends ConvertToJpgData {
-  imageSize: Dimensions;
+  imageSize: ImageSize;
   sizes: ImageSize[];
 }
 
 export interface ImageSizeResponse extends Omit<ConvertToJpgResponse, 'data'> {
   data: ImageSizeData;
 }
+
+const traceLogMetadata = (metadata: Metadata, logger: Logger) => {
+  const {
+    format,
+    size,
+    width,
+    height,
+    space,
+    channels,
+    depth,
+    density,
+    chromaSubsampling,
+    isProgressive,
+    hasProfile,
+    hasAlpha,
+  } = metadata;
+  logger.trace({
+    format,
+    size,
+    width,
+    height,
+    space,
+    channels,
+    depth,
+    density,
+    chromaSubsampling,
+    isProgressive,
+    hasProfile,
+    hasAlpha,
+  });
+};
 
 // #5
 // data:
@@ -23,40 +56,53 @@ export interface ImageSizeResponse extends Omit<ConvertToJpgResponse, 'data'> {
 //   buffer
 export const getImageSize = async (
   req: Readonly<ConvertToJpgResponse>): Promise<Readonly<ImageSizeResponse>> => {
-  const { data, deps: { gm, logger } } = req;
+  const { data, deps: { logger } } = req;
   const method = '5. getImageSize()';
 
-  logger.trace({
-    method,
-  });
-
-  return new Promise((resolve, reject) => {
-    gm(data.buffer).size((err: Error|null, size: Dimensions) => {
-      if (err) {
-        logger.error({
-          method,
-          err,
-        });
-        return reject(err);
-      }
-
-      const nextData: ImageSizeData = {
-        ...data,
-        imageSize: size,
-        sizes: calcSizes(size.width),
-      };
-
-      const response: ImageSizeResponse = {
-        ...req,
-        data: nextData,
-      };
-
-      logger.trace({
-        msg: '5. getImageSize got size',
-        size,
-        sizes: nextData.sizes,
-      });
-      return resolve(response);
+  try {
+    logger.trace({
+      method,
     });
-  });
+
+    const { jpeg } = data;
+    const metadata = await jpeg.metadata();
+
+    traceLogMetadata(metadata, logger);
+
+    const { width, height } = metadata;
+    if (!width) {
+      throw new Error(`No width ${width} in metadata`);
+    }
+
+    const imageSize: ImageSize = {
+      width,
+      height,
+      name: 'original',
+    };
+
+    const nextData: ImageSizeData = {
+      ...data,
+      imageSize,
+      sizes: calcSizes(imageSize.width),
+    };
+
+    const response: ImageSizeResponse = {
+      ...req,
+      data: nextData,
+    };
+
+    logger.trace({
+      msg: '5. getImageSize got size',
+      imageSize,
+      sizes: nextData.sizes,
+    });
+
+    return response;
+  } catch (err) {
+    logger.error({
+      method,
+      err,
+    });
+    throw err;
+  }
 };

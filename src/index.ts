@@ -3,7 +3,7 @@ import { Context, S3Event } from 'aws-lambda';
 import AWS from 'aws-sdk';
 import util from 'util';
 import Logger, { LevelType } from 'lalog';
-import gm from 'gm';
+import sharp from 'sharp';
 import { pipeline } from './outer';
 
 import env from './env';
@@ -34,9 +34,7 @@ async function handler(event: S3Event, ctx: Context): Promise<void> {
     const deps: RequestDeps = {
       s3: new AWS.S3(),
       logger,
-      gm: gm.subClass({
-        imageMagick: true,
-      }),
+      sharp,
     };
 
     const req: BasicRequest = {

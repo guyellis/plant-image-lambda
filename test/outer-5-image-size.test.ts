@@ -1,19 +1,18 @@
-import { mockLogger, mockGM as MockGM } from './helper';
-
+import { mockLogger } from './helper';
 import { getImageSize } from '../src/outer-5-image-size';
 import { ConvertToJpgResponse } from '../src/outer-3-convert-to-jpg';
 
 describe('getImageSize', () => {
   test('should throw if size rejects', async () => {
-    MockGM.prototype.size = (cb: Function) => cb('fake-size-error');
-    const gm = new MockGM();
-
     const req = {
       data: {
         buffer: 'fake-buffer',
+        jpeg: {
+          // eslint-disable-next-line prefer-promise-reject-errors
+          metadata: () => Promise.reject('fake-size-error'),
+        },
       },
       deps: {
-        gm,
         logger: mockLogger,
       },
     } as unknown as ConvertToJpgResponse;
