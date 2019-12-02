@@ -1,4 +1,4 @@
-import S3 from 'aws-sdk/clients/s3';
+import S3, { GetObjectOutput } from 'aws-sdk/clients/s3';
 import Logger from 'lalog';
 import { SubClass } from 'gm';
 
@@ -26,7 +26,7 @@ interface RequestInput {
   imageType: string;
   key: string;
   outKeyRoot: string;
-  s3Object: object;
+  s3Object: GetObjectOutput;
 }
 
 export interface PlantRequest {
