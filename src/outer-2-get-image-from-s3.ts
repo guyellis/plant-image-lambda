@@ -13,7 +13,8 @@ export interface GetImageFromS3Response extends Omit<ExtractFromEventResponse, '
 // #2
 // data has: bucketName, key, fileName, imageType
 export const getImageFromS3 = async (
-  req: Readonly<ExtractFromEventResponse>): Promise<Readonly<GetImageFromS3Response>> => {
+  req: Readonly<ExtractFromEventResponse>,
+): Promise<Readonly<GetImageFromS3Response>> => {
   const { data, deps: { s3, logger } } = req;
   logger.time('getImageFromS3');
   logger.trace({ msg: '2. getImageFromS3()' });

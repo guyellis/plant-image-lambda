@@ -1,6 +1,5 @@
 import util from 'util';
 import { PutObjectOutput } from 'aws-sdk/clients/s3';
-import { AWSError } from 'aws-sdk';
 
 import { ImageSize, RequestDeps } from './types';
 import { ImageSizeResponse, ImageSizeData } from './outer-5-image-size';
@@ -90,26 +89,24 @@ const uploadImage = async (
 
   const outKey = `${req.input.outKeyRoot + req.item.size.name}/${req.input.fileName}`;
 
-  return new Promise((resolve, reject) => {
-    s3.putObject({
+  try {
+    const result: PutObjectOutput = await s3.putObject({
       Bucket: bucket,
       Key: outKey,
       Body: req.buffer,
       ContentType: 'JPG',
-    }, (err: AWSError, result: PutObjectOutput) => {
-      if (err) {
-        const errObj = {
-          msg: 'Error in s3.putObject()', err, bucket, outKey, step,
-        };
-        logger.timeEnd('uploadImage', 'error', errObj);
-        return reject(err);
-      }
-      logger.timeEnd('uploadImage', 'info', {
-        bucket, outKey, step,
-      });
-      return resolve(result);
+    }).promise();
+    logger.timeEnd('uploadImage', 'info', {
+      bucket, outKey, step,
     });
-  });
+    return result;
+  } catch (err) {
+    const errObj = {
+      msg: 'Error in s3.putObject()', err, bucket, outKey, step,
+    };
+    logger.timeEnd('uploadImage', 'error', errObj);
+    throw err;
+  }
 };
 
 export const innerPipeline = async (req: Readonly<ImageSizeResponse>): Promise<void> => {

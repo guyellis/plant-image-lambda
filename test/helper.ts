@@ -133,8 +133,11 @@ export const mockS3 = {
       promise: () => Promise.resolve(fakeS3Object),
     };
   },
-  putObject(_: PutObjectRequest, cb: Function) {
-    cb();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  putObject(_: PutObjectRequest) {
+    return {
+      promise: () => Promise.resolve(),
+    };
   },
 };
 

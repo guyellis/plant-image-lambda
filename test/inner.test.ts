@@ -1,4 +1,3 @@
-import { PutObjectRequest } from 'aws-sdk/clients/s3';
 import { Sharp } from 'sharp';
 import {
   mockLogger, mockS3, mockLoggerReset,
@@ -111,8 +110,11 @@ describe('innerPipeline', () => {
       deps: {
         logger: mockLogger,
         s3: {
-          putObject(_: PutObjectRequest, cb: Function) {
-            cb('fake-putObject-error');
+          putObject() {
+            return {
+              // eslint-disable-next-line prefer-promise-reject-errors
+              promise: () => Promise.reject('fake-putObject-error'),
+            };
           },
         },
       },
