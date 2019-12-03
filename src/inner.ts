@@ -117,6 +117,11 @@ export const innerPipeline = async (req: Readonly<ImageSizeResponse>): Promise<v
   let index = 0;
   let innerReq: ProcessImageReqOptions | null = null;
   try {
+    logger.trace({
+      msg: 'About to start for...of loop to resize and write images',
+      sizes,
+    });
+
     // eslint-disable-next-line no-restricted-syntax
     for (const size of sizes) {
       innerReq = {
@@ -137,11 +142,15 @@ export const innerPipeline = async (req: Readonly<ImageSizeResponse>): Promise<v
       index += 1;
     }
 
-    const logData = util.inspect(req.data);
     logger.trace({
-      msg: 'Successfully resized',
-      logData,
+      msg: 'Just finished for...of loop for resize and write images',
     });
+
+    // const logData = util.inspect(req.data);
+    // logger.trace({
+    //   msg: 'Successfully resized',
+    //   logData,
+    // });
   } catch (err) {
     const logData = util.inspect(req.data);
     logger.error({
