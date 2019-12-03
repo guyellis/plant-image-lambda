@@ -2,35 +2,23 @@
 import { Context, S3Event } from 'aws-lambda';
 import AWS from 'aws-sdk';
 import util from 'util';
-import Logger, { LevelType } from 'lalog';
 import sharp from 'sharp';
 import { pipeline } from './outer';
 
-import env from './env';
 import { BasicRequest } from './outer-1-extract-from-event';
 import { RequestDeps } from './types';
+import { logger } from './logger';
 
 /**
  * Entry point from Lambda call
  */
 async function handler(event: S3Event, ctx: Context): Promise<void> {
-  process.env.LOGGLY_TOKEN = env.LOGGLY_TOKEN;
-
-  const level: LevelType = (process.env.LALOG_LEVEL || 'info') as LevelType;
-  Logger.setLevel(level);
-
-  const logger = Logger.create({
-    serviceName: 'plant-image-lambda',
-    moduleName: 'n/a',
-    addTrackId: true,
-  });
-
-  logger.trace({
-    msg: 'Reading options from event',
-    event: util.inspect(event, { depth: 5 }),
-  });
-
   try {
+    logger.trace({
+      msg: 'Reading options from event',
+      event: util.inspect(event, { depth: 5 }),
+    });
+
     const deps: RequestDeps = {
       s3: new AWS.S3(),
       logger,
