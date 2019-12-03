@@ -1,12 +1,12 @@
 // eslint-disable-next-line import/no-unresolved
 import { Context } from 'aws-lambda';
-import { mockGM as MockGM, fakeEvent /* , mockLogger */ } from './helper';
+import { fakeEvent /* , mockLogger */ } from './helper';
 import { pipeline } from '../src/outer';
 import { handler } from '../src';
 
-jest.mock('gm', () => ({
-  subClass: () => new MockGM(),
-}));
+// jest.mock('gm', () => ({
+//   subClass: () => new MockGM(),
+// }));
 
 jest.mock('node-fetch', () => (() => ({
   status: 200,

@@ -3,7 +3,6 @@ import { S3Event } from 'aws-lambda';
 import Logger, { LogFunction, TimeLogFunction, LevelType } from 'lalog';
 import { GetObjectOutput, PutObjectRequest } from 'aws-sdk/clients/s3';
 import { sharpMethod } from '../src/types';
-import { ImageSizeResponse } from '../src/outer-5-image-size';
 
 import S3 = require('aws-sdk/clients/s3');
 
