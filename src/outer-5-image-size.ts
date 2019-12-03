@@ -1,9 +1,9 @@
 import { Metadata } from 'sharp';
-import Logger from 'lalog';
 
 import { calcSizes } from './image-sizes';
 import { ConvertToJpgResponse, ConvertToJpgData } from './outer-3-convert-to-jpg';
 import { ImageSize } from './types';
+import { PlantImageLogger } from './logger';
 
 
 export interface ImageSizeData extends ConvertToJpgData {
@@ -15,7 +15,7 @@ export interface ImageSizeResponse extends Omit<ConvertToJpgResponse, 'data'> {
   data: ImageSizeData;
 }
 
-const traceLogMetadata = (metadata: Metadata, logger: Logger) => {
+const traceLogMetadata = (metadata: Metadata, logger: PlantImageLogger) => {
   const {
     format,
     size,
