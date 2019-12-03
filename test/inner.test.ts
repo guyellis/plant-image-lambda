@@ -1,9 +1,10 @@
 import { PutObjectRequest } from 'aws-sdk/clients/s3';
+import { Sharp } from 'sharp';
 import {
   mockLogger, mockS3, mockLoggerReset,
   fakeS3 as s3,
   fakeSharpJpegError as sharp,
-  fakeInput as input,
+  // fakeInput as input,
 } from './helper';
 
 import { innerPipeline } from '../src/inner';
@@ -15,14 +16,18 @@ describe('innerPipeline', () => {
     // MockGM.prototype.toBuffer = (_: any, cb: Function): void => cb(null, 'fake-buffer');
   });
 
-  test.only('should throw if processImage throws', async () => {
+  test('should throw if processImage throws', async () => {
     // MockGM.prototype.toBuffer = (_: any, cb: Function): void => cb('fake-toBuffer-error');
     // const gm = new MockGM();
 
+    const resizeSharp = {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      toBuffer: () => {},
+    };
     const req: ImageSizeResponse = {
       buffer: Buffer.from(''),
       event: {},
-      input,
+      // input,
       item: {
         size: {
           name: 'fake item size',
@@ -36,6 +41,9 @@ describe('innerPipeline', () => {
         imageSize: {
           width: 1200,
         },
+        jpeg: {
+          resize: () => resizeSharp,
+        },
       },
       deps: {
         logger: mockLogger,
@@ -46,12 +54,12 @@ describe('innerPipeline', () => {
     } as unknown as ImageSizeResponse;
 
     // eslint-disable-next-line prefer-promise-reject-errors
-    input.jpeg.resize = () => Promise.reject('fake-resize-error');
+    resizeSharp.toBuffer = () => Promise.reject('fake-toBuffer-error') as unknown as Sharp;
 
     try {
       await innerPipeline(req);
     } catch (err) {
-      expect(err).toEqual('fake-jpeg-error');
+      expect(err).toEqual('fake-toBuffer-error');
     }
 
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
@@ -68,6 +76,9 @@ describe('innerPipeline', () => {
         sizes: [{ width: 500 }],
         imageSize: {
           width: 500,
+        },
+        jpeg: {
+          toBuffer: () => 'fake buffer',
         },
       },
       deps: {
@@ -90,6 +101,11 @@ describe('innerPipeline', () => {
         sizes: [{ width: 500 }, { width: 1000 }],
         imageSize: {
           width: 1200,
+        },
+        jpeg: {
+          resize: () => ({
+            toBuffer: () => 'fake buffer',
+          }),
         },
       },
       deps: {
