@@ -2,6 +2,9 @@
 import { S3Event } from 'aws-lambda';
 import Logger, { LogFunction, TimeLogFunction, LevelType } from 'lalog';
 import { GetObjectOutput, PutObjectRequest } from 'aws-sdk/clients/s3';
+import { sharpMethod } from '../src/types';
+
+import S3 = require('aws-sdk/clients/s3');
 
 export const fakeEvent: S3Event = {
   Records: [{
@@ -183,3 +186,25 @@ export const mockS3 = {
    ]
 }
 */
+
+export const fakeS3: S3 = {} as S3;
+
+export const fakeSharpJpegError: sharpMethod = (() => ({
+  // eslint-disable-next-line prefer-promise-reject-errors
+  jpeg: () => Promise.reject('fake-jpeg-error'),
+})) as unknown as sharpMethod;
+
+const s3Object: GetObjectOutput = {
+
+} as GetObjectOutput;
+
+export const fakeInput: RequestInput = {
+  bucketName: 'fake bucket name',
+  buffer: Buffer.from('fake buffer'),
+  fileName: 'fake file name',
+  imageSize: { height: 200, width: 200, name: 'fake image name' },
+  imageType: 'jpg',
+  key: 'fake key',
+  outKeyRoot: 'fake output key root',
+  s3Object,
+};

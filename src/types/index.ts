@@ -8,7 +8,7 @@ export interface ImageSize {
   width: number;
 }
 
-type sharpMethod = (input?: string | Buffer, options?: sharp.SharpOptions) => sharp.Sharp;
+export type sharpMethod = (input?: string | Buffer, options?: sharp.SharpOptions) => sharp.Sharp;
 
 export interface RequestDeps {
   sharp: sharpMethod;
