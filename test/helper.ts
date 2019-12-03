@@ -1,8 +1,9 @@
 // eslint-disable-next-line import/no-unresolved
 import { S3Event } from 'aws-lambda';
-import Logger, { LogFunction, TimeLogFunction, LevelType } from 'lalog';
+import { LogFunction, TimeLogFunction, LevelType } from 'lalog';
 import { GetObjectOutput, PutObjectRequest } from 'aws-sdk/clients/s3';
 import { sharpMethod } from '../src/types';
+import { PlantImageLogger } from '../src/logger';
 
 import S3 = require('aws-sdk/clients/s3');
 
@@ -56,7 +57,7 @@ export const fakeS3Object: GetObjectOutput = {
   Body: '<Buffer>',
 };
 
-export const mockLogger: Logger = {} as Logger;
+export const mockLogger: PlantImageLogger = {} as PlantImageLogger;
 
 const isObject = (obj: any): boolean => obj !== null && typeof obj === 'object';
 
@@ -90,42 +91,13 @@ const loggerTimeEndMockFunction: TimeLogFunction = async (
 };
 
 export const mockLoggerReset = (): void => {
-  // const levels = ['trace', 'info', 'warn', 'error', 'fatal', 'security'];
   mockLogger.trace = jest.fn(loggerMockFunction);
-  mockLogger.info = jest.fn(loggerMockFunction);
-  mockLogger.warn = jest.fn(loggerMockFunction);
   mockLogger.error = jest.fn(loggerMockFunction);
-  mockLogger.fatal = jest.fn(loggerMockFunction);
-  mockLogger.security = jest.fn(loggerMockFunction);
   mockLogger.timeEnd = jest.fn(loggerTimeEndMockFunction);
   mockLogger.time = jest.fn();
 };
 
 mockLoggerReset();
-
-// export class mockGM {
-//   constructor() {
-//     // @ts-ignore - intentionally done like this for testing
-//     return () => this;
-//   }
-
-//   antialias() { return this; }
-
-//   autoOrient() { return this; }
-
-//   density() { return this; }
-
-//   resize() { return this; }
-
-//   // eslint-disable-next-line class-methods-use-this
-//   toBuffer(_: any, cb: Function) {
-//     cb(null, 'Fake Buffer');
-//   }
-
-//   size(cb: Function) {
-//     cb.call(this, null, { width: 3000, height: 2000 });
-//   }
-// }
 
 export const mockS3 = {
   getObject() {
