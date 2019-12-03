@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import { Context } from 'aws-lambda';
+import sharp, { Sharp, Metadata } from 'sharp';
 
 import { fakeEvent } from './helper';
 
@@ -14,6 +15,26 @@ jest.mock('node-fetch', () => (() => ({
   status: 200,
 })));
 
+jest.mock('sharp');
+
+const sharpMock = sharp as unknown as jest.Mock;
+
+const metadataMocker: Metadata = {
+  chromaSubsampling: '4:2:0:4',
+  width: 500,
+  height: 500,
+};
+
+const sharpMocker: Sharp = {
+  jpeg: () => sharpMocker,
+  resize: () => sharpMocker,
+  // @ts-ignore
+  toBuffer: () => Promise.resolve(Buffer.from('')),
+  // @ts-ignore
+  metadata: () => Promise.resolve(metadataMocker),
+};
+
+sharpMock.mockImplementation(() => sharpMocker);
 
 describe('index-handler', () => {
   test('should run end-to-end', (end) => {
