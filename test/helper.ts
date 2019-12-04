@@ -2,10 +2,25 @@
 import { S3Event } from 'aws-lambda';
 import { LogFunction, TimeLogFunction, LevelType } from 'lalog';
 import { GetObjectOutput, PutObjectRequest } from 'aws-sdk/clients/s3';
+import { Response, Headers } from 'node-fetch';
+
 import { sharpMethod } from '../src/types';
 import { PlantImageLogger } from '../src/logger';
 
 import S3 = require('aws-sdk/clients/s3');
+
+export const makeFakeFetchResponse = (status: number): Response => {
+  const response: Response = {
+    headers: {} as Headers,
+    ok: true,
+    redirected: false,
+    status,
+    statusText: 'OK',
+    type: 'default',
+    url: 'fake-url',
+  } as Response;
+  return response;
+};
 
 export const fakeEvent: S3Event = {
   Records: [{

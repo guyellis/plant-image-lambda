@@ -3,13 +3,12 @@ import { Context } from 'aws-lambda';
 import { GetObjectOutput, PutObjectRequest } from 'aws-sdk/clients/s3';
 import fs from 'fs';
 import path from 'path';
+import { Response } from 'node-fetch';
 
-import { fakeEvent } from './helper';
+import { fakeEvent, makeFakeFetchResponse } from './helper';
 import * as index from '../src';
 
-jest.mock('node-fetch', () => (() => ({
-  status: 200,
-})));
+jest.mock('node-fetch', () => ((): Response => makeFakeFetchResponse(200)));
 
 // eslint-disable-next-line security/detect-non-literal-fs-filename
 const Body = fs.readFileSync(path.join(__dirname, '/fixtures/passiflora-arida.jpg'));

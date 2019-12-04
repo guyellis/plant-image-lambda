@@ -38,7 +38,7 @@ const processImage = async (
   logger.time('processImage');
   const size = req.input.imageSize;
 
-  const getResponse = (buffer: Buffer) => {
+  const getResponse = (buffer: Buffer): UploadImageReqOptions => {
     const res: UploadImageReqOptions = {
       buffer,
       deps: req.deps,

@@ -1,21 +1,19 @@
 import _ from 'lodash';
+import { Response } from 'node-fetch';
 
 import env from '../src/env';
-import { mockLogger, mockLoggerReset } from './helper';
+import { mockLogger, mockLoggerReset, makeFakeFetchResponse } from './helper';
 import { writeToServer } from '../src/write-to-server';
 import { ImageSizeResponse } from '../src/outer-5-image-size';
 
-const mockFetchResult: Response = {
-  status: 200,
-} as Response;
-
+let status = 200;
 let mockThrow = false;
 
 jest.mock('node-fetch', () => (): Promise<Response> => {
   if (mockThrow) {
     throw new Error('fake-error');
   }
-  return Promise.resolve(mockFetchResult);
+  return Promise.resolve(makeFakeFetchResponse(status));
 });
 
 describe('write-to-server', () => {
@@ -36,14 +34,19 @@ describe('write-to-server', () => {
       },
     } as unknown) as ImageSizeResponse;
 
-    // @ts-ignore - not mutable but mutating for testing
-    mockFetchResult.status = 400;
+    status = 400;
 
     const result = await writeToServer(req);
 
     expect(result).toMatchInlineSnapshot(`
       Object {
+        "headers": Object {},
+        "ok": true,
+        "redirected": false,
         "status": 400,
+        "statusText": "OK",
+        "type": "default",
+        "url": "fake-url",
       }
     `);
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
@@ -84,15 +87,20 @@ describe('write-to-server', () => {
       },
     } as unknown) as ImageSizeResponse;
 
-    // @ts-ignore - not mutable but mutating for testing
-    mockFetchResult.status = 200;
+    status = 200;
     mockThrow = false;
 
     const result = await writeToServer(req);
 
     expect(result).toMatchInlineSnapshot(`
       Object {
+        "headers": Object {},
+        "ok": true,
+        "redirected": false,
         "status": 200,
+        "statusText": "OK",
+        "type": "default",
+        "url": "fake-url",
       }
     `);
     expect(mockLogger.error).not.toHaveBeenCalled();
@@ -116,15 +124,20 @@ describe('write-to-server', () => {
       },
     } as unknown) as ImageSizeResponse;
 
-    // @ts-ignore - not mutable but mutating for testing
-    mockFetchResult.status = 200;
+    status = 200;
     mockThrow = false;
 
     const result = await writeToServer(req);
     const logTraceMock = logger.trace as jest.Mock;
     expect(result).toMatchInlineSnapshot(`
       Object {
+        "headers": Object {},
+        "ok": true,
+        "redirected": false,
         "status": 200,
+        "statusText": "OK",
+        "type": "default",
+        "url": "fake-url",
       }
     `);
     expect(logger.error).not.toHaveBeenCalled();

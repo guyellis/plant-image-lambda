@@ -15,7 +15,7 @@ export interface ImageSizeResponse extends Omit<ConvertToJpgResponse, 'data'> {
   data: ImageSizeData;
 }
 
-const traceLogMetadata = (metadata: Metadata, logger: PlantImageLogger) => {
+const traceLogMetadata = (metadata: Metadata, logger: PlantImageLogger): void => {
   const {
     format,
     size,
