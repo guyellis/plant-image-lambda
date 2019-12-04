@@ -20,8 +20,7 @@ const time = (label: string): void => {
   return laLogger.time(label);
 };
 
-// const j = (obj: any) => JSON.stringify(obj, null, 2);
-const j = (obj: any) => obj;
+const j = (obj: any) => JSON.stringify(obj, null, 2);
 
 const timeEnd: TimeLogFunction = (label: string, level?: LevelType, obj?: any) => {
   console.timeEnd(label);

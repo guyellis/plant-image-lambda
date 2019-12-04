@@ -25,7 +25,7 @@ describe('convertToJpg', () => {
       expect(err).toEqual('fake-jpeg-error');
     }
 
-    expect(mockLogger.error).toHaveBeenCalledTimes(1);
+    expect(mockLogger.timeEnd).toHaveBeenCalledTimes(1);
     expect.assertions(2);
   });
 });

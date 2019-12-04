@@ -1,7 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import { Context, S3Event } from 'aws-lambda';
 import AWS from 'aws-sdk';
-import util from 'util';
 import sharp from 'sharp';
 import { pipeline } from './outer';
 
@@ -35,7 +34,6 @@ async function handler(event: S3Event, ctx: Context): Promise<void> {
   } catch (err) {
     logger.error({
       msg: 'Error in pipeline',
-      event: util.inspect(event, { depth: 5 }),
       err,
     });
     ctx.done(err);

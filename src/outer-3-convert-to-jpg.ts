@@ -1,13 +1,7 @@
 import { Sharp } from 'sharp';
 import { GetImageFromS3Response, GetImageFromS3Data } from './outer-2-get-image-from-s3';
 
-// #3
-// data:
-//   bucketName
-//   key
-//   fileName
-//   imageType
-//   s3Object
+const logTimeName = 'convertToJpg';
 
 export interface ConvertToJpgData extends GetImageFromS3Data {
   jpeg: Sharp;
@@ -27,7 +21,7 @@ export const convertToJpg = async (
     },
   } = data;
 
-  logger.time('convertToJpg');
+  logger.time(logTimeName);
   logger.trace({
     msg: `Response content type: ${ContentType}`,
     method: '3. convertToJpg()',
@@ -46,10 +40,10 @@ export const convertToJpg = async (
       data: nextData,
     };
 
-    logger.time('convertToJpg');
+    logger.timeEnd(logTimeName);
     return response;
   } catch (err) {
-    logger.error({
+    logger.timeEnd(logTimeName, 'error', {
       msg: 'convertToJpg error in toBuffer',
       method: 'convertToJpg()',
       err,
