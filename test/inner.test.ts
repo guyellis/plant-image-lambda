@@ -3,7 +3,6 @@ import {
   mockLogger, mockS3, mockLoggerReset,
   fakeS3 as s3,
   fakeSharpJpegError as sharp,
-  // fakeInput as input,
 } from './helper';
 
 import { innerPipeline } from '../src/inner';

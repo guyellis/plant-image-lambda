@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import { Context } from 'aws-lambda';
-import { fakeEvent /* , mockLogger */ } from './helper';
+import { fakeEvent, mockLogger } from './helper';
 import { pipeline } from '../src/outer';
 import { handler } from '../src';
 
@@ -22,16 +22,11 @@ describe('index-handler-error', () => {
     const ctx: Context = {
       done(err: Error|null) {
         expect(err).toBe('fake-outer-pipeline-error');
+        expect(mockLogger.error).toHaveBeenCalledTimes(1);
 
-        // TODO: The expect() below should work. When stepping through with
-        // the debugger this logger.error() method is hit but for some reason
-        // the mockLogger does not appear to have been substituted properly.
-        // Fix this - perhaps coming up with another way to mock the logger.
-        // expect(mockLogger.error).toHaveBeenCalledTimes(1);
-
-        // 1 Assertion from above
+        // 2 Assertion from above
         // 4 Assertions from logger.create()
-        expect.assertions(5);
+        expect.assertions(6);
         end();
       },
     } as Context;
