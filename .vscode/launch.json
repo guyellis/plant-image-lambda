@@ -8,6 +8,7 @@
     "args": ["-i"],
     "env": {
       "NODE_ENV": "development",
+      "SKIP_COVERAGE": "1"
     },
     "cwd": "${workspaceRoot}"
   }, {

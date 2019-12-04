@@ -5,9 +5,9 @@
   },
   "dependencies": {
     "aws-sdk": "2.584.0",
-    "gm": "1.23.1",
     "lalog": "0.8.1",
-    "node-fetch": "2.6.0"
+    "node-fetch": "2.6.0",
+    "sharp": "0.23.3"
   },
   "description": "Image Lambda for Plant Project",
   "devDependencies": {
@@ -19,6 +19,7 @@
     "@types/lodash": "4.14.149",
     "@types/node": "12.12.14",
     "@types/node-fetch": "2.5.4",
+    "@types/sharp": "0.23.0",
     "@typescript-eslint/eslint-plugin": "2.10.0",
     "@typescript-eslint/parser": "2.10.0",
     "check-node-version": "4.0.2",

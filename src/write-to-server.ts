@@ -21,6 +21,8 @@ export const writeToServer = async (
       sizes,
     },
   } = req;
+
+  logger.trace({ msg: 'writeToServer(): Started', env, sizes });
   const { presets } = logger;
   const { trackId } = presets ?? {};
 
@@ -30,13 +32,19 @@ export const writeToServer = async (
     trackId, // Allows receiver to use same trackId for logging
   });
 
+  logger.trace({ msg: 'writeToServer(): putData stringified', putData });
+
   const port = parseInt(PLANT_IMAGE_PORT, 10);
   const protocol = port === 443 ? 'https' : 'http';
 
-  const url = `${protocol}://${PLANT_IMAGE_HOST}/api/image-complete?token=${PLANT_IMAGE_COMPLETE}`;
+  // When we're testing we are going to be setting the port to an arbitrary
+  // high value that will map back to where our test server is running.
+  // In this case we'll want to append :<port> to the host.
+  const portSuffix = port !== 443 && port !== 80 ? `:${port}` : '';
+
+  const url = `${protocol}://${PLANT_IMAGE_HOST}${portSuffix}/api/image-complete?token=${PLANT_IMAGE_COMPLETE}`;
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    'Content-Length': Buffer.byteLength(putData).toString(),
   };
   const options: RequestInit = {
     body: putData,
@@ -45,18 +53,20 @@ export const writeToServer = async (
   };
   let response: Response | null = null;
 
+  logger.trace({ msg: 'writeToServer(): About to call fetch()', options, url });
+
   try {
     response = await fetch(url, options);
     const logData = {
       env,
-      msg: 'Image sizing metadata update sent',
+      msg: 'Image sizing metadata update sent and received',
       options,
       putData,
       status: response.status,
       url,
     };
     if (response.status === 200) {
-      logger.trace(logData);
+      logger.info(logData);
     } else {
       logger.error({
         ...logData,

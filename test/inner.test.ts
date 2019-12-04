@@ -1,6 +1,8 @@
-import { PutObjectRequest } from 'aws-sdk/clients/s3';
+import { Sharp } from 'sharp';
 import {
-  mockLogger, mockGM as MockGM, mockS3, mockLoggerReset,
+  mockLogger, mockS3, mockLoggerReset,
+  fakeS3 as s3,
+  fakeSharpJpegError as sharp,
 } from './helper';
 
 import { innerPipeline } from '../src/inner';
@@ -9,26 +11,48 @@ import { ImageSizeResponse } from '../src/outer-5-image-size';
 describe('innerPipeline', () => {
   beforeEach(() => {
     mockLoggerReset();
-    MockGM.prototype.toBuffer = (_: any, cb: Function): void => cb(null, 'fake-buffer');
+    // MockGM.prototype.toBuffer = (_: any, cb: Function): void => cb(null, 'fake-buffer');
   });
 
   test('should throw if processImage throws', async () => {
-    MockGM.prototype.toBuffer = (_: any, cb: Function): void => cb('fake-toBuffer-error');
-    const gm = new MockGM();
+    // MockGM.prototype.toBuffer = (_: any, cb: Function): void => cb('fake-toBuffer-error');
+    // const gm = new MockGM();
 
+    const resizeSharp = {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      toBuffer: () => {},
+    };
     const req: ImageSizeResponse = {
+      buffer: Buffer.from(''),
+      event: {},
+      // input,
+      item: {
+        size: {
+          name: 'fake item size',
+          width: 500,
+          height: 500,
+        },
+      },
       data: {
         buffer: 'fake-buffer',
         sizes: [{ width: 500 }, { width: 1000 }],
         imageSize: {
           width: 1200,
         },
+        jpeg: {
+          resize: () => resizeSharp,
+        },
       },
       deps: {
-        gm,
         logger: mockLogger,
+        sharp,
+        s3,
       },
+      step: 1,
     } as unknown as ImageSizeResponse;
+
+    // eslint-disable-next-line prefer-promise-reject-errors
+    resizeSharp.toBuffer = () => Promise.reject('fake-toBuffer-error') as unknown as Sharp;
 
     try {
       await innerPipeline(req);
@@ -42,7 +66,7 @@ describe('innerPipeline', () => {
   });
 
   test('should skip image processing if width is target width', async () => {
-    const gm = new MockGM();
+    // const gm = new MockGM();
 
     const req: ImageSizeResponse = {
       data: {
@@ -51,9 +75,11 @@ describe('innerPipeline', () => {
         imageSize: {
           width: 500,
         },
+        jpeg: {
+          toBuffer: () => 'fake buffer',
+        },
       },
       deps: {
-        gm,
         logger: mockLogger,
         s3: mockS3,
       },
@@ -67,8 +93,6 @@ describe('innerPipeline', () => {
   });
 
   test('should throw if uploadImage throws', async () => {
-    const gm = new MockGM();
-
     const req: ImageSizeResponse = {
       data: {
         buffer: 'fake-buffer',
@@ -76,13 +100,20 @@ describe('innerPipeline', () => {
         imageSize: {
           width: 1200,
         },
+        jpeg: {
+          resize: () => ({
+            toBuffer: () => 'fake buffer',
+          }),
+        },
       },
       deps: {
-        gm,
         logger: mockLogger,
         s3: {
-          putObject(_: PutObjectRequest, cb: Function) {
-            cb('fake-putObject-error');
+          putObject() {
+            return {
+              // eslint-disable-next-line prefer-promise-reject-errors
+              promise: () => Promise.reject('fake-putObject-error'),
+            };
           },
         },
       },

@@ -1,20 +1,9 @@
+/*
 import { ConvertToJpgResponse, ConvertToJpgData } from './outer-3-convert-to-jpg';
 
-// var gm = import('gm').subClass({
-//   imageMagick: true
-// });
-
-// #4
-// data:
-//   bucketName
-//   key
-//   fileName
-//   imageType
-//   s3Object
-//   buffer
 export const fixExif = async (
   req: Readonly<ConvertToJpgResponse>): Promise<Readonly<ConvertToJpgResponse>> => {
-  const { data, deps: { gm, logger } } = req;
+  const { data, deps: { sharp, logger } } = req;
   const method = '4. fixExif()';
 
   logger.trace({
@@ -47,3 +36,4 @@ export const fixExif = async (
       });
   });
 };
+*/
