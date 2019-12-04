@@ -1,15 +1,10 @@
+import { Sharp } from 'sharp';
 import { GetImageFromS3Response, GetImageFromS3Data } from './outer-2-get-image-from-s3';
 
-// #3
-// data:
-//   bucketName
-//   key
-//   fileName
-//   imageType
-//   s3Object
+const logTimeName = 'convertToJpg';
 
 export interface ConvertToJpgData extends GetImageFromS3Data {
-  buffer: Buffer;
+  jpeg: Sharp;
 }
 
 export interface ConvertToJpgResponse extends Omit<GetImageFromS3Response, 'data'> {
@@ -18,7 +13,7 @@ export interface ConvertToJpgResponse extends Omit<GetImageFromS3Response, 'data
 
 export const convertToJpg = async (
   req: Readonly<GetImageFromS3Response>): Promise<Readonly<ConvertToJpgResponse>> => {
-  const { data, deps: { gm, logger } } = req;
+  const { data, deps: { sharp, logger } } = req;
   const {
     s3Object: {
       ContentType,
@@ -26,35 +21,33 @@ export const convertToJpg = async (
     },
   } = data;
 
-  logger.time('convertToJpg');
+  logger.time(logTimeName);
   logger.trace({
     msg: `Response content type: ${ContentType}`,
     method: '3. convertToJpg()',
   });
-  return new Promise((resolve, reject) => {
-    gm(Body as string)
-      .antialias(true)
-      .density(300, 300)
-      .toBuffer('JPG', (err: Error|null, buffer: Buffer) => {
-        if (err) {
-          logger.error({
-            msg: 'convertToJpg error in toBuffer',
-            method: 'convertToJpg()',
-            err,
-          });
-          return reject(err);
-        }
-        const nextData: ConvertToJpgData = {
-          ...data,
-          buffer,
-        };
-        const response: ConvertToJpgResponse = {
-          ...req,
-          data: nextData,
-        };
-
-        logger.time('convertToJpg');
-        return resolve(response);
+  try {
+    const jpeg = await sharp(Body as Buffer)
+      .jpeg({
+        quality: 100,
       });
-  });
+    const nextData: ConvertToJpgData = {
+      ...data,
+      jpeg,
+    };
+    const response: ConvertToJpgResponse = {
+      ...req,
+      data: nextData,
+    };
+
+    logger.timeEnd(logTimeName);
+    return response;
+  } catch (err) {
+    logger.timeEnd(logTimeName, 'error', {
+      msg: 'convertToJpg error in toBuffer',
+      method: 'convertToJpg()',
+      err,
+    });
+    throw err;
+  }
 };

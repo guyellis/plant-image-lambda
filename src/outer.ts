@@ -1,7 +1,7 @@
 import { Response } from 'node-fetch';
 
 import { getImageSize } from './outer-5-image-size';
-import { fixExif } from './outer-4-fix-exif';
+// import { fixExif } from './outer-4-fix-exif';
 
 import { convertToJpg } from './outer-3-convert-to-jpg';
 import { getImageFromS3 } from './outer-2-get-image-from-s3';
@@ -20,8 +20,8 @@ export const pipeline = async (req: Readonly<BasicRequest>): Promise<Readonly<Re
   const extractedRequest = extractFromEvent(req);
   const imageFromS3 = await getImageFromS3(extractedRequest);
   const jpgResponse = await convertToJpg(imageFromS3);
-  const exifResponse = await fixExif(jpgResponse);
-  const imageSizeResponse = await getImageSize(exifResponse);
+  // const exifResponse = await fixExif(jpgResponse);
+  const imageSizeResponse = await getImageSize(jpgResponse);
   await innerPipeline(imageSizeResponse);
   return httpPost(imageSizeResponse);
 };

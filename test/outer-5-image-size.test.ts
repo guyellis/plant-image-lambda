@@ -1,19 +1,22 @@
-import { mockLogger, mockGM as MockGM } from './helper';
-
+import { Metadata } from 'sharp';
+import { mockLogger } from './helper';
 import { getImageSize } from '../src/outer-5-image-size';
 import { ConvertToJpgResponse } from '../src/outer-3-convert-to-jpg';
 
 describe('getImageSize', () => {
+  beforeEach(() => {
+    mockLogger.error = jest.fn();
+  });
   test('should throw if size rejects', async () => {
-    MockGM.prototype.size = (cb: Function) => cb('fake-size-error');
-    const gm = new MockGM();
-
     const req = {
       data: {
         buffer: 'fake-buffer',
+        jpeg: {
+          // eslint-disable-next-line prefer-promise-reject-errors
+          metadata: () => Promise.reject('fake-size-error'),
+        },
       },
       deps: {
-        gm,
         logger: mockLogger,
       },
     } as unknown as ConvertToJpgResponse;
@@ -22,6 +25,34 @@ describe('getImageSize', () => {
       await getImageSize(req);
     } catch (err) {
       expect(err).toEqual('fake-size-error');
+    }
+
+    expect(mockLogger.error).toHaveBeenCalledTimes(1);
+    expect.assertions(2);
+  });
+
+  test('should throw if width is missing rejects', async () => {
+    const metadataMocker: Metadata = {
+      chromaSubsampling: '4:2:0:4',
+    };
+
+    const req = {
+      data: {
+        buffer: 'fake-buffer',
+        jpeg: {
+          // eslint-disable-next-line prefer-promise-reject-errors
+          metadata: () => Promise.resolve(metadataMocker),
+        },
+      },
+      deps: {
+        logger: mockLogger,
+      },
+    } as unknown as ConvertToJpgResponse;
+
+    try {
+      await getImageSize(req);
+    } catch (err) {
+      expect(err.message).toEqual('No width undefined in metadata');
     }
 
     expect(mockLogger.error).toHaveBeenCalledTimes(1);

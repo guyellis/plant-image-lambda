@@ -5,17 +5,17 @@ import { mockLogger, mockLoggerReset } from './helper';
 import { writeToServer } from '../src/write-to-server';
 import { ImageSizeResponse } from '../src/outer-5-image-size';
 
-const mockFetchResult = {
+const mockFetchResult: Response = {
   status: 200,
-};
+} as Response;
 
 let mockThrow = false;
 
-jest.mock('node-fetch', () => () => {
+jest.mock('node-fetch', () => (): Promise<Response> => {
   if (mockThrow) {
     throw new Error('fake-error');
   }
-  return mockFetchResult;
+  return Promise.resolve(mockFetchResult);
 });
 
 describe('write-to-server', () => {
@@ -36,6 +36,7 @@ describe('write-to-server', () => {
       },
     } as unknown) as ImageSizeResponse;
 
+    // @ts-ignore - not mutable but mutating for testing
     mockFetchResult.status = 400;
 
     const result = await writeToServer(req);
@@ -83,6 +84,7 @@ describe('write-to-server', () => {
       },
     } as unknown) as ImageSizeResponse;
 
+    // @ts-ignore - not mutable but mutating for testing
     mockFetchResult.status = 200;
     mockThrow = false;
 
@@ -114,6 +116,7 @@ describe('write-to-server', () => {
       },
     } as unknown) as ImageSizeResponse;
 
+    // @ts-ignore - not mutable but mutating for testing
     mockFetchResult.status = 200;
     mockThrow = false;
 

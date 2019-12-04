@@ -1,11 +1,11 @@
-import { mockLogger, mockGM as MockGM } from './helper';
+import { mockLogger } from './helper';
 import { convertToJpg } from '../src/outer-3-convert-to-jpg';
 import { GetImageFromS3Response } from '../src/outer-2-get-image-from-s3';
 
 describe('convertToJpg', () => {
   test('should throw if toBuffer rejects', async () => {
-    MockGM.prototype.toBuffer = (_: any, cb: Function): void => cb('fake-toBuffer-error');
-    const gm = new MockGM();
+    // MockGM.prototype.toBuffer = (_: any, cb: Function): void => cb('fake-toBuffer-error');
+    // const gm = new MockGM();
 
     const req = {
       data: {
@@ -13,7 +13,8 @@ describe('convertToJpg', () => {
         },
       },
       deps: {
-        gm,
+        // eslint-disable-next-line prefer-promise-reject-errors
+        sharp: () => ({ jpeg: () => Promise.reject('fake-jpeg-error') }),
         logger: mockLogger,
       },
     } as unknown as GetImageFromS3Response;
@@ -21,10 +22,10 @@ describe('convertToJpg', () => {
     try {
       await convertToJpg(req);
     } catch (err) {
-      expect(err).toEqual('fake-toBuffer-error');
+      expect(err).toEqual('fake-jpeg-error');
     }
 
-    expect(mockLogger.error).toHaveBeenCalledTimes(1);
+    expect(mockLogger.timeEnd).toHaveBeenCalledTimes(1);
     expect.assertions(2);
   });
 });
