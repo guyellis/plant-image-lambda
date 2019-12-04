@@ -92,6 +92,7 @@ const loggerTimeEndMockFunction: TimeLogFunction = async (
 
 export const mockLoggerReset = (): void => {
   mockLogger.trace = jest.fn(loggerMockFunction);
+  mockLogger.info = jest.fn(loggerMockFunction);
   mockLogger.error = jest.fn(loggerMockFunction);
   mockLogger.timeEnd = jest.fn(loggerTimeEndMockFunction);
   mockLogger.time = jest.fn();

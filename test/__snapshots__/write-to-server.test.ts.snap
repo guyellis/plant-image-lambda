@@ -10,18 +10,8 @@ Array [
       "PLANT_IMAGE_HOST": "fake-host",
       "PLANT_IMAGE_PORT": "443",
     },
-    "msg": "Image sizing metadata update sent",
-    "options": Object {
-      "body": "{\\"metadata\\":\\"fake-metadata\\",\\"sizes\\":\\"fake-sizes\\",\\"trackId\\":\\"fake-track-id\\"}",
-      "headers": Object {
-        "Content-Length": "75",
-        "Content-Type": "application/json",
-      },
-      "method": "PUT",
-    },
-    "putData": "{\\"metadata\\":\\"fake-metadata\\",\\"sizes\\":\\"fake-sizes\\",\\"trackId\\":\\"fake-track-id\\"}",
-    "status": 200,
-    "url": "https://fake-host/api/image-complete?token=fake-value",
+    "msg": "writeToServer(): Started",
+    "sizes": "fake-sizes",
   },
 ]
 `;

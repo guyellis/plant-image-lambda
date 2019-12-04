@@ -20,7 +20,8 @@ const time = (label: string): void => {
   return laLogger.time(label);
 };
 
-const j = (obj: any) => JSON.stringify(obj, null, 2);
+// const j = (obj: any) => JSON.stringify(obj, null, 2);
+const j = (obj: any) => obj;
 
 const timeEnd: TimeLogFunction = (label: string, level?: LevelType, obj?: any) => {
   console.timeEnd(label);
@@ -35,17 +36,23 @@ const trace: LogFunction = (obj) => {
   return laLogger.trace(obj);
 };
 
+const info: LogFunction = (obj) => {
+  console.info(j(obj));
+  return laLogger.info(obj);
+};
+
 const error: LogFunction = (obj) => {
   console.error(j(obj));
   return laLogger.error(obj);
 };
 
-export type PlantImageLogger = Pick<Logger, 'timeEnd' | 'time' | 'trace' | 'error' | 'presets'>;
+export type PlantImageLogger = Pick<Logger, 'timeEnd' | 'time' | 'trace' | 'info' | 'error' | 'presets'>;
 
 export const logger: PlantImageLogger = {
   error,
   time,
   timeEnd,
   trace,
+  info,
   presets,
 };

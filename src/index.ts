@@ -14,9 +14,9 @@ import { logger } from './logger';
  */
 async function handler(event: S3Event, ctx: Context): Promise<void> {
   try {
-    logger.trace({
+    logger.info({
       msg: 'Reading options from event',
-      event: util.inspect(event, { depth: 5 }),
+      event,
     });
 
     const deps: RequestDeps = {
