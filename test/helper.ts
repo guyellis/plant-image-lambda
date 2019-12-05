@@ -1,13 +1,11 @@
 // eslint-disable-next-line import/no-unresolved
 import { S3Event } from 'aws-lambda';
 import { LogFunction, TimeLogFunction } from 'lalog';
-import { GetObjectOutput, PutObjectRequest } from 'aws-sdk/clients/s3';
+import S3, { GetObjectOutput, PutObjectRequest } from 'aws-sdk/clients/s3';
 import { Response, Headers } from 'node-fetch';
 
 import { sharpMethod } from '../src/types';
 import { PlantImageLogger } from '../src/logger';
-
-import S3 = require('aws-sdk/clients/s3');
 
 export const makeFakeFetchResponse = (status: number): Response => {
   const response: Response = {

@@ -1,20 +1,21 @@
-import { LaLogOptions } from 'lalog';
+import Logger, { LaLogOptions } from 'lalog';
+import S3 from 'aws-sdk/clients/s3';
 
 import { mockLogger, mockS3 } from './helper';
 
 jest.mock('aws-sdk', () => ({
-  S3: function S3() {
-    return mockS3;
+  S3: function S(): S3 {
+    return mockS3 as unknown as S3;
   },
 }));
 
 jest.mock('lalog', () => ({
-  create: ({ serviceName, moduleName }: LaLogOptions) => {
+  create: ({ serviceName, moduleName }: LaLogOptions): Logger => {
     expect(serviceName).toBeTruthy();
     expect(moduleName).toBeTruthy();
     expect(typeof serviceName).toBe('string');
     expect(typeof moduleName).toBe('string');
-    return mockLogger;
+    return mockLogger as Logger;
   },
   getLevel: () => 'info',
   setLevel: jest.fn(),
