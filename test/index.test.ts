@@ -28,11 +28,9 @@ const metadataMocker: Metadata = {
 const sharpMocker: Sharp = {
   jpeg: () => sharpMocker,
   resize: () => sharpMocker,
-  // @ts-ignore
   toBuffer: () => Promise.resolve(Buffer.from('')),
-  // @ts-ignore
   metadata: () => Promise.resolve(metadataMocker),
-};
+} as Sharp;
 
 sharpMock.mockImplementation(() => sharpMocker);
 

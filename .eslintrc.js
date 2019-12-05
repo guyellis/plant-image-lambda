@@ -25,14 +25,14 @@ module.exports = {
     "jest/no-identical-title": [2],
     "jest/prefer-to-have-length": [2],
     "jest/valid-expect": [2],
-    "@typescript-eslint/no-var-requires": [2],
-    '@typescript-eslint/no-empty-interface': [2],
+    '@typescript-eslint/ban-ts-ignore': [2],
     '@typescript-eslint/class-name-casing': [2],
+    '@typescript-eslint/no-empty-interface': [2],
+    "@typescript-eslint/no-var-requires": [2],
     'import/prefer-default-export': [0],
     // TODO: Enable these lint rules:
     // They were disabled to facilitate the transition to TypeScript
     '@typescript-eslint/no-explicit-any': [0],
-    '@typescript-eslint/ban-ts-ignore': [0],
     "@typescript-eslint/explicit-function-return-type": [0],
   },
   settings: {
