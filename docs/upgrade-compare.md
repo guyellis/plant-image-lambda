@@ -2,6 +2,8 @@
 
 As at 12/3/19 the Prod version of this Lambda was very old and running on Node 4. It was last published on 2016-09-17 which is 3.25 years ago. I'm testing a new version of this Lambda for Node 12.
 
+(On 12/4/19 the Node 12 version was deployed to prod.)
+
 ## Stats at 12/3/19
 
 The Node 4 version is always listed first and then the Node 12.
