@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import { S3Event } from 'aws-lambda';
-import { LogFunction, TimeLogFunction, LevelType } from 'lalog';
+import { LogFunction, TimeLogFunction } from 'lalog';
 import { GetObjectOutput, PutObjectRequest } from 'aws-sdk/clients/s3';
 import { Response, Headers } from 'node-fetch';
 
@@ -74,9 +74,9 @@ export const fakeS3Object: GetObjectOutput = {
 
 export const mockLogger: PlantImageLogger = {} as PlantImageLogger;
 
-const isObject = (obj: any): boolean => obj !== null && typeof obj === 'object';
+const isObject = (obj: object): boolean => obj !== null && typeof obj === 'object';
 
-const loggerMockFunction: LogFunction = (errObj: any, extra?: any) => {
+const loggerMockFunction: LogFunction = (errObj, extra) => {
   if (!isObject(errObj)) {
     throw new Error(`First param to lalog logger method is not an object: ${typeof errObj}`);
   }
@@ -88,8 +88,8 @@ const loggerMockFunction: LogFunction = (errObj: any, extra?: any) => {
 };
 
 const loggerTimeEndMockFunction: TimeLogFunction = async (
-  label: any, level?: LevelType, extraLogData?: any,
-): Promise<any> => {
+  label, level, extraLogData,
+) => {
   if (typeof label !== 'string') {
     throw new Error(`1st param to lalog timeEnd method is not an string: ${typeof label}`);
   }

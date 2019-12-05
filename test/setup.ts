@@ -1,3 +1,5 @@
+import { LaLogOptions } from 'lalog';
+
 import { mockLogger, mockS3 } from './helper';
 
 jest.mock('aws-sdk', () => ({
@@ -7,7 +9,7 @@ jest.mock('aws-sdk', () => ({
 }));
 
 jest.mock('lalog', () => ({
-  create: ({ serviceName, moduleName }: any) => {
+  create: ({ serviceName, moduleName }: LaLogOptions) => {
     expect(serviceName).toBeTruthy();
     expect(moduleName).toBeTruthy();
     expect(typeof serviceName).toBe('string');

@@ -20,9 +20,10 @@ const time = (label: string): void => {
   return laLogger.time(label);
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const j = (obj: any): string => JSON.stringify(obj, null, 2);
 
-const timeEnd: TimeLogFunction = (label: string, level?: LevelType, obj?: any) => {
+const timeEnd: TimeLogFunction = (label, level, obj) => {
   console.timeEnd(label);
   if (obj) {
     console.log(j(obj));
