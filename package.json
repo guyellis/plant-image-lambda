@@ -20,7 +20,7 @@
     "@types/node": "12.12.15",
     "@types/node-fetch": "2.5.4",
     "@types/sharp": "0.23.1",
-    "@typescript-eslint/eslint-plugin": "2.10.0",
+    "@typescript-eslint/eslint-plugin": "2.11.0",
     "@typescript-eslint/parser": "2.10.0",
     "check-node-version": "4.0.2",
     "concurrently": "5.0.0",
