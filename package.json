@@ -17,7 +17,7 @@
     "@types/gm": "1.18.7",
     "@types/jest": "25.1.1",
     "@types/lodash": "4.14.149",
-    "@types/node": "13.5.2",
+    "@types/node": "13.5.3",
     "@types/node-fetch": "2.5.4",
     "@types/sharp": "0.24.0",
     "@typescript-eslint/eslint-plugin": "2.18.0",
