@@ -18,7 +18,7 @@ module.exports = {
     '!prettier.config.js',
     '!index.ts',
     '!src/types/**',
-    '**/*.{js,ts}',
+    'src/**/*.{js,ts}',
   ],
   coveragePathIgnorePatterns: [
     '<rootDir>/dist/',

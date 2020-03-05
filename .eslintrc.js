@@ -31,6 +31,10 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': [2],
     "@typescript-eslint/no-var-requires": [2],
     'import/prefer-default-export': [0],
+    'import/extensions': ['error', 'ignorePackages', {
+      js: 'never',
+      ts: 'never',
+    }],
     // TODO: Enable these lint rules:
     // They were disabled to facilitate the transition to TypeScript
     "@typescript-eslint/explicit-function-return-type": [0],
@@ -40,8 +44,9 @@ module.exports = {
       "@typescript-eslint/parser": [".ts", ".tsx"]
     },
     "import/resolver": {
-      // use <root>/tsconfig.json
-      typescript: {}
+      node: {
+        extensions: [".js", ".ts"]
+      }
     }
   }
 };
