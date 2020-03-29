@@ -13,7 +13,7 @@ describe('getImageSize', () => {
         buffer: 'fake-buffer',
         jpeg: {
           // eslint-disable-next-line prefer-promise-reject-errors
-          metadata: () => Promise.reject('fake-size-error'),
+          metadata: (): Promise<never> => Promise.reject('fake-size-error'),
         },
       },
       deps: {
@@ -41,7 +41,7 @@ describe('getImageSize', () => {
         buffer: 'fake-buffer',
         jpeg: {
           // eslint-disable-next-line prefer-promise-reject-errors
-          metadata: () => Promise.resolve(metadataMocker),
+          metadata: (): Promise<Metadata> => Promise.resolve(metadataMocker),
         },
       },
       deps: {

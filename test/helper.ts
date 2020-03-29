@@ -114,15 +114,15 @@ export const mockLoggerReset = (): void => {
 mockLoggerReset();
 
 export const mockS3 = {
-  getObject() {
+  getObject(): {promise: Function} {
     return {
-      promise: () => Promise.resolve(fakeS3Object),
+      promise: (): Promise<S3.GetObjectOutput> => Promise.resolve(fakeS3Object),
     };
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  putObject(_: PutObjectRequest) {
+  putObject(_: PutObjectRequest): {promise: Function} {
     return {
-      promise: () => Promise.resolve(),
+      promise: (): Promise<void> => Promise.resolve(),
     };
   },
 };

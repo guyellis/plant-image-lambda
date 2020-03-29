@@ -17,7 +17,7 @@ jest.mock('lalog', () => ({
     expect(typeof moduleName).toBe('string');
     return mockLogger as Logger;
   },
-  getLevel: () => 'info',
+  getLevel: (): string => 'info',
   setLevel: jest.fn(),
 }));
 
