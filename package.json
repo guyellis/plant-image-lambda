@@ -36,7 +36,7 @@
     "pre-commit": "1.2.2",
     "prettier": "2.0.2",
     "ts-jest": "25.3.1",
-    "ts-node": "8.8.1",
+    "ts-node": "8.8.2",
     "typescript": "3.8.3"
   },
   "engines": {
