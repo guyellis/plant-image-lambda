@@ -33,7 +33,7 @@ const writeImage = async (putObject: PutObjectRequest): Promise<PutObjectOutput>
   const [, sizeName] = putObject.Key.split('/');
   const outFile = path.join(__dirname, '/fixtures/', `${sizeName}.jpg`);
   // eslint-disable-next-line security/detect-non-literal-fs-filename
-  await fs.writeFile(outFile, putObject.Body);
+  await fs.writeFile(outFile, putObject.Body as string);
   return Promise.resolve({} as PutObjectOutput);
 };
 
