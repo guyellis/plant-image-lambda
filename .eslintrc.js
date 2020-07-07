@@ -10,9 +10,9 @@ module.exports = {
     'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
   ],
   parser: '@typescript-eslint/parser', // Specifies the ESLint parser
-  parserOptions:  {
-    ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features
-    sourceType:  'module',  // Allows for the use of imports
+  parserOptions: {
+    ecmaVersion: 2018,  // Allows for the parsing of modern ECMAScript features
+    sourceType: 'module',  // Allows for the use of imports
   },
   'plugins': [
     'import',
@@ -45,7 +45,6 @@ module.exports = {
     'comma-dangle': [0],
     'quote-props': [0],
     'no-multi-spaces': [0],
-    'key-spacing': [0],
   },
   settings: {
     'import/parsers': {
