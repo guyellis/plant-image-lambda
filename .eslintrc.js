@@ -37,7 +37,18 @@ module.exports = {
     }],
     // TODO: Enable these lint rules:
     // They were disabled to facilitate the transition to TypeScript
-    "@typescript-eslint/explicit-function-return-type": [0],
+    '@typescript-eslint/explicit-function-return-type': [0],
+    // These rules disabled during the dependency upgrade on 2020-07-06
+    // Check these and re-enable
+    '@typescript-eslint/class-name-casing': [0],
+    '@typescript-eslint/ban-ts-ignore': [0],
+    '@typescript-eslint/ban-types': [0],
+    'comma-dangle': [0],
+    'quotes': [0],
+    'no-dupe-keys': [0],
+    'quote-props': [0],
+    'no-multi-spaces': [0],
+    'key-spacing': [0],
   },
   settings: {
     "import/parsers": {
