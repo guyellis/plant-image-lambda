@@ -2,7 +2,7 @@
 module.exports = {
   env: {
     jest: true,
-    node: true
+    node: true,
   },
   extends: [
     'airbnb-base',
@@ -17,7 +17,7 @@ module.exports = {
   plugins: [
     'import',
     'security',
-    'jest'
+    'jest',
   ],
   rules: {
     'jest/no-disabled-tests': [2],
@@ -42,16 +42,15 @@ module.exports = {
     '@typescript-eslint/class-name-casing': [0],
     '@typescript-eslint/ban-ts-ignore': [0],
     '@typescript-eslint/ban-types': [0],
-    'comma-dangle': [0],
   },
   settings: {
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx']
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
     'import/resolver': {
       node: {
-        extensions: ['.js', '.ts']
-      }
-    }
-  }
+        extensions: ['.js', '.ts'],
+      },
+    },
+  },
 };
