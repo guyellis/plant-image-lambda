@@ -1,10 +1,10 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
-  'env': {
-    'jest': true,
-    'node': true
+  env: {
+    jest: true,
+    node: true
   },
-  'extends': [
+  extends: [
     'airbnb-base',
     'plugin:security/recommended',
     'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
@@ -14,12 +14,12 @@ module.exports = {
     ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
     sourceType: 'module', // Allows for the use of imports
   },
-  'plugins': [
+  plugins: [
     'import',
     'security',
     'jest'
   ],
-  'rules': {
+  rules: {
     'jest/no-disabled-tests': [2],
     'jest/no-focused-tests': [2],
     'jest/no-identical-title': [2],
@@ -43,7 +43,6 @@ module.exports = {
     '@typescript-eslint/ban-ts-ignore': [0],
     '@typescript-eslint/ban-types': [0],
     'comma-dangle': [0],
-    'quote-props': [0],
   },
   settings: {
     'import/parsers': {
