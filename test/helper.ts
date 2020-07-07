@@ -72,6 +72,7 @@ export const fakeS3Object: GetObjectOutput = {
 
 export const mockLogger: PlantImageLogger = {} as PlantImageLogger;
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 const isObject = (obj: object): boolean => obj !== null && typeof obj === 'object';
 
 const loggerMockFunction: LogFunction = (errObj, extra) => {
@@ -114,13 +115,13 @@ export const mockLoggerReset = (): void => {
 mockLoggerReset();
 
 export const mockS3 = {
-  getObject(): {promise: Function} {
+  getObject(): {promise: () => Promise<GetObjectOutput>; } {
     return {
       promise: (): Promise<S3.GetObjectOutput> => Promise.resolve(fakeS3Object),
     };
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  putObject(_: PutObjectRequest): {promise: Function} {
+  putObject(_: PutObjectRequest): {promise: () => Promise<void>} {
     return {
       promise: (): Promise<void> => Promise.resolve(),
     };

@@ -41,7 +41,6 @@ module.exports = {
     // Check these and re-enable
     '@typescript-eslint/class-name-casing': [0],
     '@typescript-eslint/ban-ts-ignore': [0],
-    '@typescript-eslint/ban-types': [0],
   },
   settings: {
     'import/parsers': {
