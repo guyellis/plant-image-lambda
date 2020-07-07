@@ -1,12 +1,12 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
-  "env": {
-    "jest": true,
-    "node": true
+  'env': {
+    'jest': true,
+    'node': true
   },
-  "extends": [
-    "airbnb-base",
-    "plugin:security/recommended",
+  'extends': [
+    'airbnb-base',
+    'plugin:security/recommended',
     'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
   ],
   parser: '@typescript-eslint/parser', // Specifies the ESLint parser
@@ -14,22 +14,22 @@ module.exports = {
     ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features
     sourceType:  'module',  // Allows for the use of imports
   },
-  "plugins": [
+  'plugins': [
     'import',
-    "security",
-    "jest"
+    'security',
+    'jest'
   ],
-  "rules": {
-    "jest/no-disabled-tests": [2],
-    "jest/no-focused-tests": [2],
-    "jest/no-identical-title": [2],
-    "jest/prefer-to-have-length": [2],
-    "jest/valid-expect": [2],
+  'rules': {
+    'jest/no-disabled-tests': [2],
+    'jest/no-focused-tests': [2],
+    'jest/no-identical-title': [2],
+    'jest/prefer-to-have-length': [2],
+    'jest/valid-expect': [2],
     '@typescript-eslint/ban-ts-ignore': [2],
     '@typescript-eslint/class-name-casing': [2],
     '@typescript-eslint/no-empty-interface': [2],
     '@typescript-eslint/no-explicit-any': [2],
-    "@typescript-eslint/no-var-requires": [2],
+    '@typescript-eslint/no-var-requires': [2],
     'import/prefer-default-export': [0],
     'import/extensions': ['error', 'ignorePackages', {
       js: 'never',
@@ -44,19 +44,18 @@ module.exports = {
     '@typescript-eslint/ban-ts-ignore': [0],
     '@typescript-eslint/ban-types': [0],
     'comma-dangle': [0],
-    'quotes': [0],
     'no-dupe-keys': [0],
     'quote-props': [0],
     'no-multi-spaces': [0],
     'key-spacing': [0],
   },
   settings: {
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"]
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx']
     },
-    "import/resolver": {
+    'import/resolver': {
       node: {
-        extensions: [".js", ".ts"]
+        extensions: ['.js', '.ts']
       }
     }
   }
