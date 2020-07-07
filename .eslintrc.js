@@ -25,8 +25,7 @@ module.exports = {
     'jest/no-identical-title': [2],
     'jest/prefer-to-have-length': [2],
     'jest/valid-expect': [2],
-    '@typescript-eslint/ban-ts-ignore': [2],
-    '@typescript-eslint/class-name-casing': [2],
+
     '@typescript-eslint/no-empty-interface': [2],
     '@typescript-eslint/no-explicit-any': [2],
     '@typescript-eslint/no-var-requires': [2],
@@ -44,7 +43,6 @@ module.exports = {
     '@typescript-eslint/ban-ts-ignore': [0],
     '@typescript-eslint/ban-types': [0],
     'comma-dangle': [0],
-    'no-dupe-keys': [0],
     'quote-props': [0],
     'no-multi-spaces': [0],
     'key-spacing': [0],
