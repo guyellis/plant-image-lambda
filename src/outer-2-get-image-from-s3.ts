@@ -1,7 +1,6 @@
 import { GetObjectOutput } from 'aws-sdk/clients/s3';
 import { ExtractFromEventResponse, ExtractFromEventData } from './outer-1-extract-from-event';
 
-
 export interface GetImageFromS3Data extends ExtractFromEventData {
   s3Object: GetObjectOutput;
 }

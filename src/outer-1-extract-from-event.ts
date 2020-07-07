@@ -1,4 +1,3 @@
-
 import path from 'path';
 // eslint-disable-next-line import/no-unresolved
 import { S3Event } from 'aws-lambda';

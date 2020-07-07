@@ -5,7 +5,6 @@ import { ConvertToJpgResponse, ConvertToJpgData } from './outer-3-convert-to-jpg
 import { ImageSize } from './types';
 import { PlantImageLogger } from './logger';
 
-
 export interface ImageSizeData extends ConvertToJpgData {
   imageSize: ImageSize;
   sizes: ImageSize[];

@@ -1,4 +1,3 @@
-
 export default {
   LALOG_LEVEL: 'info',
   LOGGLY_TOKEN: 'fake-token',
