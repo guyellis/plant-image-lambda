@@ -11,8 +11,8 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser', // Specifies the ESLint parser
   parserOptions: {
-    ecmaVersion: 2018,  // Allows for the parsing of modern ECMAScript features
-    sourceType: 'module',  // Allows for the use of imports
+    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
+    sourceType: 'module', // Allows for the use of imports
   },
   'plugins': [
     'import',
@@ -44,7 +44,6 @@ module.exports = {
     '@typescript-eslint/ban-types': [0],
     'comma-dangle': [0],
     'quote-props': [0],
-    'no-multi-spaces': [0],
   },
   settings: {
     'import/parsers': {
