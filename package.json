@@ -32,7 +32,7 @@
     "eslint-plugin-security": "1.4.0",
     "jest": "26.1.0",
     "jest-circus": "26.1.0",
-    "lodash": "4.17.15",
+    "lodash": "4.17.19",
     "pre-commit": "1.2.2",
     "prettier": "2.0.5",
     "ts-jest": "26.1.1",
