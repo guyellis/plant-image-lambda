@@ -30,7 +30,7 @@
     "eslint-plugin-import": "2.22.0",
     "eslint-plugin-jest": "23.20.0",
     "eslint-plugin-security": "1.4.0",
-    "jest": "26.2.2",
+    "jest": "26.3.0",
     "jest-circus": "26.3.0",
     "lodash": "4.17.19",
     "pre-commit": "1.2.2",
