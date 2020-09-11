@@ -4,7 +4,7 @@
     "url": "https://github.com/guyellis/plant-image-lambda/issues"
   },
   "dependencies": {
-    "aws-sdk": "2.749.0",
+    "aws-sdk": "2.750.0",
     "lalog": "0.8.1",
     "node-fetch": "2.6.1",
     "sharp": "0.26.0"
