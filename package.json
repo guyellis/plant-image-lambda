@@ -13,7 +13,7 @@
   "devDependencies": {
     "@types/aws-lambda": "8.10.63",
     "@types/debug": "4.1.5",
-    "@types/eslint": "7.2.3",
+    "@types/eslint": "7.2.4",
     "@types/gm": "1.18.9",
     "@types/jest": "26.0.14",
     "@types/lodash": "4.14.161",
