@@ -12,7 +12,8 @@ export interface ConvertToJpgResponse extends Omit<GetImageFromS3Response, 'data
 }
 
 export const convertToJpg = async (
-  req: Readonly<GetImageFromS3Response>): Promise<Readonly<ConvertToJpgResponse>> => {
+  req: Readonly<GetImageFromS3Response>,
+): Promise<Readonly<ConvertToJpgResponse>> => {
   const { data, deps: { sharp, logger } } = req;
   const {
     s3Object: {
