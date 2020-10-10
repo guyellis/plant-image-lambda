@@ -54,7 +54,8 @@ const traceLogMetadata = (metadata: Metadata, logger: PlantImageLogger): void =>
 //   s3Object
 //   buffer
 export const getImageSize = async (
-  req: Readonly<ConvertToJpgResponse>): Promise<Readonly<ImageSizeResponse>> => {
+  req: Readonly<ConvertToJpgResponse>,
+): Promise<Readonly<ImageSizeResponse>> => {
   const { data, deps: { logger } } = req;
   const method = '5. getImageSize()';
 

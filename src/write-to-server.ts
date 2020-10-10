@@ -3,7 +3,8 @@ import env from './env';
 import { ImageSizeResponse } from './outer-5-image-size';
 
 export const writeToServer = async (
-  req: Readonly<ImageSizeResponse>): Promise<Readonly<Response | null>> => {
+  req: Readonly<ImageSizeResponse>,
+): Promise<Readonly<Response | null>> => {
   const {
     PLANT_IMAGE_COMPLETE,
     PLANT_IMAGE_HOST,
