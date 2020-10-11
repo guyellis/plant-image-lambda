@@ -10,10 +10,10 @@ describe('extractFromEvent', () => {
 
   test('should build an object', async () => {
     const req: BasicRequest = {
-      event: fakeEvent,
       deps: {
         logger: mockLogger,
       },
+      event: fakeEvent,
     } as BasicRequest;
 
     const expected = {
@@ -31,10 +31,10 @@ describe('extractFromEvent', () => {
 
   test('should log and throw if no key match', async () => {
     const req: BasicRequest = {
-      event: _.cloneDeep(fakeEvent),
       deps: {
         logger: mockLogger,
       },
+      event: _.cloneDeep(fakeEvent),
     } as BasicRequest;
 
     req.event.Records[0].s3.object.key = 'abcjjj';
@@ -51,10 +51,10 @@ describe('extractFromEvent', () => {
 
   test('should log and throw if image type not recognized', async () => {
     const req: BasicRequest = {
-      event: _.cloneDeep(fakeEvent),
       deps: {
         logger: mockLogger,
       },
+      event: _.cloneDeep(fakeEvent),
     } as BasicRequest;
 
     req.event.Records[0].s3.object.key = 'abc.jjj';
@@ -71,10 +71,10 @@ describe('extractFromEvent', () => {
 
   test('should log and throw if orig missing from key', async () => {
     const req: BasicRequest = {
-      event: _.cloneDeep(fakeEvent),
       deps: {
         logger: mockLogger,
       },
+      event: _.cloneDeep(fakeEvent),
     } as BasicRequest;
 
     req.event.Records[0].s3.object.key = 'test/bad/2016-08-27+10.20.04.jpg';
@@ -91,10 +91,10 @@ describe('extractFromEvent', () => {
 
   test('should log and throw if root is not recognized', async () => {
     const req: BasicRequest = {
-      event: _.cloneDeep(fakeEvent),
       deps: {
         logger: mockLogger,
       },
+      event: _.cloneDeep(fakeEvent),
     } as BasicRequest;
 
     req.event.Records[0].s3.object.key = 'bad/orig/2016-08-27+10.20.04.jpg';

@@ -60,17 +60,17 @@ const processImage = async (
       buffer = await jpeg.resize(targetSize.width).toBuffer();
     }
     logger.timeEnd('processImage', 'info', {
-      step, item, size, targetSize, msg,
+      item, msg, size, step, targetSize,
     });
 
     return getResponse(buffer);
   } catch (err) {
     logger.timeEnd('processImage', 'error', {
-      msg: 'Error in scale.resize()',
       err,
-      step,
       item,
+      msg: 'Error in scale.resize()',
       size,
+      step,
       targetSize,
     });
     throw err;
@@ -91,10 +91,10 @@ const uploadImage = async (
 
   try {
     const result: PutObjectOutput = await s3.putObject({
-      Bucket: bucket,
-      Key: outKey,
       Body: req.buffer,
+      Bucket: bucket,
       ContentType: 'JPG',
+      Key: outKey,
     }).promise();
     logger.timeEnd('uploadImage', 'info', {
       bucket, outKey, step,
@@ -102,7 +102,7 @@ const uploadImage = async (
     return result;
   } catch (err) {
     const errObj = {
-      msg: 'Error in s3.putObject()', err, bucket, outKey, step,
+      bucket, err, msg: 'Error in s3.putObject()', outKey, step,
     };
     logger.timeEnd('uploadImage', 'error', errObj);
     throw err;
@@ -125,12 +125,12 @@ export const innerPipeline = async (req: Readonly<ImageSizeResponse>): Promise<v
     // eslint-disable-next-line no-restricted-syntax
     for (const size of sizes) {
       innerReq = {
-        item: {
-          size,
-          index,
-        },
-        input: req.data,
         deps: req.deps,
+        input: req.data,
+        item: {
+          index,
+          size,
+        },
         step: 0,
       };
 

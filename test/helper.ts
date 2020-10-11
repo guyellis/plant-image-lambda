@@ -22,52 +22,52 @@ export const makeFakeFetchResponse = (status: number): Response => {
 
 export const fakeEvent: S3Event = {
   Records: [{
-    eventVersion: '2.0',
-    eventSource: 'aws:s3',
     awsRegion: 'us-east-1',
-    eventTime: '2016-09-10T00:28:36.547Z',
     eventName: 'ObjectCreated:Put',
-    userIdentity: {
-      principalId: 'AAAAAAAAAAAAA',
-    },
+    eventSource: 'aws:s3',
+    eventTime: '2016-09-10T00:28:36.547Z',
+    eventVersion: '2.0',
     requestParameters: {
       sourceIPAddress: '1.2.3.4',
     },
     responseElements: {
-      'x-amz-request-id': 'AAAAAAAAAAAAAAAA',
       'x-amz-id-2': 'oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo',
+      'x-amz-request-id': 'AAAAAAAAAAAAAAAA',
     },
     s3: {
-      s3SchemaVersion: '1.0',
-      configurationId: 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
       bucket: {
+        arn: 'arn:aws:s3:::example.com',
         name: 'example.com',
         ownerIdentity: {
           principalId: 'AAAAAAAAAAAAA',
         },
-        arn: 'arn:aws:s3:::example.com',
       },
+      configurationId: 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
       object: {
-        key: 'test/orig/2016-08-27+10.20.04.jpg',
-        size: 4777321,
         eTag: '11111111111111111111111111111111',
+        key: 'test/orig/2016-08-27+10.20.04.jpg',
         sequencer: 'AAAAAAAAAAAAAAAAAA',
+        size: 4777321,
       },
+      s3SchemaVersion: '1.0',
+    },
+    userIdentity: {
+      principalId: 'AAAAAAAAAAAAA',
     },
   }],
 };
 
 export const fakeS3Object: GetObjectOutput = {
   AcceptRanges: 'bytes',
-  LastModified: new Date('Tue, 06 Sep 2016 22:45:04 GMT'),
-  ContentLength: 2718943,
-  ETag: '"244c6ae2eeaf49e7f84070864aa3fa26"',
-  ContentType: 'image/jpeg',
-  Metadata: {
-    userid: '12345',
-    originalname: '987.jpg',
-  },
   Body: '<Buffer>',
+  ContentLength: 2718943,
+  ContentType: 'image/jpeg',
+  ETag: '"244c6ae2eeaf49e7f84070864aa3fa26"',
+  LastModified: new Date('Tue, 06 Sep 2016 22:45:04 GMT'),
+  Metadata: {
+    originalname: '987.jpg',
+    userid: '12345',
+  },
 };
 
 export const mockLogger: PlantImageLogger = {} as PlantImageLogger;
@@ -192,7 +192,7 @@ export const fakeInput = {
   bucketName: 'fake bucket name',
   buffer: Buffer.from('fake buffer'),
   fileName: 'fake file name',
-  imageSize: { height: 200, width: 200, name: 'fake image name' },
+  imageSize: { height: 200, name: 'fake image name', width: 200 },
   imageType: 'jpg',
   key: 'fake key',
   outKeyRoot: 'fake output key root',

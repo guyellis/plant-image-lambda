@@ -24,29 +24,29 @@ describe('innerPipeline', () => {
     };
     const req: ImageSizeResponse = {
       buffer: Buffer.from(''),
-      event: {},
-      // input,
-      item: {
-        size: {
-          name: 'fake item size',
-          width: 500,
-          height: 500,
-        },
-      },
       data: {
         buffer: 'fake-buffer',
-        sizes: [{ width: 500 }, { width: 1000 }],
         imageSize: {
           width: 1200,
         },
         jpeg: {
           resize: () => resizeSharp,
         },
+        sizes: [{ width: 500 }, { width: 1000 }],
       },
+      
       deps: {
         logger: mockLogger,
-        sharp,
         s3,
+        sharp,
+      },
+      event: {},
+      item: {
+        size: {
+          height: 500,
+          name: 'fake item size',
+          width: 500,
+        },
       },
       step: 1,
     } as unknown as ImageSizeResponse;
@@ -71,13 +71,13 @@ describe('innerPipeline', () => {
     const req: ImageSizeResponse = {
       data: {
         buffer: 'fake-buffer',
-        sizes: [{ width: 500 }],
         imageSize: {
           width: 500,
         },
         jpeg: {
           toBuffer: () => 'fake buffer',
         },
+        sizes: [{ width: 500 }],
       },
       deps: {
         logger: mockLogger,
@@ -96,7 +96,6 @@ describe('innerPipeline', () => {
     const req: ImageSizeResponse = {
       data: {
         buffer: 'fake-buffer',
-        sizes: [{ width: 500 }, { width: 1000 }],
         imageSize: {
           width: 1200,
         },
@@ -105,6 +104,7 @@ describe('innerPipeline', () => {
             toBuffer: () => 'fake buffer',
           }),
         },
+        sizes: [{ width: 500 }, { width: 1000 }],
       },
       deps: {
         logger: mockLogger,

@@ -13,9 +13,8 @@ describe('convertToJpg', () => {
         },
       },
       deps: {
-        // eslint-disable-next-line prefer-promise-reject-errors
-        sharp: () => ({ jpeg: () => Promise.reject('fake-jpeg-error') }),
         logger: mockLogger,
+        sharp: () => ({ jpeg: () => Promise.reject('fake-jpeg-error') }),
       },
     } as unknown as GetImageFromS3Response;
 

@@ -23,14 +23,14 @@ describe('write-to-server', () => {
 
   test('should log an error if node-fetch returns non-200', async () => {
     const req = ({
-      deps: {
-        logger: mockLogger,
-      },
       data: {
         s3Object: {
           Metadata: 'fake-metadata',
         },
         sizes: 'fake-sizes',
+      },
+      deps: {
+        logger: mockLogger,
       },
     } as unknown) as ImageSizeResponse;
 
@@ -54,14 +54,14 @@ describe('write-to-server', () => {
 
   test('should log an error if node-fetch throw', async () => {
     const req = ({
-      deps: {
-        logger: mockLogger,
-      },
       data: {
         s3Object: {
           Metadata: 'fake-metadata',
         },
         sizes: 'fake-sizes',
+      },
+      deps: {
+        logger: mockLogger,
       },
     } as unknown) as ImageSizeResponse;
 
@@ -76,14 +76,14 @@ describe('write-to-server', () => {
   test('should use https instead of http', async () => {
     env.PLANT_IMAGE_PORT = '443';
     const req = ({
-      deps: {
-        logger: mockLogger,
-      },
       data: {
         s3Object: {
           Metadata: 'fake-metadata',
         },
         sizes: 'fake-sizes',
+      },
+      deps: {
+        logger: mockLogger,
       },
     } as unknown) as ImageSizeResponse;
 
@@ -113,14 +113,14 @@ describe('write-to-server', () => {
     };
     env.PLANT_IMAGE_PORT = '443';
     const req = ({
-      deps: {
-        logger,
-      },
       data: {
         s3Object: {
           Metadata: 'fake-metadata',
         },
         sizes: 'fake-sizes',
+      },
+      deps: {
+        logger,
       },
     } as unknown) as ImageSizeResponse;
 

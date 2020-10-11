@@ -14,27 +14,27 @@ import { logger } from './logger';
 async function handler(event: S3Event, ctx: Context): Promise<void> {
   try {
     logger.info({
-      msg: 'Reading options from event',
       event,
+      msg: 'Reading options from event',
     });
 
     const deps: RequestDeps = {
-      s3: new AWS.S3(),
       logger,
+      s3: new AWS.S3(),
       sharp,
     };
 
     const req: BasicRequest = {
-      event,
       deps,
+      event,
     };
 
     await pipeline(req);
     ctx.done();
   } catch (err) {
     logger.error({
-      msg: 'Error in pipeline',
       err,
+      msg: 'Error in pipeline',
     });
     ctx.done(err);
   }

@@ -53,7 +53,7 @@ export const extractFromEvent = (
     const msg = `skipping non-image ${key}`;
     const err = new Error(msg);
     logger.error({
-      msg, imageType, key, err,
+      err, imageType, key, msg,
     });
     throw err;
   }
@@ -64,7 +64,7 @@ export const extractFromEvent = (
     // up/orig/ for prod
     const msg = `Not processing ${key} because it is not an original image.`;
     const err = new Error(msg);
-    logger.error({ msg, key, err });
+    logger.error({ err, key, msg });
     throw err;
   }
 
@@ -76,7 +76,7 @@ export const extractFromEvent = (
   if (!['test', 'up'].includes(outKeyRoot)) {
     const msg = `key does not start with a recognized folder:${key}`;
     const err = new Error(msg);
-    logger.error({ msg, key, err });
+    logger.error({ err, key, msg });
     throw err;
   }
   outKeyRoot += '/';
@@ -85,9 +85,9 @@ export const extractFromEvent = (
     ...req,
     data: {
       bucketName: event.Records[0].s3.bucket.name,
-      key,
       fileName: path.basename(key),
       imageType,
+      key,
       outKeyRoot,
     },
   };

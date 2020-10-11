@@ -39,7 +39,7 @@ export const calcSizes = (width: number): ImageSize[] => {
         w = width;
       }
       if (w) {
-        acc.push({ width: w, name });
+        acc.push({ name, width: w });
       }
       return acc;
     }, [],

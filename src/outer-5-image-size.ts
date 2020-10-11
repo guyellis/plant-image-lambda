@@ -30,18 +30,18 @@ const traceLogMetadata = (metadata: Metadata, logger: PlantImageLogger): void =>
     hasAlpha,
   } = metadata;
   logger.trace({
-    format,
-    size,
-    width,
-    height,
-    space,
     channels,
-    depth,
-    density,
     chromaSubsampling,
-    isProgressive,
-    hasProfile,
+    density,
+    depth,
+    format,
     hasAlpha,
+    hasProfile,
+    height,
+    isProgressive,
+    size,
+    space,
+    width,
   });
 };
 
@@ -75,9 +75,9 @@ export const getImageSize = async (
     }
 
     const imageSize: ImageSize = {
-      width,
       height,
       name: 'original',
+      width,
     };
 
     const nextData: ImageSizeData = {
@@ -92,16 +92,16 @@ export const getImageSize = async (
     };
 
     logger.trace({
-      msg: '5. getImageSize got size',
       imageSize,
+      msg: '5. getImageSize got size',
       sizes: nextData.sizes,
     });
 
     return response;
   } catch (err) {
     logger.error({
-      method,
       err,
+      method,
     });
     throw err;
   }

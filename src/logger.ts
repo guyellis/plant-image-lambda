@@ -8,9 +8,9 @@ process.env.LOGGLY_TOKEN = env.LOGGLY_TOKEN;
 Logger.setLevel(env.LALOG_LEVEL as LevelType);
 
 const laLogger = Logger.create({
-  serviceName: 'plant-image-lambda',
-  moduleName: 'handler',
   addTrackId: true,
+  moduleName: 'handler',
+  serviceName: 'plant-image-lambda',
 });
 
 const { presets } = laLogger;
@@ -50,9 +50,9 @@ export type PlantImageLogger = Pick<Logger, 'timeEnd' | 'time' | 'trace' | 'info
 
 export const logger: PlantImageLogger = {
   error,
+  info,
+  presets,
   time,
   timeEnd,
   trace,
-  info,
-  presets,
 };

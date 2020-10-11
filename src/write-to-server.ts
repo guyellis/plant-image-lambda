@@ -23,7 +23,7 @@ export const writeToServer = async (
     },
   } = req;
 
-  logger.trace({ msg: 'writeToServer(): Started', env, sizes });
+  logger.trace({ env, msg: 'writeToServer(): Started', sizes });
   const { presets } = logger;
   const { trackId } = presets ?? {};
 

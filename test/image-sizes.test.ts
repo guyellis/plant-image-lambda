@@ -4,9 +4,9 @@ import { ImageSize } from '../src/types';
 function getExpected(sizes: number[]): ImageSize[] {
   const names = ['thumb', 'sm', 'md', 'lg', 'xl'];
   return sizes.map((width: number, index: number) => ({
-    width,
     // eslint-disable-next-line security/detect-object-injection
     name: names[index],
+    width,
   }));
 }
 

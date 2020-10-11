@@ -24,8 +24,8 @@ export const convertToJpg = async (
 
   logger.time(logTimeName);
   logger.trace({
-    msg: `Response content type: ${ContentType}`,
     method: '3. convertToJpg()',
+    msg: `Response content type: ${ContentType}`,
   });
   try {
     const jpeg = await sharp(Body as Buffer)
@@ -45,9 +45,9 @@ export const convertToJpg = async (
     return response;
   } catch (err) {
     logger.timeEnd(logTimeName, 'error', {
-      msg: 'convertToJpg error in toBuffer',
-      method: 'convertToJpg()',
       err,
+      method: 'convertToJpg()',
+      msg: 'convertToJpg error in toBuffer',
     });
     throw err;
   }

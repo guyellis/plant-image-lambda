@@ -15,15 +15,15 @@ export const getFakeS3Object = async (): Promise<GetObjectOutput> => {
   const Body = await fs.readFile(path.join(__dirname, '/fixtures/passiflora-arida.jpg'));
   const objectOutput: GetObjectOutput = {
     AcceptRanges: 'bytes',
-    LastModified: new Date('Tue, 06 Sep 2016 22:45:04 GMT'),
-    ContentLength: 2718943,
-    ETag: '"244c6ae2eeaf49e7f84070864aa3fa26"',
-    ContentType: 'image/jpeg',
-    Metadata: {
-      userid: '12345',
-      originalname: '987.jpg',
-    },
     Body,
+    ContentLength: 2718943,
+    ContentType: 'image/jpeg',
+    ETag: '"244c6ae2eeaf49e7f84070864aa3fa26"',
+    LastModified: new Date('Tue, 06 Sep 2016 22:45:04 GMT'),
+    Metadata: {
+      originalname: '987.jpg',
+      userid: '12345',
+    },
   };
   return objectOutput;
 };

@@ -21,15 +21,15 @@ const sharpMock = sharp as unknown as jest.Mock;
 
 const metadataMocker: Metadata = {
   chromaSubsampling: '4:2:0:4',
-  width: 500,
   height: 500,
+  width: 500,
 };
 
 const sharpMocker: Sharp = {
   jpeg: () => sharpMocker,
+  metadata: () => Promise.resolve(metadataMocker),
   resize: () => sharpMocker,
   toBuffer: () => Promise.resolve(Buffer.from('')),
-  metadata: () => Promise.resolve(metadataMocker),
 } as Sharp;
 
 sharpMock.mockImplementation(() => sharpMocker);

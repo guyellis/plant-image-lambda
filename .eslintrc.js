@@ -40,7 +40,7 @@ module.exports = {
     'jest/valid-expect': [2],
     'quotes': [2, 'single'],
     'semi': [2],
-    'sort-keys-fix/sort-keys-fix': [0], // TODO: Enable
+    'sort-keys-fix/sort-keys-fix': [2],
   },
   settings: {
     'import/parsers': {

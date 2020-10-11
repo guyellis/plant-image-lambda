@@ -38,8 +38,8 @@ export const getImageFromS3 = async (
     return response;
   } catch (err) {
     logger.timeEnd('getImageFromS3', 'error', {
-      msg: 'Error in s3.getObject() via getImageFromS3()',
       err,
+      msg: 'Error in s3.getObject() via getImageFromS3()',
     });
     throw err;
   }

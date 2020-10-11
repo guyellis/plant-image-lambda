@@ -16,7 +16,12 @@ describe('getImageFromS3', () => {
     };
 
     const req: ExtractFromEventResponse = {
+      data: {
+        bucketName: fakeBucket,
+        key: fakeKey,
+      },
       deps: {
+        logger: mockLogger,
         s3: {
           getObject(obj: GetObjectRequest) {
             expect(fakeBucket).toBe(obj.Bucket);
@@ -26,11 +31,6 @@ describe('getImageFromS3', () => {
             };
           },
         },
-        logger: mockLogger,
-      },
-      data: {
-        bucketName: fakeBucket,
-        key: fakeKey,
       },
     } as unknown as ExtractFromEventResponse;
 
@@ -40,7 +40,12 @@ describe('getImageFromS3', () => {
 
   test('should throw if s3.getObject has error', async () => {
     const req = {
+      data: {
+        bucketName: fakeBucket,
+        key: fakeKey,
+      },
       deps: {
+        logger: mockLogger,
         s3: {
           getObject(obj: GetObjectRequest) {
             expect(fakeBucket).toBe(obj.Bucket);
@@ -51,11 +56,6 @@ describe('getImageFromS3', () => {
             };
           },
         },
-        logger: mockLogger,
-      },
-      data: {
-        bucketName: fakeBucket,
-        key: fakeKey,
       },
     } as unknown as ExtractFromEventResponse;
 
