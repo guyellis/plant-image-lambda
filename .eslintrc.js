@@ -1,39 +1,46 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
   env: {
+    browser: false,
+    es6: true,
     jest: true,
+    'jest/globals': true,
     node: true,
   },
   extends: [
-    'airbnb-base',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
     'plugin:security/recommended',
-    'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
   ],
-  parser: '@typescript-eslint/parser', // Specifies the ESLint parser
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
     sourceType: 'module', // Allows for the use of imports
   },
   plugins: [
-    'import',
-    'security',
     'jest',
+    'security',
+    'sort-keys-fix',
   ],
   rules: {
+    '@typescript-eslint/explicit-function-return-type': [0], // TODO: Enable
+    '@typescript-eslint/no-empty-interface': [2],
+    '@typescript-eslint/no-explicit-any': [2],
+    '@typescript-eslint/no-var-requires': [2],
+    'import/extensions': ['error', 'ignorePackages', {
+      js: 'never',
+      ts: 'never',
+    }],
+    'import/prefer-default-export': [0],
     'jest/no-disabled-tests': [2],
     'jest/no-focused-tests': [2],
     'jest/no-identical-title': [2],
     'jest/prefer-to-have-length': [2],
     'jest/valid-expect': [2],
-
-    '@typescript-eslint/no-empty-interface': [2],
-    '@typescript-eslint/no-explicit-any': [2],
-    '@typescript-eslint/no-var-requires': [2],
-    'import/prefer-default-export': [0],
-    'import/extensions': ['error', 'ignorePackages', {
-      js: 'never',
-      ts: 'never',
-    }],
+    'quotes': [2, 'single'],
+    'semi': [2],
+    'sort-keys-fix/sort-keys-fix': [0], // TODO: Enable
   },
   settings: {
     'import/parsers': {
