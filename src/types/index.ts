@@ -8,6 +8,9 @@ export interface ImageSize {
   width: number;
 }
 
+// Added on 2020-12-14 when typescript-eslint/parse@4.10.0 upgraded.
+// TODO: Might be a false positive. Try removing this in the future.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type sharpMethod = (input?: string | Buffer, options?: sharp.SharpOptions) => sharp.Sharp;
 
 export interface RequestDeps {
