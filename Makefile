@@ -7,7 +7,7 @@ lambda:
 	@if [ -z "${LOGGLY_TOKEN}" ]; then (echo "Please export LOGGLY_TOKEN" && exit 1); fi
 	@if [ -z "${LALOG_LEVEL}" ]; then (echo "Please export LALOG_LEVEL" && exit 1); fi
 	@echo "Installing node modules (all)"
-	npm i --depth 0
+	npm ci --depth 0
 	@echo "Check Node Version"
 	@npm run cnv
 	@echo "Remove existing build/"
@@ -23,7 +23,7 @@ lambda:
 	@echo "Remove existing node_modules"
 	@rm -rf node_modules/
 	@echo "Installing node modules (production)"
-	npm i --production --depth 0
+	npm ci --production --depth 0
 	@echo "Create new build/"
 	@mkdir build
 	@echo "Copying files to build/"
@@ -33,7 +33,7 @@ lambda:
 	@cd build && zip -rq lambda-image.zip .
 	@mv build/lambda-image.zip ./
 	@echo "Installing node modules (all)"
-	npm i --depth 0
+	npm ci --depth 0
 
 uploadlambda: lambda
 	@if [ -z "${LAMBDA_FUNCTION_NAME}" ]; then (echo "Please export LAMBDA_FUNCTION_NAME" && exit 1); fi
