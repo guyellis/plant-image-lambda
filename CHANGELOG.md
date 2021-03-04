@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.5 (2021-03-04)
+
+- Add runtypes to generate types for PUT
+
 ## 2.1.4
 
 - Dependency updates
