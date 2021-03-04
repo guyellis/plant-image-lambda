@@ -9,13 +9,15 @@ export interface GetImageFromS3Response extends Omit<ExtractFromEventResponse, '
   data: GetImageFromS3Data;
 }
 
+const TIME_KEY = 'getImageFromS3';
+
 // #2
 // data has: bucketName, key, fileName, imageType
 export const getImageFromS3 = async (
   req: Readonly<ExtractFromEventResponse>,
 ): Promise<Readonly<GetImageFromS3Response>> => {
   const { data, deps: { s3, logger } } = req;
-  logger.time('getImageFromS3');
+  logger.time(TIME_KEY);
   logger.trace({ msg: '2. getImageFromS3()' });
   // Download the image from S3 into a buffer.
   // sadly it downloads the image several times, but we couldn't place it outside
@@ -34,10 +36,10 @@ export const getImageFromS3 = async (
       ...req,
       data: nextData,
     };
-    logger.timeEnd('getImageFromS3');
+    logger.timeEnd(TIME_KEY, 'info', nextData);
     return response;
   } catch (err) {
-    logger.timeEnd('getImageFromS3', 'error', {
+    logger.timeEnd(TIME_KEY, 'error', {
       err,
       msg: 'Error in s3.getObject() via getImageFromS3()',
     });

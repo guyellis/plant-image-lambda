@@ -17,12 +17,12 @@ module.exports = {
     '!jest.config.js',
     '!prettier.config.js',
     '!index.ts',
-    '!src/types/**',
     'src/**/*.{js,ts}',
   ],
   coveragePathIgnorePatterns: [
     '<rootDir>/dist/',
     '<rootDir>/node_modules/',
+    '<rootDir>/src/types/',
     '<rootDir>/test/',
   ],
   coverageThreshold: {

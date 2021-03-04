@@ -2,12 +2,13 @@ import { Metadata } from 'sharp';
 
 import { calcSizes } from './image-sizes';
 import { ConvertToJpgResponse, ConvertToJpgData } from './outer-3-convert-to-jpg';
-import { ImageSize } from './types';
 import { PlantImageLogger } from './logger';
+import { ImageCompleteMetadata, NoteImageSize } from './types/image-lambda-types';
 
 export interface ImageSizeData extends ConvertToJpgData {
-  imageSize: ImageSize;
-  sizes: ImageSize[];
+  imageSize: NoteImageSize;
+  sizes: NoteImageSize[];
+  metadata: ImageCompleteMetadata;
 }
 
 export interface ImageSizeResponse extends Omit<ConvertToJpgResponse, 'data'> {
@@ -69,27 +70,34 @@ export const getImageSize = async (
 
     traceLogMetadata(metadata, logger);
 
-    const { width, height } = metadata;
+    const { width } = metadata;
     if (!width) {
       throw new Error(`No width ${width} in metadata`);
     }
 
-    const imageSize: ImageSize = {
-      height,
-      name: 'original',
+    const imageSize: NoteImageSize = {
+      name: 'orig',
       width,
     };
 
-    const nextData: ImageSizeData = {
-      ...data,
+    // const nextData: ImageSizeData = {
+      const nextData = {
+        ...data,
       imageSize,
+      // metadata: {
+      //   // TODO: Fix all of these
+      //   id: '',
+      //   noteid: '',
+      //   originalname: '',
+      //   userid: '',
+      // },
       sizes: calcSizes(imageSize.width),
     };
 
     const response: ImageSizeResponse = {
       ...req,
       data: nextData,
-    };
+    } as ImageSizeResponse; // TODO: Get rid of this cast
 
     logger.trace({
       imageSize,

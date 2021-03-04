@@ -1,4 +1,9 @@
-import { ImageSize } from './types';
+import { ImageSizeName, NoteImageSize } from './types/image-lambda-types';
+
+type Bracket = {
+  bracket: number;
+  name: ImageSizeName;
+}
 
 /**
  * Calculate the sizes to be used for resizing the image based on the current size
@@ -6,12 +11,12 @@ import { ImageSize } from './types';
  * @return - an array of up to 4 elements representing the size
  * in each group
  */
-export const calcSizes = (width: number): ImageSize[] => {
+export const calcSizes = (width: number): NoteImageSize[] => {
   if (width < 1) {
     throw new Error(`Unexpected width less than 1: ${width}`);
   }
 
-  const brackets = [{
+  const brackets: Bracket[] = [{
     bracket: 100,
     name: 'thumb',
   }, {
@@ -29,7 +34,7 @@ export const calcSizes = (width: number): ImageSize[] => {
   }];
 
   return brackets.reduce(
-    (acc: ImageSize[], { bracket, name }, index) => {
+    (acc: NoteImageSize[], { bracket, name }, index) => {
       let w;
       if (width > bracket) {
         w = bracket;

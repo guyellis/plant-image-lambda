@@ -1,6 +1,7 @@
 import fetch, { Response, RequestInit } from 'node-fetch';
 import env from './env';
 import { ImageSizeResponse } from './outer-5-image-size';
+import { ImageCompleteBody } from './types/image-lambda-types';
 
 export const writeToServer = async (
   req: Readonly<ImageSizeResponse>,
@@ -25,15 +26,15 @@ export const writeToServer = async (
 
   logger.trace({ env, msg: 'writeToServer(): Started', sizes });
   const { presets } = logger;
-  const { trackId } = presets ?? {};
+  const { trackId = '' } = presets ?? {};
 
-  const putData = JSON.stringify({
+  const putData: ImageCompleteBody = {
     metadata,
     sizes,
     trackId, // Allows receiver to use same trackId for logging
-  });
+  } as ImageCompleteBody; // TODO: Remove this cast
 
-  logger.trace({ msg: 'writeToServer(): putData stringified', putData });
+  logger.info({ msg: 'writeToServer(): putData', putData });
 
   const port = parseInt(PLANT_IMAGE_PORT, 10);
   const protocol = port === 443 ? 'https' : 'http';
@@ -48,7 +49,7 @@ export const writeToServer = async (
     'Content-Type': 'application/json',
   };
   const options: RequestInit = {
-    body: putData,
+    body: JSON.stringify(putData),
     headers,
     method: 'PUT',
   };

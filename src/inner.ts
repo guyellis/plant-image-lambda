@@ -1,14 +1,15 @@
 import util from 'util';
 import { PutObjectOutput } from 'aws-sdk/clients/s3';
 
-import { ImageSize, RequestDeps } from './types';
+import { RequestDeps } from './types';
 import { ImageSizeResponse, ImageSizeData } from './outer-5-image-size';
+import { NoteImageSize } from './types/image-lambda-types';
 
 const bucket = 'i.plaaant.com';
 
 interface ProcessImageReqOptions {
   item: {
-    size: ImageSize;
+    size: NoteImageSize;
     index: number;
   };
   input: ImageSizeData;
@@ -20,7 +21,7 @@ interface UploadImageReqOptions {
   step: number;
   deps: RequestDeps;
   item: {
-    size: ImageSize;
+    size: NoteImageSize;
     index: number;
   };
   input: ImageSizeData;

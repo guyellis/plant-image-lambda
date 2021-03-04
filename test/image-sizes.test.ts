@@ -1,8 +1,8 @@
 import { calcSizes } from '../src/image-sizes';
-import { ImageSize } from '../src/types';
+import { ImageSizeName, NoteImageSize } from '../src/types/image-lambda-types';
 
-function getExpected(sizes: number[]): ImageSize[] {
-  const names = ['thumb', 'sm', 'md', 'lg', 'xl'];
+function getExpected(sizes: number[]): NoteImageSize[] {
+  const names: ImageSizeName[] = ['thumb', 'sm', 'md', 'lg', 'xl'];
   return sizes.map((width: number, index: number) => ({
     // eslint-disable-next-line security/detect-object-injection
     name: names[index],
@@ -12,7 +12,7 @@ function getExpected(sizes: number[]): ImageSize[] {
 
 describe('image', () => {
   test('should calculate the cut image sizes', () => {
-    let actual: ImageSize[] = calcSizes(300);
+    let actual: NoteImageSize[] = calcSizes(300);
     let expected = getExpected([100, 300]);
     expect(actual).toEqual(expected);
 
