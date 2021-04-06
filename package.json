@@ -8,7 +8,7 @@
     "lalog": "0.8.4",
     "node-fetch": "2.6.1",
     "runtypes": "6.0.0",
-    "sharp": "0.28.0"
+    "sharp": "0.28.1"
   },
   "description": "Image Lambda for Plant Project",
   "devDependencies": {
