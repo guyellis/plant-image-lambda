@@ -4,7 +4,7 @@
     "url": "https://github.com/guyellis/plant-image-lambda/issues"
   },
   "dependencies": {
-    "aws-sdk": "2.905.0",
+    "aws-sdk": "2.906.0",
     "lalog": "0.8.4",
     "node-fetch": "2.6.1",
     "runtypes": "6.3.0",
@@ -18,7 +18,7 @@
     "@types/gm": "1.18.9",
     "@types/jest": "26.0.23",
     "@types/lodash": "4.14.169",
-    "@types/node": "15.0.2",
+    "@types/node": "15.0.3",
     "@types/node-fetch": "2.5.10",
     "@types/sharp": "0.28.1",
     "@typescript-eslint/eslint-plugin": "4.23.0",
