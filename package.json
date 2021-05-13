@@ -17,7 +17,7 @@
     "@types/eslint": "7.2.10",
     "@types/gm": "1.18.9",
     "@types/jest": "26.0.23",
-    "@types/lodash": "4.14.168",
+    "@types/lodash": "4.14.169",
     "@types/node": "15.0.3",
     "@types/node-fetch": "2.5.10",
     "@types/sharp": "0.28.1",
