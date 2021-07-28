@@ -19,7 +19,7 @@
     "@types/lodash": "4.14.171",
     "@types/node": "16.4.3",
     "@types/node-fetch": "2.5.12",
-    "@types/sharp": "0.28.4",
+    "@types/sharp": "0.28.5",
     "@typescript-eslint/eslint-plugin": "4.28.5",
     "@typescript-eslint/parser": "4.28.5",
     "check-node-version": "4.1.0",
