@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
-import { Context, S3Event } from 'aws-lambda';
+import { S3Event } from 'aws-lambda';
 import AWS from 'aws-sdk';
 import sharp from 'sharp';
 import { pipeline } from './outer';
@@ -7,11 +7,13 @@ import { pipeline } from './outer';
 import { BasicRequest } from './outer-1-extract-from-event';
 import { RequestDeps } from './types';
 import { logger } from './logger';
+import { getError } from './utils';
 
 /**
  * Entry point from Lambda call
  */
-async function handler(event: S3Event, ctx: Context): Promise<void> {
+async function handler(event: S3Event): Promise<void> {
+  console.log('here');
   try {
     logger.info({
       event,
@@ -30,13 +32,14 @@ async function handler(event: S3Event, ctx: Context): Promise<void> {
     };
 
     await pipeline(req);
-    ctx.done();
-  } catch (err) {
+    return Promise.resolve();
+  } catch (error) {
+    const err = getError(error);
     logger.error({
       err,
       msg: 'Error in pipeline',
     });
-    ctx.done(err);
+    return Promise.reject(error);
   }
 }
 

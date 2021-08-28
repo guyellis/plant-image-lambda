@@ -49,13 +49,12 @@ describe('getImageSize', () => {
       },
     } as unknown as ConvertToJpgResponse;
 
-    try {
-      await getImageSize(req);
-    } catch (err) {
-      expect(err.message).toEqual('No width undefined in metadata');
-    }
+    await expect(() =>
+      getImageSize(req),
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"No width undefined in metadata"',
+    );
 
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
-    expect.assertions(2);
   });
 });

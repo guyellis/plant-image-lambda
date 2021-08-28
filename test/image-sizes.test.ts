@@ -78,11 +78,8 @@ describe('image', () => {
   });
 
   test('should throw if size is under 1', () => {
-    try {
-      calcSizes(0);
-    } catch (e) {
-      expect(e.message).toBe('Unexpected width less than 1: 0');
-    }
-    expect.assertions(1);
+    expect(() => calcSizes(0)).toThrowErrorMatchingInlineSnapshot(
+      '"Unexpected width less than 1: 0"',
+    );
   });
 });
