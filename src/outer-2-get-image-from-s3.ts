@@ -1,5 +1,7 @@
 import { GetObjectOutput } from 'aws-sdk/clients/s3';
+import { LogData } from 'lalog';
 import { ExtractFromEventResponse, ExtractFromEventData } from './outer-1-extract-from-event';
+import { getError } from './utils';
 
 export interface GetImageFromS3Data extends ExtractFromEventData {
   s3Object: GetObjectOutput;
@@ -36,9 +38,13 @@ export const getImageFromS3 = async (
       ...req,
       data: nextData,
     };
-    logger.timeEnd(TIME_KEY, 'info', nextData);
+    const logData: LogData = {
+      nextData,
+    };
+    logger.timeEnd(TIME_KEY, 'info', logData);
     return response;
-  } catch (err) {
+  } catch (error) {
+    const err = getError(error);
     logger.timeEnd(TIME_KEY, 'error', {
       err,
       msg: 'Error in s3.getObject() via getImageFromS3()',

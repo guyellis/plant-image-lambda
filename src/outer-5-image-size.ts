@@ -4,6 +4,7 @@ import { calcSizes } from './image-sizes';
 import { ConvertToJpgResponse, ConvertToJpgData } from './outer-3-convert-to-jpg';
 import { PlantImageLogger } from './logger';
 import { ImageCompleteMetadata, NoteImageSize } from './types/image-lambda-types';
+import { getError } from './utils';
 
 export interface ImageSizeData extends ConvertToJpgData {
   imageSize: NoteImageSize;
@@ -106,7 +107,8 @@ export const getImageSize = async (
     });
 
     return response;
-  } catch (err) {
+  } catch (error) {
+    const err = getError(error);
     logger.error({
       err,
       method,

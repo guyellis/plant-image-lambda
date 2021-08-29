@@ -19,7 +19,7 @@ import { innerPipeline } from './inner';
 export const pipeline = async (req: Readonly<BasicRequest>): Promise<Readonly<Response | null>> => {
   const extractedRequest = extractFromEvent(req);
   const imageFromS3 = await getImageFromS3(extractedRequest);
-  const jpgResponse = await convertToJpg(imageFromS3);
+  const jpgResponse = convertToJpg(imageFromS3);
   // const exifResponse = await fixExif(jpgResponse);
   const imageSizeResponse = await getImageSize(jpgResponse);
   await innerPipeline(imageSizeResponse);

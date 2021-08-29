@@ -59,11 +59,9 @@ describe('getImageFromS3', () => {
       },
     } as unknown as ExtractFromEventResponse;
 
-    try {
-      await getImageFromS3(req);
-    } catch (err) {
-      expect(err).toEqual('fake-s3-getObject-error');
-    }
+    await expect(() => getImageFromS3(req)).rejects.toMatchInlineSnapshot(
+      '[Error: fake-s3-getObject-error]',
+    );
 
     expect(mockLogger.timeEnd).toHaveBeenCalledTimes(2);
     expect.assertions(4);

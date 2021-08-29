@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "aws-sdk": "2.978.0",
-    "lalog": "0.8.4",
+    "lalog": "1.0.2",
     "node-fetch": "2.6.1",
     "runtypes": "6.3.2",
     "sharp": "0.29.0"
@@ -14,10 +14,11 @@
   "devDependencies": {
     "@types/aws-lambda": "8.10.83",
     "@types/eslint": "7.28.0",
+    "@types/express": "4.17.13",
     "@types/gm": "1.18.10",
     "@types/jest": "27.0.1",
     "@types/lodash": "4.14.172",
-    "@types/node": "16.7.4",
+    "@types/node": "16.7.5",
     "@types/node-fetch": "2.5.12",
     "@types/sharp": "0.28.5",
     "@typescript-eslint/eslint-plugin": "4.29.3",

@@ -1,6 +1,8 @@
 import { Sharp } from 'sharp';
 import {
-  mockLogger, mockS3, mockLoggerReset,
+  mockLogger,
+  mockS3,
+  mockLoggerReset,
   fakeS3 as s3,
   fakeSharpJpegError as sharp,
 } from './helper';
@@ -34,7 +36,7 @@ describe('innerPipeline', () => {
         },
         sizes: [{ width: 500 }, { width: 1000 }],
       },
-      
+
       deps: {
         logger: mockLogger,
         s3,
@@ -52,13 +54,12 @@ describe('innerPipeline', () => {
     } as unknown as ImageSizeResponse;
 
     // eslint-disable-next-line prefer-promise-reject-errors
-    resizeSharp.toBuffer = () => Promise.reject('fake-toBuffer-error') as unknown as Sharp;
+    resizeSharp.toBuffer = () =>
+      Promise.reject('fake-toBuffer-error') as unknown as Sharp;
 
-    try {
-      await innerPipeline(req);
-    } catch (err) {
-      expect(err).toEqual('fake-toBuffer-error');
-    }
+    await expect(innerPipeline(req)).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"fake-toBuffer-error"',
+    );
 
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
     expect(mockLogger.timeEnd).toHaveBeenCalledTimes(1);
@@ -119,11 +120,9 @@ describe('innerPipeline', () => {
       },
     } as unknown as ImageSizeResponse;
 
-    try {
-      await innerPipeline(req);
-    } catch (err) {
-      expect(err).toEqual('fake-putObject-error');
-    }
+    await expect(innerPipeline(req)).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"fake-putObject-error"',
+    );
 
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
     expect(mockLogger.timeEnd).toHaveBeenCalledTimes(2);

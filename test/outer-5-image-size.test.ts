@@ -21,11 +21,9 @@ describe('getImageSize', () => {
       },
     } as unknown as ConvertToJpgResponse;
 
-    try {
-      await getImageSize(req);
-    } catch (err) {
-      expect(err).toEqual('fake-size-error');
-    }
+    await expect(getImageSize(req)).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"fake-size-error"',
+    );
 
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
     expect.assertions(2);

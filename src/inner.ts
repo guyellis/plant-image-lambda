@@ -4,6 +4,7 @@ import { PutObjectOutput } from 'aws-sdk/clients/s3';
 import { RequestDeps } from './types';
 import { ImageSizeResponse, ImageSizeData } from './outer-5-image-size';
 import { NoteImageSize } from './types/image-lambda-types';
+import { getError } from './utils';
 
 const bucket = 'i.plaaant.com';
 
@@ -65,7 +66,8 @@ const processImage = async (
     });
 
     return getResponse(buffer);
-  } catch (err) {
+  } catch (error) {
+    const err = getError(error);
     logger.timeEnd('processImage', 'error', {
       err,
       item,
@@ -101,7 +103,8 @@ const uploadImage = async (
       bucket, outKey, step,
     });
     return result;
-  } catch (err) {
+  } catch (error) {
+    const err = getError(error);
     const errObj = {
       bucket, err, msg: 'Error in s3.putObject()', outKey, step,
     };
@@ -152,7 +155,8 @@ export const innerPipeline = async (req: Readonly<ImageSizeResponse>): Promise<v
     //   msg: 'Successfully resized',
     //   logData,
     // });
-  } catch (err) {
+  } catch (error) {
+    const err = getError(error);
     const logData = util.inspect(req.data);
     logger.error({
       err,

@@ -1,5 +1,6 @@
 import { Sharp } from 'sharp';
 import { GetImageFromS3Response, GetImageFromS3Data } from './outer-2-get-image-from-s3';
+import { getError } from './utils';
 
 const logTimeName = 'convertToJpg';
 
@@ -11,9 +12,9 @@ export interface ConvertToJpgResponse extends Omit<GetImageFromS3Response, 'data
   data: ConvertToJpgData;
 }
 
-export const convertToJpg = async (
+export const convertToJpg = (
   req: Readonly<GetImageFromS3Response>,
-): Promise<Readonly<ConvertToJpgResponse>> => {
+): Readonly<ConvertToJpgResponse> => {
   const { data, deps: { sharp, logger } } = req;
   const {
     s3Object: {
@@ -28,7 +29,7 @@ export const convertToJpg = async (
     msg: `Response content type: ${ContentType}`,
   });
   try {
-    const jpeg = await sharp(Body as Buffer)
+    const jpeg = sharp(Body as Buffer)
       .jpeg({
         quality: 100,
       });
@@ -41,9 +42,10 @@ export const convertToJpg = async (
       data: nextData,
     };
 
-    logger.timeEnd(logTimeName);
+    logger.timeEnd(logTimeName, 'info');
     return response;
-  } catch (err) {
+  } catch (error) {
+    const err = getError(error);
     logger.timeEnd(logTimeName, 'error', {
       err,
       method: 'convertToJpg()',
