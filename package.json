@@ -7,7 +7,7 @@
     "aws-sdk": "2.983.0",
     "lalog": "1.0.2",
     "node-fetch": "2.6.1",
-    "runtypes": "6.3.2",
+    "runtypes": "6.4.0",
     "sharp": "0.29.0"
   },
   "description": "Image Lambda for Plant Project",
