@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.12 (2021-09-15)
+
+- Dependency updates
+
 ## 2.1.11 (2021-08-15)
 
 - Dependency updates
