@@ -6,7 +6,7 @@
   "dependencies": {
     "aws-sdk": "2.1023.0",
     "lalog": "1.0.2",
-    "node-fetch": "2.6.1",
+    "node-fetch": "3.1.0",
     "runtypes": "6.5.0",
     "sharp": "0.29.2"
   },
