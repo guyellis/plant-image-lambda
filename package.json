@@ -30,7 +30,7 @@
     "eslint-plugin-jest": "25.3.0",
     "eslint-plugin-security": "1.4.0",
     "eslint-plugin-sort-keys-fix": "1.1.2",
-    "jest": "27.4.4",
+    "jest": "27.4.5",
     "jest-circus": "27.4.5",
     "lodash": "4.17.21",
     "pre-commit": "1.2.2",
