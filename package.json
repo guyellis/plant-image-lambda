@@ -13,7 +13,7 @@
   "description": "Image Lambda for Plant Project",
   "devDependencies": {
     "@types/aws-lambda": "8.10.91",
-    "@types/eslint": "8.4.0",
+    "@types/eslint": "8.4.1",
     "@types/express": "4.17.13",
     "@types/gm": "1.18.11",
     "@types/jest": "27.4.0",
