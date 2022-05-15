@@ -10,6 +10,7 @@
       "NODE_ENV": "development",
       "SKIP_COVERAGE": "1"
     },
+    "runtimeVersion": "16.15.0",
     "cwd": "${workspaceRoot}"
   }, {
     "name": "Jest (this file)",
@@ -25,7 +26,7 @@
     ],
     "console": "integratedTerminal",
     "internalConsoleOptions": "neverOpen",
-    "port": 9229,
+    "runtimeVersion": "16.15.0",
     "skipFiles": ["<node_internals>/**/*.js"]
   }, {
     "name": "Jest Update (this file)",
@@ -42,7 +43,7 @@
     ],
     "console": "integratedTerminal",
     "internalConsoleOptions": "neverOpen",
-    "port": 9229,
+    "runtimeVersion": "16.15.0",
     "skipFiles": ["<node_internals>/**/*.js"]
   }]
 }
