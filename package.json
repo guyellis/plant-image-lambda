@@ -17,7 +17,7 @@
     "@types/express": "4.17.13",
     "@types/gm": "1.18.12",
     "@types/jest": "28.1.7",
-    "@types/lodash": "4.14.183",
+    "@types/lodash": "4.14.184",
     "@types/node": "16.11.35",
     "@types/node-fetch": "2.6.1",
     "@types/sharp": "0.30.5",
