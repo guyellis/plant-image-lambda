@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
-import Logger from 'lalog';
-import { LevelType, LogFunction, TimeLogFunction } from 'lalog/dist/local-types';
+import Logger, { LevelType, LogFunction, TimeLogFunction } from 'lalog';
 
 import env from './env';
 

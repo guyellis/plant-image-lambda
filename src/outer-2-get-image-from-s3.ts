@@ -1,5 +1,5 @@
 import { GetObjectOutput } from 'aws-sdk/clients/s3';
-import { LogData } from 'lalog/dist/local-types';
+import { LogData } from 'lalog';
 
 import { ExtractFromEventResponse, ExtractFromEventData } from './outer-1-extract-from-event';
 import { getError } from './utils';

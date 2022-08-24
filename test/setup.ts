@@ -1,5 +1,4 @@
-import Logger from 'lalog';
-import { LaLogOptions } from 'lalog/dist/local-types';
+import Logger, { LaLogOptions } from 'lalog';
 import S3 from 'aws-sdk/clients/s3';
 
 import { mockLogger, mockS3 } from './helper';
