@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import { S3Event } from 'aws-lambda';
-import { LogFunction, TimeLogFunction } from 'lalog';
+import { LogFunction, TimeLogFunction } from 'lalog/dist/local-types';
 import S3, { GetObjectOutput, PutObjectRequest } from 'aws-sdk/clients/s3';
 import { Response, Headers } from 'node-fetch';
 
