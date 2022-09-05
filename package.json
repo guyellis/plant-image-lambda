@@ -21,7 +21,7 @@
     "@types/node": "16.11.35",
     "@types/node-fetch": "2.6.1",
     "@types/sharp": "0.30.5",
-    "@typescript-eslint/eslint-plugin": "5.36.1",
+    "@typescript-eslint/eslint-plugin": "5.36.2",
     "@typescript-eslint/parser": "5.36.2",
     "check-node-version": "4.2.1",
     "eslint": "8.23.0",
