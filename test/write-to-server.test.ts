@@ -22,7 +22,7 @@ describe('write-to-server', () => {
   });
 
   test('should log an error if node-fetch returns non-200', async () => {
-    const req = ({
+    const req = {
       data: {
         s3Object: {
           Metadata: 'fake-metadata',
@@ -32,15 +32,15 @@ describe('write-to-server', () => {
       deps: {
         logger: mockLogger,
       },
-    } as unknown) as ImageSizeResponse;
+    } as unknown as ImageSizeResponse;
 
     status = 400;
 
     const result = await writeToServer(req);
 
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "headers": Object {},
+      {
+        "headers": {},
         "ok": true,
         "redirected": false,
         "status": 400,
@@ -53,7 +53,7 @@ describe('write-to-server', () => {
   });
 
   test('should log an error if node-fetch throw', async () => {
-    const req = ({
+    const req = {
       data: {
         s3Object: {
           Metadata: 'fake-metadata',
@@ -63,7 +63,7 @@ describe('write-to-server', () => {
       deps: {
         logger: mockLogger,
       },
-    } as unknown) as ImageSizeResponse;
+    } as unknown as ImageSizeResponse;
 
     mockThrow = true;
 
@@ -75,7 +75,7 @@ describe('write-to-server', () => {
 
   test('should use https instead of http', async () => {
     env.PLANT_IMAGE_PORT = '443';
-    const req = ({
+    const req = {
       data: {
         s3Object: {
           Metadata: 'fake-metadata',
@@ -85,7 +85,7 @@ describe('write-to-server', () => {
       deps: {
         logger: mockLogger,
       },
-    } as unknown) as ImageSizeResponse;
+    } as unknown as ImageSizeResponse;
 
     status = 200;
     mockThrow = false;
@@ -93,8 +93,8 @@ describe('write-to-server', () => {
     const result = await writeToServer(req);
 
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "headers": Object {},
+      {
+        "headers": {},
         "ok": true,
         "redirected": false,
         "status": 200,
@@ -112,7 +112,7 @@ describe('write-to-server', () => {
       trackId: 'fake-track-id',
     };
     env.PLANT_IMAGE_PORT = '443';
-    const req = ({
+    const req = {
       data: {
         s3Object: {
           Metadata: 'fake-metadata',
@@ -122,7 +122,7 @@ describe('write-to-server', () => {
       deps: {
         logger,
       },
-    } as unknown) as ImageSizeResponse;
+    } as unknown as ImageSizeResponse;
 
     status = 200;
     mockThrow = false;
@@ -130,8 +130,8 @@ describe('write-to-server', () => {
     const result = await writeToServer(req);
     const logTraceMock = logger.trace as jest.Mock;
     expect(result).toMatchInlineSnapshot(`
-      Object {
-        "headers": Object {},
+      {
+        "headers": {},
         "ok": true,
         "redirected": false,
         "status": 200,

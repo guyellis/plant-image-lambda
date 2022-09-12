@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`write-to-server should send trackId if on presets 2`] = `
-Array [
-  Object {
-    "env": Object {
+[
+  {
+    "env": {
       "LALOG_LEVEL": "info",
       "LOGGLY_TOKEN": "fake-token",
       "PLANT_IMAGE_COMPLETE": "fake-value",
