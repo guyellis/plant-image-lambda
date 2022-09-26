@@ -72,7 +72,6 @@ export const fakeS3Object: GetObjectOutput = {
 
 export const mockLogger: PlantImageLogger = {} as PlantImageLogger;
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 const isObject = (obj: object): boolean => obj !== null && typeof obj === 'object';
 
 const loggerMockFunction: LogFunction = (errObj, extra) => {

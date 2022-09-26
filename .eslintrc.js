@@ -24,7 +24,7 @@ module.exports = {
     'sort-keys-fix',
   ],
   rules: {
-    '@typescript-eslint/explicit-function-return-type': [0], // TODO: Enable
+    '@typescript-eslint/explicit-function-return-type': [2],
     '@typescript-eslint/no-empty-interface': [2],
     '@typescript-eslint/no-explicit-any': [2],
     '@typescript-eslint/no-var-requires': [2],

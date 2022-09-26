@@ -35,13 +35,6 @@ module.exports = {
   },
   setupFilesAfterEnv: ['./test/setup.ts'],
   testMatch: ['**/test/**/*.test.ts'],
-  // Jasmine, jest's default test-runner, fails silently on afterAll within
-  // a describe block. This is a bug that the jest team is not going to fix
-  // because they plan to use jest-circus/runner by default in the near future.
-  // https://github.com/facebook/jest/issues/6692
-  // TODO: Remove the testRunner option and the previous comment when jest
-  // updates the default test-runner to jest-circus.
-  // testRunner: 'jest-circus/runner',
   transform: {
     '.+\\.ts$': 'ts-jest',
   },

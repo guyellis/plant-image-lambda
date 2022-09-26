@@ -2,7 +2,7 @@ import { fakeEvent, mockLogger } from './helper';
 import { pipeline } from '../src/outer';
 import { handler } from '../src';
 
-jest.mock('node-fetch', () => () => ({
+jest.mock('node-fetch', () => (): { status: number; } => ({
   status: 200,
 }));
 

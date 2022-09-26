@@ -22,7 +22,7 @@ describe('innerPipeline', () => {
 
     const resizeSharp = {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
-      toBuffer: () => {},
+      toBuffer: (): void => {},
     };
     const req: ImageSizeResponse = {
       buffer: Buffer.from(''),
@@ -53,9 +53,8 @@ describe('innerPipeline', () => {
       step: 1,
     } as unknown as ImageSizeResponse;
 
-    // eslint-disable-next-line prefer-promise-reject-errors
-    resizeSharp.toBuffer = () =>
-      Promise.reject('fake-toBuffer-error') as unknown as Sharp;
+    resizeSharp.toBuffer = (): Promise<Sharp> =>
+      Promise.reject('fake-toBuffer-error') as unknown as Promise<Sharp>;
 
     await expect(innerPipeline(req)).rejects.toThrowErrorMatchingInlineSnapshot(
       '"fake-toBuffer-error"',

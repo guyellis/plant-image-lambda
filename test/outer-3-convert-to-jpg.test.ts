@@ -11,7 +11,7 @@ describe('convertToJpg', () => {
       deps: {
         logger: mockLogger,
         sharp: () => ({
-          jpeg: () => {
+          jpeg: (): void => {
             throw new Error('fake-jpeg-error');
           },
         }),

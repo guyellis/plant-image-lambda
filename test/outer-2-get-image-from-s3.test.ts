@@ -51,8 +51,7 @@ describe('getImageFromS3', () => {
             expect(fakeBucket).toBe(obj.Bucket);
             expect(fakeKey).toBe(obj.Key);
             return {
-              // eslint-disable-next-line prefer-promise-reject-errors
-              promise: () => Promise.reject('fake-s3-getObject-error'),
+              promise: (): Promise<void> => Promise.reject('fake-s3-getObject-error'),
             };
           },
         },
