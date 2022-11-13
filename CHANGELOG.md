@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.25 (2022-11-13)
+
+- Dependency updates
+
 ## 2.1.24 (2022-10-14)
 
 - Dependency updates
