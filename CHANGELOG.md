@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.0 (2022-11-25)
+
+- Node 16 to 18
+- Dependency updates
+
 ## 2.1.25 (2022-11-13)
 
 - Dependency updates
