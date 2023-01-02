@@ -16,7 +16,7 @@
     "@types/eslint": "8.4.10",
     "@types/express": "4.17.15",
     "@types/gm": "1.25.0",
-    "@types/jest": "29.2.4",
+    "@types/jest": "29.2.5",
     "@types/lodash": "4.14.191",
     "@types/node": "18.11.18",
     "@types/node-fetch": "2.6.1",
