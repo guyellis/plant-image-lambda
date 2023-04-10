@@ -22,7 +22,7 @@
     "@types/node-fetch": "2.6.1",
     "@types/sharp": "0.31.1",
     "@typescript-eslint/eslint-plugin": "5.57.1",
-    "@typescript-eslint/parser": "5.57.1",
+    "@typescript-eslint/parser": "5.58.0",
     "check-node-version": "4.2.1",
     "eslint": "8.37.0",
     "eslint-import-resolver-typescript": "3.5.5",
