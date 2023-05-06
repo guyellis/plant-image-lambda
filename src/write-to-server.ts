@@ -1,4 +1,3 @@
-import fetch, { Response, RequestInit } from 'node-fetch';
 import env from './env';
 import { ImageSizeResponse } from './outer-5-image-size';
 import { ImageCompleteBody } from './types/image-lambda-types';

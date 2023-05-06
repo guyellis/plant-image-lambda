@@ -4,7 +4,7 @@ import { fakeEvent } from './helper';
 
 import * as index from '../src';
 
-jest.mock('node-fetch', () => (): { status: number; } => ({
+global.fetch = jest.fn().mockImplementation((): { status: number; } => ({
   status: 200,
 }));
 

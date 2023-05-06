@@ -2,7 +2,6 @@
 import { S3Event } from 'aws-lambda';
 import { LogFunction, TimeLogFunction } from 'lalog';
 import S3, { GetObjectOutput, PutObjectRequest } from 'aws-sdk/clients/s3';
-import { Response, Headers } from 'node-fetch';
 
 import { sharpMethod } from '../src/types';
 import { PlantImageLogger } from '../src/logger';

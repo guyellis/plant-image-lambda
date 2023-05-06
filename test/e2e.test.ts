@@ -5,12 +5,11 @@ import S3, {
 } from 'aws-sdk/clients/s3';
 import { promises as fs } from 'fs';
 import path from 'path';
-import { Response } from 'node-fetch';
 
 import { fakeEvent, makeFakeFetchResponse } from './helper';
 import * as index from '../src';
 
-jest.mock('node-fetch', () => (): Response => makeFakeFetchResponse(200));
+global.fetch = jest.fn().mockImplementation(() => makeFakeFetchResponse(200));
 
 export const getFakeS3Object = async (): Promise<GetObjectOutput> => {
   // eslint-disable-next-line security/detect-non-literal-fs-filename

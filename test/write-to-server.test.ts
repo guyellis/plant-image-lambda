@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { Response } from 'node-fetch';
 
 import env from '../src/env';
 import { mockLogger, mockLoggerReset, makeFakeFetchResponse } from './helper';
@@ -9,7 +8,7 @@ import { ImageSizeResponse } from '../src/outer-5-image-size';
 let status = 200;
 let mockThrow = false;
 
-jest.mock('node-fetch', () => (): Promise<Response> => {
+global.fetch = jest.fn().mockImplementation((): Promise<Response> => {
   if (mockThrow) {
     throw new Error('fake-error');
   }
@@ -21,7 +20,7 @@ describe('write-to-server', () => {
     mockLoggerReset();
   });
 
-  test('should log an error if node-fetch returns non-200', async () => {
+  test('should log an error if fetch returns non-200', async () => {
     const req = {
       data: {
         s3Object: {
@@ -52,7 +51,7 @@ describe('write-to-server', () => {
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
   });
 
-  test('should log an error if node-fetch throw', async () => {
+  test('should log an error if fetch throws', async () => {
     const req = {
       data: {
         s3Object: {

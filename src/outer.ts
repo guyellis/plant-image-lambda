@@ -1,5 +1,3 @@
-import { Response } from 'node-fetch';
-
 import { getImageSize } from './outer-5-image-size';
 // import { fixExif } from './outer-4-fix-exif';
 
