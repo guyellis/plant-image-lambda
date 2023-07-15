@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.4 (2023-07-15)
+
+- Dependency updates
+
 ## 2.2.3 (2023-05-06)
 
 - Dependency updates
