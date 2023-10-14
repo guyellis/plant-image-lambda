@@ -64,5 +64,5 @@
     "precom": "npm run lint && npm run coverage",
     "test": "tsc && npm run lint && npm run coverage"
   },
-  "version": "2.2.4"
+  "version": "2.2.5"
 }
