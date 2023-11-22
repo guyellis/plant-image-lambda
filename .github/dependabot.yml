@@ -7,28 +7,3 @@ updates:
     time: "20:00"
   open-pull-requests-limit: 20
   ignore:
-  - dependency-name: "@types/node"
-    versions:
-    - 14.14.23
-    - 14.14.35
-    - 14.14.37
-    - 15.0.0
-  - dependency-name: aws-sdk
-    versions:
-    - 2.835.0
-    - 2.863.0
-    - 2.880.0
-    - 2.884.0
-    - 2.887.0
-    - 2.890.0
-    - 2.893.0
-    - 2.894.0
-  - dependency-name: "@typescript-eslint/eslint-plugin"
-    versions:
-    - 4.16.1
-  - dependency-name: concurrently
-    versions:
-    - 6.0.0
-  - dependency-name: "@types/sharp"
-    versions:
-    - 0.27.2

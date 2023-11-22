@@ -5,19 +5,19 @@
   },
   "dependencies": {
     "aws-sdk": "2.1501.0",
-    "lalog": "2.0.1",
+    "lalog": "3.0.0",
     "runtypes": "6.7.0",
     "sharp": "0.32.6"
   },
   "description": "Image Lambda for Plant Project",
   "devDependencies": {
-    "@types/aws-lambda": "8.10.126",
+    "@types/aws-lambda": "8.10.128",
     "@types/eslint": "8.44.7",
     "@types/express": "4.17.21",
     "@types/gm": "1.25.4",
-    "@types/jest": "29.5.9",
+    "@types/jest": "29.5.10",
     "@types/lodash": "4.14.202",
-    "@types/node": "20.9.3",
+    "@types/node": "20.9.4",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "check-node-version": "4.2.1",
@@ -36,7 +36,7 @@
     "typescript": "5.3.2"
   },
   "engines": {
-    "node": ">=18.12.1",
+    "node": ">=20.9.0",
     "npm": ">=8.0.0"
   },
   "homepage": "https://github.com/guyellis/plant-image-lambda#readme",

@@ -10,7 +10,7 @@
       "NODE_ENV": "development",
       "SKIP_COVERAGE": "1"
     },
-    "runtimeVersion": "18.12.1",
+    "runtimeVersion": "20.9.0",
     "cwd": "${workspaceRoot}"
   }, {
     "name": "Jest (this file)",
@@ -26,7 +26,7 @@
     ],
     "console": "integratedTerminal",
     "internalConsoleOptions": "neverOpen",
-    "runtimeVersion": "18.12.1",
+    "runtimeVersion": "20.9.0",
     "skipFiles": ["<node_internals>/**/*.js"]
   }, {
     "name": "Jest Update (this file)",
@@ -43,7 +43,7 @@
     ],
     "console": "integratedTerminal",
     "internalConsoleOptions": "neverOpen",
-    "runtimeVersion": "18.12.1",
+    "runtimeVersion": "20.9.0",
     "skipFiles": ["<node_internals>/**/*.js"]
   }]
 }
