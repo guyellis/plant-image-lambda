@@ -7,7 +7,7 @@
     "aws-sdk": "2.1534.0",
     "lalog": "3.0.0",
     "runtypes": "6.7.0",
-    "sharp": "0.33.1"
+    "sharp": "0.33.2"
   },
   "description": "Image Lambda for Plant Project",
   "devDependencies": {
