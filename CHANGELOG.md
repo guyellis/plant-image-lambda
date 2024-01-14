@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.1 (2024-01-13)
+
+- Dependency updates
+
 ## 3.0.0 (2023-11-21)
 
 - Node.js 18.x to 20.x & Dependency updates
