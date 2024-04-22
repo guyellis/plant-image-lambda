@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "aws-sdk": "2.1603.0",
-    "lalog": "3.0.0",
+    "lalog": "3.1.1",
     "runtypes": "6.7.0",
     "sharp": "0.33.3"
   },
