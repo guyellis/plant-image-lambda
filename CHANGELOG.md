@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.3 (2024-07-13)
+
+- Dependency updates
+
 ## 3.0.2 (2024-04-06)
 
 - Dependency updates
