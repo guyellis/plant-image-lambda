@@ -13,6 +13,10 @@ jest.mock('sharp');
 const sharpMock = sharp as unknown as jest.Mock;
 
 const metadataMocker: Metadata = {
+  autoOrient: {
+    height: 500,
+    width: 500,
+  },
   chromaSubsampling: '4:2:0:4',
   height: 500,
   width: 500,

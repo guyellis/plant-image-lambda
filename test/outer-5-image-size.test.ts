@@ -30,6 +30,10 @@ describe('getImageSize', () => {
 
   test('should throw if width is missing rejects', async () => {
     const metadataMocker: Metadata = {
+      autoOrient: {
+        height: 500,
+        width: 500,
+      },
       chromaSubsampling: '4:2:0:4',
     };
 
