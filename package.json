@@ -22,7 +22,7 @@
     "@typescript-eslint/parser": "5.62.0",
     "check-node-version": "4.2.1",
     "eslint": "8.57.0",
-    "eslint-import-resolver-typescript": "4.3.4",
+    "eslint-import-resolver-typescript": "4.3.5",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-jest": "27.9.0",
     "eslint-plugin-security": "1.7.1",
