@@ -31,7 +31,7 @@ describe('getImageSize', () => {
   test('should throw if width is missing rejects', async () => {
     const metadataMocker: Metadata = {
       chromaSubsampling: '4:2:0:4',
-    };
+    } as Metadata;
 
     const req = {
       data: {
