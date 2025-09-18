@@ -16,7 +16,7 @@ const metadataMocker: Metadata = {
   chromaSubsampling: '4:2:0:4',
   height: 500,
   width: 500,
-};
+} as Metadata;
 
 const sharpMocker: Sharp = {
   jpeg: () => sharpMocker,
