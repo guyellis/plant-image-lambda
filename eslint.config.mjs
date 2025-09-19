@@ -27,7 +27,7 @@ export default [
   eslintPluginSecurity.configs.recommended,
   eslintPluginJest.configs['flat/recommended'],
   {
-    ignores: ["build/", "node_modules/", "typings/", "coverage/", "dist/", "eslint.config.js"],
+    ignores: ["build/", "node_modules/", "typings/", "coverage/", "dist/", "eslint.config.mjs"],
   },
   {
     files: ["prettier.config.js"],
