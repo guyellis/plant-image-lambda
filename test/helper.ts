@@ -178,7 +178,6 @@ export const mockS3 = {
 export const fakeS3: S3 = {} as S3;
 
 export const fakeSharpJpegError: sharpMethod = (() => ({
-  // eslint-disable-next-line prefer-promise-reject-errors
   jpeg: () => Promise.reject('fake-jpeg-error'),
 })) as unknown as sharpMethod;
 

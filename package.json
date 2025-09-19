@@ -63,7 +63,7 @@
     "clean": "make clean",
     "cnv": "check-node-version --package",
     "coverage": "jest --coverage --maxWorkers=${JEST_MAX_WORKERS:-50%}",
-    "lint": "eslint --ext .js --ext .ts .",
+    "lint": "eslint --ext .js --ext .ts . --max-warnings 0",
     "lintfix": "npm run lint -- --fix",
     "precom": "npm run lint && npm run coverage",
     "test": "tsc && npm run lint && npm run coverage"

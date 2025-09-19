@@ -13,7 +13,6 @@ import { getError } from './utils';
  * Entry point from Lambda call
  */
 async function handler(event: S3Event): Promise<void> {
-  console.log('here');
   try {
     logger.info({
       event,

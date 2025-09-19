@@ -37,5 +37,4 @@ export default {
 };
 `;
 
-// eslint-disable-next-line security/detect-non-literal-fs-filename
 fs.writeFileSync(path.join(__dirname, 'env.ts'), envTs);

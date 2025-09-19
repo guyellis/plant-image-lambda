@@ -76,6 +76,7 @@ export default [
       "jest/no-identical-title": [2],
       "jest/prefer-to-have-length": [2],
       "jest/valid-expect": [2],
+      "no-console": [2],
       quotes: [2, "single"],
       semi: [2],
       "sort-keys-fix/sort-keys-fix": [2],

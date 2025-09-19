@@ -126,7 +126,6 @@ export const innerPipeline = async (req: Readonly<ImageSizeResponse>): Promise<v
       sizes,
     });
 
-    // eslint-disable-next-line no-restricted-syntax
     for (const size of sizes) {
       innerReq = {
         deps: req.deps,
@@ -138,9 +137,7 @@ export const innerPipeline = async (req: Readonly<ImageSizeResponse>): Promise<v
         step: 0,
       };
 
-      // eslint-disable-next-line no-await-in-loop
       const processImageResponse = await processImage(innerReq); // #3
-      // eslint-disable-next-line no-await-in-loop
       await uploadImage(processImageResponse); // #4
 
       index += 1;

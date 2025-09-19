@@ -12,7 +12,6 @@ import * as index from '../src';
 global.fetch = jest.fn().mockImplementation(() => makeFakeFetchResponse(200));
 
 const getFakeS3Object = async (): Promise<GetObjectOutput> => {
-  // eslint-disable-next-line security/detect-non-literal-fs-filename
   const Body = await fs.readFile(
     path.join(__dirname, '/fixtures/passiflora-arida.jpg'),
   );

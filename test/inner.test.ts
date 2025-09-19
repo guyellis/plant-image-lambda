@@ -21,7 +21,6 @@ describe('innerPipeline', () => {
     // const gm = new MockGM();
 
     const resizeSharp = {
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
       toBuffer: (): void => {},
     };
     const req: ImageSizeResponse = {
@@ -111,7 +110,6 @@ describe('innerPipeline', () => {
         s3: {
           putObject() {
             return {
-              // eslint-disable-next-line prefer-promise-reject-errors
               promise: () => Promise.reject('fake-putObject-error'),
             };
           },
