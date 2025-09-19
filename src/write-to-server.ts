@@ -74,7 +74,7 @@ export const writeToServer = async (
         msg: `Unexpected response status ${response.status} in PUT call`,
       });
     }
-  } catch (err) {
+  } catch {
     logger.error({
       env,
       msg: 'Error sending image sizing metadata',
