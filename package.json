@@ -18,7 +18,7 @@
     "@types/express": "5.0.5",
     "@types/gm": "1.25.4",
     "@types/jest": "30.0.0",
-    "@types/lodash": "4.17.20",
+    "@types/lodash": "4.17.21",
     "@types/node": "24.10.1",
     "@typescript-eslint/eslint-plugin": "8.46.3",
     "@typescript-eslint/parser": "8.47.0",
