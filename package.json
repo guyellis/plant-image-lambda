@@ -21,7 +21,7 @@
     "@types/lodash": "4.17.24",
     "@types/node": "26.1.1",
     "@typescript-eslint/eslint-plugin": "8.62.1",
-    "@typescript-eslint/parser": "8.63.0",
+    "@typescript-eslint/parser": "8.64.0",
     "check-node-version": "4.2.1",
     "eslint": "9.39.2",
     "eslint-import-resolver-typescript": "4.4.5",
